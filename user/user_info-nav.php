@@ -7,11 +7,15 @@
             <h3 id="user-name">Juan Dela Cruz</h3>
         </div>
         <div class="details">
-            <p>ID: 0001</p>
+            <p><span class="semibold-text">ID: </span><span>0001</span></p>
             <span>|</span>
-            <p>Age: 40</p>
+            <p><span class="semibold-text">Age: </span><span>40</span></p>
             <span>|</span>
-            <p>Sex: Male</p>
+            <p><span class="semibold-text">Sex: </span><span>Male</span></p>
+        </div>
+        <div class="details">
+            <p><span class="semibold-text">Created on: </span><span id="creation-date">October 31, 2023</span></p>
+            
         </div>
     </div>
 </div>

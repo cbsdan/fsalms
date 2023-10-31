@@ -9,7 +9,7 @@
     </div>
     <div class="section">
         <?php
-            include_once('./user/info_section.php');
+            include_once('./user/edit_section.php');
         ?>
     </div>
 </main>
