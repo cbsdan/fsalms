@@ -89,7 +89,9 @@ main .section h1 {
 
 /*Transactions Section*/
 .section #transac-type {
+    display: flex;
     margin: 2rem 0 1rem;
+    margin-left: auto;
     background-color: var(--input-box-background);
     padding: 0.5rem 1rem;
 }
