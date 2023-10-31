@@ -13,9 +13,9 @@ main .section {
     margin-bottom: 2rem;
 }
 main .section .background {
-    min-height: 80vh;
+    min-height: 50vh;
     background-color: var(--light-background);
-    padding: 1rem 2rem;
+    padding: 1rem 2rem 2rem;
 }
 .navigation-container .nav {
     color: var(--light-text);
@@ -84,7 +84,6 @@ main .section h1 {
 .section .record-container {
     min-height: 30vh;
     background-color: var(--input-box-background);
-    margin-bottom: 2rem;
 }
 
 /*Transactions Section*/
@@ -98,7 +97,6 @@ main .section h1 {
 .section .transactions-container .transactions-table {
     min-height: 50vh;
     background-color: var(--input-box-background);
-    margin-bottom: 2rem;
 }
 
 /*Edit Section and Change Password Section*/
