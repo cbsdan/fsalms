@@ -5,17 +5,6 @@
     'Modern Antiqua'
 */
 
-:root {
-    --main-color: #2C3E50;
-    --gold: #F1C40F;
-    --pale-yellow: #FBE3B1;
-    --light-text: #EFEFEF;
-    --dark-text: #1A1A1A;
-    --main-background: #FFF3E0;
-    --light-background: #EDEDED;
-
-    --max-width: 1400px;
-}
 * {
     margin: 0; padding: 0; border: 0; 
     background-color: transparent;
@@ -26,6 +15,13 @@
 }
 button, a {
     cursor: pointer;
+}
+a {
+    font-style: normal;
+}
+img {
+    width: 50px;
+    height: 50px;
 }
 html {
     font-size: 62.5%;
@@ -121,3 +117,93 @@ main {
     min-height: 100vh;
     background-color: var(--main-background);
 }
+
+
+/* 
+    /////////////////////////
+    USER INFO, NAVIGATION
+    /////////////////////////
+*/
+.info-nav-container {
+    background-color: var(--pale-yellow);
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    max-width: var(--content-max-width);
+    padding: 1rem 10rem;
+    margin: 0 auto;
+    font-size: 1.4rem; 
+}
+.profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#user-profile {
+    border: 0.3rem solid rgba(var(--main-color-rgb), var(--opacity));;
+    border-radius: 50%;
+    width: 7rem;
+    height: 7rem;
+}
+#user-name {
+    font-size: 2.4rem;
+}
+
+.info-container {
+    flex: 1;
+    background-color: rgba(var(--main-color-rgb), var(--opacity));
+    color: var(--light-text);
+    padding: 0.75rem 1.5rem;
+}
+
+.info-container .details{
+    display: flex;
+    gap: 1.2rem;
+}
+
+.navigation-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 10rem;
+    font-size: 1.6rem;
+    color: var(--light-text);
+    font-weight: 600;
+}
+.navigation-container .background {
+    background-color: rgba(var(--main-color-rgb), 0.75);
+    padding: 0.5rem 2rem;
+}
+.navigation-container a {
+    margin-right: 1.2rem;
+}
+
+
+/* 
+    /////////////////////////
+    SECTION
+    /////////////////////////
+*/
+main .section {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 10rem;
+    font-size: 1.6rem;
+    color: var(--dark-text);
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+main .section .background {
+    min-height: 80vh;
+    background-color: var(--light-background);
+    padding: 1rem 1.5rem;
+}
+.navigation-container .nav {
+    color: var(--light-text);
+}
+.navigation-container .nav.active {
+    color: var(--gold);
+}
+

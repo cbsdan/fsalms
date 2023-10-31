@@ -1,0 +1,15 @@
+:root {
+    --main-color: #2C3E50;
+    --main-color-rgb: 44, 62, 80;
+    --gold: #F1C40F;
+    --pale-yellow: #FBE3B1;
+    --light-text: #EFEFEF;
+    --dark-text: #1A1A1A;
+    --main-background: #FFF3E0;
+    --light-background: #EDEDED;
+
+    --max-width: 1400px;
+    --content-max-width: 1200px;
+    --opacity: 0.5; 
+    
+}
