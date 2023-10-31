@@ -22,6 +22,8 @@ button, a, select {
 }
 a {
     font-style: normal;
+    text-decoration: none;
+    color: var(--light-text);
 }
 img {
     width: 50px;
@@ -136,37 +138,36 @@ main {
     background-color: var(--pale-yellow);
 }
 .user-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
     max-width: var(--content-max-width);
     padding: 1rem 10rem;
     margin: 0 auto;
     font-size: 1.4rem; 
 }
-.profile-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
 #user-profile {
-    border: 0.3rem solid rgba(var(--main-color-rgb), var(--opacity));;
+    border: 0.3rem solid var(--main-color);
     border-radius: 50%;
-    width: 7rem;
-    height: 7rem;
+    width: 7.5rem;
+    height: 7.5rem;
 }
 #user-name {
     font-size: 2.4rem;
 }
 
-.info-container {
+.user-info .background {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
     flex: 1;
     background-color: rgba(var(--main-color-rgb), var(--opacity));
     color: var(--light-text);
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 2rem;
 }
-
+.user-info .background .profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .info-container .details{
     display: flex;
     gap: 1.2rem;

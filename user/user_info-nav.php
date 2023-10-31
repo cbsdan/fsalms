@@ -1,21 +1,22 @@
 <div class="user-info">
-    <div class="profile-container">
-        <img src="./img/default-profile.png" id="user-profile">
-    </div>
-    <div class="info-container">
-        <div>
-            <h3 id="user-name">Juan Dela Cruz</h3>
+    <div class="background">
+        <div class="profile-container">
+            <img src="./img/profile-1.png" id="user-profile">
         </div>
-        <div class="details">
-            <p><span class="semibold-text">ID: </span><span>0001</span></p>
-            <span>|</span>
-            <p><span class="semibold-text">Age: </span><span>40</span></p>
-            <span>|</span>
-            <p><span class="semibold-text">Sex: </span><span>Male</span></p>
-        </div>
-        <div class="details">
-            <p><span class="semibold-text">Created on: </span><span id="creation-date">October 31, 2023</span></p>
-            
+        <div class="info-container">
+            <div>
+                <h3 id="user-name">Juan Dela Cruz</h3>
+            </div>
+            <div class="details">
+                <p><span class="semibold-text">ID: </span><span>0001</span></p>
+                <span>|</span>
+                <p><span class="semibold-text">Age: </span><span>40</span></p>
+                <span>|</span>
+                <p><span class="semibold-text">Sex: </span><span>Male</span></p>
+            </div>
+            <div class="details">
+                <p><span class="semibold-text">Created on: </span><span id="creation-date">October 31, 2023</span></p>
+            </div>
         </div>
     </div>
 </div>

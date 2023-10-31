@@ -13,10 +13,10 @@
 <body>
     <header>
         <div class="content">
-            <div class="logo-container">
+            <a class="logo-container" href="./index.php">
                 <div class="fsalms-container"><img src="./img/logo.png" id="fsalms-logo"></div>
                 <div class="title-container"><h1 id="fsalms-text">FSALMS</h1></div>
-            </div>
+            </a>
             <div class="log-container">
                 <button id="log-status">Logout</button>
             </div>
