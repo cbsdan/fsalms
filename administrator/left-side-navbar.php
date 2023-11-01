@@ -1,6 +1,6 @@
 <div class="left-side-navbar">
     <div class="navbar-container">
-        <div class="admin-card">
+        <div class="admin-card" onclick="loadContent('./administrator/settings.php', this)">
             <div class="profile"><img src="./img/profile-1.png" alt="admin" id="admin-profile"></div>
             <h2>ADMINISTRATOR</h2>
         </div>
@@ -29,7 +29,7 @@
                 <p class="nav-name">Transactions</p>
             </div>
         </div>
-        <div class="members nav-container">
+        <div class="loan nav-container">
             <p class="text">LOAN</p>
             <div class="nav" onclick="loadContent('./administrator/loan-requests.php', this)">
                 <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
@@ -66,6 +66,10 @@
         <div class="settings nav" onclick="loadContent('./administrator/settings.php', this)">
             <div class="nav-logo"><img src="./img/setting-icon-light.svg" class="logo setting-logo"></div>
             <p class="nav-name">Settings</p>
+        </div>
+        <div class="logout nav" onclick="loadContent('./administrator/settings.php', this)">
+            <div class="nav-logo"><img src="./img/logout.svg" class="logo setting-logo"></div>
+            <p class="nav-name">Logout</p>
         </div>
     </div>
 </div>

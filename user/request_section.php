@@ -18,5 +18,7 @@
     </div>
     <h1 class="record-title">Record</h1>
     <hr>
-    <div class="record-container"></div>
+    <div class="record-container">
+
+    </div>
 </div>

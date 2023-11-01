@@ -21,7 +21,7 @@
     display: flex;
     flex: 1;
     align-items: start;
-    flex-direction: column;
+    flex-direction: column; 
     gap: 2.5rem;
     overflow-y: hidden;
 }
@@ -29,6 +29,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    cursor: pointer;
 }
 #admin-profile {
     border: 0.1rem solid var(--pale-yellow);
@@ -39,6 +40,7 @@
 }
 .admin-card h2{
     font-weight: 500;
+    font-size: 2rem;
     color: var(--pale-yellow);
 }
 .left-side-navbar .nav-container {
@@ -62,6 +64,7 @@
     max-width: 250px;
     font-size: 1.6rem;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .nav-container .nav.active, .left-side-navbar .nav.active {
@@ -80,10 +83,15 @@
     object-fit: cover;
 }
 .left-side-navbar .nav .nav-logo .logo.setting-logo {
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
 }
-
+.left-side-navbar .navbar-container .logout, .left-side-navbar .navbar-container .settings {
+    gap: 1.5rem;
+}
+.left-side-navbar .navbar-container .logout {
+    margin-top: -1.5rem;
+}
 main .section.admin {
     width: 100%;
     margin: 1rem;
