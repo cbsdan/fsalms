@@ -19,6 +19,7 @@ html {
 }
 body {
     min-height: 100vh;
+    background-color: var(--main-background);
 }
 button, a, select {
     cursor: pointer;
@@ -142,9 +143,9 @@ main {
     background-color: var(--main-background);
     position: relative;
     padding-top: 7rem;
-    display: grid;
+    /* display: grid;
     grid-template-columns: 300px 1fr;
-    gap: 1rem;
+    gap: 1rem; */
 }
 
 /* 

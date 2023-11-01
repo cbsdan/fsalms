@@ -76,3 +76,12 @@ screenToggle.addEventListener('click', ()=>{
     }
 })
 
+if (mainElement.classList.contains("admin")) {
+    mainElement.style.display = 'grid';
+    mainElement.style.gridTemplateColumns = '300px 1fr';
+    mainElement.style.gap = '1rem';
+} else {
+    mainElement.style.display = 'block';
+    mainElement.style.gridTemplateColumns = '1fr';
+    mainElement.style.gap = '0';
+}
