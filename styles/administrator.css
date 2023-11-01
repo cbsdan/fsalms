@@ -1,0 +1,96 @@
+/* Left Side Nav Bar */
+#left-side-navbar-background {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 10rem;
+    font-size: 1.6rem;
+    color: var(--main-color);
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+.left-side-navbar {
+    background-color: var(--main-color);
+    display: flex;
+    max-width: 300px;
+    color: var(--light-text);
+    padding: 2rem;
+    overflow-y: auto;
+    z-index: 10;
+}
+.left-side-navbar .navbar-container {
+    display: flex;
+    flex: 1;
+    align-items: start;
+    flex-direction: column;
+    gap: 2.5rem;
+    overflow-y: hidden;
+}
+.left-side-navbar .admin-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+#admin-profile {
+    border: 0.1rem solid var(--pale-yellow);
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.admin-card h2{
+    font-weight: 500;
+    color: var(--pale-yellow);
+}
+.left-side-navbar .nav-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    font-size: 1.2rem;
+}
+.left-side-navbar .nav-container .nav-name:hover, .left-side-navbar .nav-name:hover{
+    color: var(--pale-yellow);
+}
+.nav-container .nav, .left-side-navbar .nav {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.7rem 1rem;
+    border-radius: 0.5rem;
+    max-width: 250px;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.nav-container .nav.active, .left-side-navbar .nav.active {
+    background-color: rgba(var(--light-background-rgb), 0.2);
+    color: var(--pale-yellow);
+}
+.nav-container .nav .nav-logo, .left-side-navbar .nav .nav-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav-container .nav .nav-logo .logo, .left-side-navbar .nav .nav-logo .logo {
+    border-radius: 0.2rem;
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
+}
+.left-side-navbar .nav .nav-logo .logo.setting-logo {
+    width: 3rem;
+    height: 3rem;
+}
+
+main .section.admin {
+    width: 100%;
+    margin: 1rem;
+    padding: 1rem;
+    background-color: var(--light-background);
+    font-size: 1.6rem;
+    color: var(--main-color);
+    font-weight: 600;
+    max-width: calc(100vw - 300px - 4rem);
+}

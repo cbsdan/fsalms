@@ -3,7 +3,7 @@
     SECTION
     /////////////////////////
 */
-main .section {
+main .section.user {
     max-width: var(--content-max-width);
     margin: 0 auto;
     padding: 0 10rem;
@@ -12,7 +12,7 @@ main .section {
     font-weight: 600;
     margin-bottom: 2rem;
 }
-main .section .background {
+main .section.user .background {
     min-height: 50vh;
     background-color: var(--light-background);
     padding: 1rem 2rem 2rem;
@@ -25,7 +25,7 @@ main .section .background {
 }
 
 /*---------------------------------------*/
-main .section h1 {
+main .section.user h1 {
     color: var(--main-color);
     margin-bottom: 0.5rem;
     font-size: 3.0rem;

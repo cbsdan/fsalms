@@ -17,6 +17,9 @@ html {
     font-size: 62.5%;
     scroll-behavior: smooth;
 }
+body {
+    min-height: 100vh;
+}
 button, a, select {
     cursor: pointer;
 }
@@ -42,6 +45,17 @@ input[type='text'], input[type="date"], input[type="file"], input[type="number"]
     HEADER, FOOTER
     /////////////////////////
 */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: top 0.3s;
+    z-index: 100;
+}
+header.hidden {
+    top: -100px; /* Hide the header by moving it out of the viewport */
+}
+
 header, footer {
     background-color: var(--gold);
 }
@@ -124,8 +138,13 @@ footer .content {
     /////////////////////////
 */
 main {
-    min-height: 80vh;
+    min-height: 50vh;
     background-color: var(--main-background);
+    position: relative;
+    padding-top: 7rem;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 1rem;
 }
 
 

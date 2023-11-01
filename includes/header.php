@@ -6,6 +6,7 @@
     <title>FSALMS</title>
     <link rel="stylesheet" href="./styles/styles.css">
     <link rel="stylesheet" href="./styles/user-section.css">
+    <link rel="stylesheet" href="./styles/administrator.css">
     <link rel="stylesheet" href="./styles/variables.css">
 
     <script src="./scripts/script.js" defer></script>
