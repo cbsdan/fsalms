@@ -41,6 +41,9 @@ input[type='text'], input[type="date"], input[type="file"], input[type="number"]
 .semibold-text {
     font-weight: 600;
 }
+.hidden {
+    display: none;
+}
 /* 
     /////////////////////////
     HEADER, FOOTER
@@ -52,6 +55,7 @@ header {
     width: 100%;
     transition: top 0.3s;
     z-index: 100;
+    
 }
 header.hidden {
     top: -100px; /* Hide the header by moving it out of the viewport */
@@ -65,8 +69,12 @@ header .content, footer .content {
     max-width: var(--max-width);
     margin: 0 auto;
 }
-
-
+header.admin, footer.admin {
+    padding-left: 300px;
+}
+header.admin .content, footer.admin .content {
+    padding: 0.2rem 2rem;
+}
 /* 
     /////////////////////////
     HEADER
@@ -139,7 +147,7 @@ footer .content {
     /////////////////////////
 */
 main {
-    min-height: 50vh;
+    min-height: 80vh;
     background-color: var(--main-background);
     position: relative;
     padding-top: 7rem;
@@ -147,7 +155,9 @@ main {
     grid-template-columns: 300px 1fr;
     gap: 1rem; */
 }
-
+main.admin {
+    padding-left: 300px;
+}
 /* 
     /////////////////////////
     USER INFO, NAVIGATION

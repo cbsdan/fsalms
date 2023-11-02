@@ -1,6 +1,7 @@
+let adminSection = document.querySelector('.section.admin');
+let userSection = document.querySelector('.section.user');
+
 function loadContent(page, button) {
-    let adminSection = document.querySelector('.section.admin');
-    let userSection = document.querySelector('.section.user');
     if (adminSection) {
         fetch(page) //PHP File
             .then(response => response.text())
@@ -29,6 +30,7 @@ function loadContent(page, button) {
 let lastScrollTop = 0;
 let headerElement = document.querySelector("header");
 let scrollTopElement = document.querySelector('.scroll-top');
+
 window.addEventListener("scroll", () => {
   const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
@@ -37,9 +39,14 @@ window.addEventListener("scroll", () => {
       if (currentScroll > lastScrollTop) {
         // Scrolling down
         headerElement.classList.add("hidden");
+        mainElement.style.paddingTop = 0;
+        adminSection.style.height = '100vh';
+
       } else {
         // Scrolling up
         headerElement.classList.remove("hidden");
+        mainElement.style.paddingTop = '7rem';
+        adminSection.style.height = 'calc(100vh - 7rem)';
       }
     
       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
@@ -66,6 +73,7 @@ screenToggle.addEventListener('click', ()=>{
         isFullScreen = true;
         screenToggleLabel.innerHTML = 'Exit Full Screen';
         footerElement.style.display = 'none';
+        adminSection.style.height = '100vh';
     } else {
         headerElement.classList.remove('hidden');
         mainElement.style.paddingTop = '7rem';
@@ -73,15 +81,16 @@ screenToggle.addEventListener('click', ()=>{
         isFullScreen = false;
         screenToggleLabel.innerHTML = 'Make Full Screen';
         footerElement.style.display = 'block';
+        adminSection.style.height = 'calc(100vh - 7rem)';
     }
 })
 
-if (mainElement.classList.contains("admin")) {
-    mainElement.style.display = 'grid';
-    mainElement.style.gridTemplateColumns = '300px 1fr';
-    mainElement.style.gap = '1rem';
-} else {
-    mainElement.style.display = 'block';
-    mainElement.style.gridTemplateColumns = '1fr';
-    mainElement.style.gap = '0';
-}
+// if (mainElement.classList.contains("admin")) {
+//     mainElement.style.display = 'grid';
+//     mainElement.style.gridTemplateColumns = '300px 1fr';
+//     mainElement.style.gap = '1rem';
+// } else {
+//     mainElement.style.display = 'block';
+//     mainElement.style.gridTemplateColumns = '1fr';
+//     mainElement.style.gap = '0';
+// }

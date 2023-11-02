@@ -13,7 +13,7 @@
     <script src="./scripts/script.js" defer></script>
 </head>
 <body>
-    <header>
+    <header class="admin">
         <div class="content">
             <a class="logo-container" href="./index.php">
                 <div class="fsalms-container"><img src="./img/logo.png" id="fsalms-logo"></div>

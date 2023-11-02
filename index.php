@@ -2,18 +2,18 @@
     include_once('./includes/header.php')
 ?>
 
-<main id="main" class="admin">
-    <div id="left-side-navbar">
-        <?php
-            include_once('./administrator/left-side-navbar.php');
-        ?>
-    </div>
+<div id="left-side-navbar">
+    <?php
+        include_once('./administrator/left-side-navbar.php');
+    ?>
+</div>
+<main id="main" class="admin"> <!--class should have admin or user-->
     <!-- <div class="info-nav-container">
         <?php
             include_once('./user/user_info-nav.php');
         ?>
     </div> -->
-    <div class="section admin">
+    <div class="section admin"> <!--class should have admin or user-->
         <!-- <?php
             include_once('./user/info_section.php');
         ?> -->

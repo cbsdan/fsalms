@@ -1,28 +1,34 @@
 /* Left Side Nav Bar */
-#left-side-navbar-background {
-    max-width: var(--content-max-width);
-    margin: 0 auto;
-    padding: 0 10rem;
-    font-size: 1.6rem;
-    color: var(--main-color);
-    font-weight: 600;
-    margin-bottom: 2rem;
-}
+
 .left-side-navbar {
     background-color: var(--main-color);
     display: flex;
+    width: 300px;
     max-width: 300px;
     color: var(--light-text);
     padding: 2rem;
-    overflow-y: auto;
-    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 110vh;
+    overflow: auto;
+    z-index: 1000;
+}
+.left-side-navbar::-webkit-scrollbar {
+    width: 1rem; 
 }
 .left-side-navbar .navbar-container {
     display: flex;
-    flex: 1;
     align-items: start;
     flex-direction: column; 
     gap: 2.5rem;
+    width: 100%;
+    height: 120vh;
+    overflow-y: auto;
+}
+
+.left-side-navbar * {
     overflow-y: hidden;
 }
 .left-side-navbar .admin-card {
@@ -87,6 +93,7 @@
     height: 2.5rem;
 }
 .left-side-navbar .navbar-container .logout, .left-side-navbar .navbar-container .settings {
+    max-height: 40px;
     gap: 1.5rem;
 }
 .left-side-navbar .navbar-container .logout {
@@ -94,11 +101,10 @@
 }
 main .section.admin {
     width: 100%;
-    margin: 1rem;
-    padding: 1rem;
+    height: calc(100vh - 7rem);
+    padding: 1rem 2rem;
     background-color: var(--light-background);
     font-size: 1.6rem;
     color: var(--main-color);
     font-weight: 600;
-    max-width: calc(100vw - 300px - 4rem);
 }
