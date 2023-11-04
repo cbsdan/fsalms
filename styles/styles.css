@@ -38,11 +38,56 @@ input[type='text'], input[type="date"], input[type="file"], input[type="number"]
     padding: 0.5rem 1rem;
     color: var(--main-color);
 }
+
+/* table default design */
+table {
+    padding: 1rem;
+    background-color: var(--input-box-background);
+    width: 1000px;
+    overflow-x: auto !important;
+}
+table thead {
+    background-color: var(--main-color);
+    color: var(--light-text);
+}
+table td img {
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid var(--main-color);
+}
+table td, table th {
+    border: 1px solid var(--main-color);
+    padding: 0.5rem 1rem;
+}
+table tr:first-child{
+    border-top: none;
+}
+table tr:last-child td{
+    border-bottom: none;
+}
+table tr {
+    cursor: pointer;
+}
+table td:first-child, table th:first-child{
+    border-left: none;
+}
+table tr td:last-child, table tr th:last-child {
+    border-right: none;
+}
+
+select {
+    padding: 0.5rem 1rem;
+    background-color: var(--input-box-background);
+}
 .semibold-text {
     font-weight: 600;
 }
 .hidden {
     display: none;
+}
+.gray-text {
+    color: rgba(var(--gray-text-rgb), 0.7);
 }
 /* 
     /////////////////////////
@@ -147,10 +192,12 @@ footer .content {
     /////////////////////////
 */
 main {
-    min-height: 80vh;
+    min-height: auto;
     background-color: var(--main-background);
     position: relative;
     padding-top: 7rem;
+    height: auto;
+    overflow-y: auto;
     /* display: grid;
     grid-template-columns: 300px 1fr;
     gap: 1rem; */

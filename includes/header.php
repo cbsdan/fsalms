@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./styles/styles.css">
     <link rel="stylesheet" href="./styles/user-section.css">
     <link rel="stylesheet" href="./styles/administrator.css">
+    <link rel="stylesheet" href="./styles/admin-sections.css">
     <link rel="stylesheet" href="./styles/other.css">
     <link rel="stylesheet" href="./styles/variables.css">
 

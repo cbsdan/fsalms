@@ -7,6 +7,7 @@
         include_once('./administrator/left-side-navbar.php');
     ?>
 </div>
+
 <main id="main" class="admin"> <!--class should have admin or user-->
     <!-- <div class="info-nav-container">
         <?php
@@ -14,9 +15,10 @@
         ?>
     </div> -->
     <div class="section admin"> <!--class should have admin or user-->
-        <!-- <?php
-            include_once('./user/info_section.php');
-        ?> -->
+        <?php
+            include_once('./administrator/dashboard-overview.php');
+        ?> 
+
     </div>
 </main>
 <div class="screen-toggle"><img src="./img/full-screen.svg" id="screen-logo"> <span>Make Full Screen</span></div>

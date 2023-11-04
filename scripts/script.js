@@ -1,6 +1,7 @@
 let adminSection = document.querySelector('.section.admin');
 let userSection = document.querySelector('.section.user');
 
+adminSection.style.min
 function loadContent(page, button) {
     if (adminSection) {
         fetch(page) //PHP File
@@ -40,13 +41,13 @@ window.addEventListener("scroll", () => {
         // Scrolling down
         headerElement.classList.add("hidden");
         mainElement.style.paddingTop = 0;
-        adminSection.style.height = '100vh';
+        adminSection.style.minHeight = '100vh';
 
       } else {
         // Scrolling up
         headerElement.classList.remove("hidden");
         mainElement.style.paddingTop = '7rem';
-        adminSection.style.height = 'calc(100vh - 7rem)';
+        adminSection.style.minHeight = 'calc(100vh - 7rem)';
       }
     
       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling

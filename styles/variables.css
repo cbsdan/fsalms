@@ -1,9 +1,11 @@
 :root {
     --main-color: #2C3E50;
+    --light-main-color-rgb: 182, 219, 255;
     --main-color-rgb: 44, 62, 80;
     --gold: #F1C40F;
     --pale-yellow: #FBE3B1;
     --light-text: #EFEFEF;
+    --gray-text-rgb: 122, 122, 122;
     --dark-text: #1A1A1A;
     --main-background: #FFF3E0;
     --light-background: #EDEDED;
