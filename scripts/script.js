@@ -74,7 +74,7 @@ screenToggle.addEventListener('click', ()=>{
         isFullScreen = true;
         screenToggleLabel.innerHTML = 'Exit Full Screen';
         footerElement.style.display = 'none';
-        adminSection.style.height = '100vh';
+        adminSection.style.minHeight = '100vh';
     } else {
         headerElement.classList.remove('hidden');
         mainElement.style.paddingTop = '7rem';
@@ -82,7 +82,7 @@ screenToggle.addEventListener('click', ()=>{
         isFullScreen = false;
         screenToggleLabel.innerHTML = 'Make Full Screen';
         footerElement.style.display = 'block';
-        adminSection.style.height = 'calc(100vh - 7rem)';
+        adminSection.style.minHeight = 'calc(100vh - 7rem)';
     }
 })
 
