@@ -191,7 +191,7 @@ table td.profile-img {
 @media screen and (min-width: 1200px){
     .overview-card {
         background-color: rgb(var(--light-main-color-rgb), 0.8);
-        flex: 0 0 calc(33% - 1rem);
+        flex: 0 0 calc(33% - 0.4rem);
         border-radius: 2rem;
     }
 }
