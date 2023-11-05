@@ -72,7 +72,7 @@
     min-width: 250px;
     flex-wrap: wrap;
 }
-.left-section .search-section {
+.search-section {
     display: flex;
     gap: 1rem;
     flex: 1;
@@ -90,9 +90,7 @@
     flex: 1;
 }
 table td.profile-img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
     border:none;
     border-bottom: 1px solid var(--main-color);
 }
@@ -281,8 +279,55 @@ table td.profile-img {
     padding: 1rem;
 }
 
+/* Add Member */
+.section .add-member, .section .edit-member, .section .edit-transaction {
+    background-color: rgba(var(--light-main-color-rgb), 0.5);
+    padding: 2rem;
+    border-radius: 2rem;
+}
+.add-member .input-name-container, .edit-member .input-name-container {
+    display: flex;
+    gap: 0.5rem !important;
+}
+.add-member .input-name-container input {
+    flex: 1 1 var(50% - 2rem);
+}
 
+/* Edit Member and Edit Transaction*/
+.select-member, .select-transaction {
+    margin-bottom: 3rem;
+}
+.edit-member .title, .edit-transaction .title {
+    margin-bottom: 0.5rem;
+}
+.edit-member hr, .edit-transaction hr {
+    margin-bottom: 2rem;
+}
 
+.select-member .search-section .search-input, .select-transaction .search-section .search-input {
+    flex: 1;
+}
+/* Edit Transaction */
+#transaction-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+#transaction-container select {
+    height: 4rem;
+    flex-shrink: 0;
+    margin-left: auto;
+    max-width: 163.75px;
+    width: 100%;
+    min-width: 50px;
+}
+/* Settings */
+.reset-title {
+    margin-top: 3.5rem;
+}
+.reset-container .description {
+    font-style: italic;
+}
 @media screen and (min-width: 1200px){
     .overview-card {
         background-color: rgb(var(--light-main-color-rgb), 0.8);

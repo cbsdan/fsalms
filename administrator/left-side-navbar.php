@@ -1,4 +1,4 @@
-<div class="left-side-navbar">
+<div class="left-side-navbar active">
     <div class="navbar-container">
         <div class="admin-card" onclick="loadContent('./administrator/settings.php', this)">
             <div class="profile"><img src="./img/profile-1.png" alt="admin" id="admin-profile"></div>

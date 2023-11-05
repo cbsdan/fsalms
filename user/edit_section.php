@@ -8,14 +8,14 @@
                 <input type="text" id="input-username" name="username" placeholder="Enter username" required>
             </div>
             <div class="info">
-                <label for="input-fname">Name: <span class="required">*</span></label>
-                <div class="input-name-container">
+                <label for="input-name">Name: <span class="required">*</span></label>
+                <div class="input-name-container" id="input-name">
                     <input type="text" id="input-fname" name="fname" placeholder="First" required>
-                    <input type="text" id="input-username" name="lname" placeholder="Last" required>
+                    <input type="text" id="input-lname" name="lname" placeholder="Last" required>
                 </div>
             </div>
             <div class="info">
-                <label for="radio-sex">Sex: <span class="required">*</span></label>
+                <label>Sex: <span class="required">*</span></label>
                 <div class="sex-radio-container">
                     <label for="radio-male"><input id="radio-male" type="radio" name="sex" value="Male" required> Male</label>
                     <label for="radio-female"><input id="radio-female" type="radio" name="sex" value="Female" required> Female</label>
@@ -35,7 +35,7 @@
             </div>
             <div class="info">
                 <label for="upload-img">Profile:</label>
-                <input type="file" accept=".jpg, .jpeg, .png" name="user-profile">
+                <input type="file" id="upload-img" accept=".jpg, .jpeg, .png" name="user-profile">
             </div>
             <button id="edit-btn" type="submit" name="edit-btn" value="submit" >Apply</button>
         </form>
@@ -57,7 +57,7 @@
                 <label for="confirm_password">Confirm Password: <span class="required">*</span></label>
                 <input id="confirm_password" type="text" name="confirm_password" placeholder="Confirm Password">
             </div>
-            <button id="pw-change-btn" type="submit" name="pw-change-btn" value="Submit">Apply</button>
+            <button id="pw-change-btn" type="submit" name="pw-change-btn" value="Submit">Change Password</button>
         </form>
     </div>
 </div>
