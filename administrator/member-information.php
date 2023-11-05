@@ -9,7 +9,7 @@
                 <option value="name" name="name" class="option" select>Name</option>
             </select> 
         </div>
-        <div class="search-result">
+        <div class="result" id="member-information-table">
             <table class="result-table">
                 <thead>
                     <tr>
@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr class="selected">
                         <td class="profile-img"><img src="./img/profile-1.png" alt="img"></td>
                         <td>001</td>
                         <td>Juan Dela Cruz</td>

@@ -71,16 +71,6 @@ main .section.user h1 {
     max-width: 300px;
 }
 
-.section .request-container form button {
-    max-width: 10rem;
-    background-color: var(--main-color);
-    color: var(--light-text);
-    padding: 0.5rem 0;
-    margin-top: 1rem;
-    border-radius: 0.5rem;
-    font-weight: 600;
-}
-
 .section .record-container {
     min-height: 30vh;
     background-color: var(--input-box-background);

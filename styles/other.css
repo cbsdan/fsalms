@@ -48,3 +48,159 @@
     height: 3.5rem;
     object-fit: cover;
 }
+/* Hide the number input spinner */
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0; 
+}
+
+/* table default design */
+table {
+    background-color: var(--input-box-background);
+    border-color: var(--light-text);
+    border-collapse: collapse;
+    flex: 1;
+}
+.result { /*Table Container*/
+    max-height: 400px;
+    overflow: auto;
+    display: flex;
+}
+.result::-webkit-scrollbar {
+    width: 5px; 
+}
+.result::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--main-color-rgb), 0.6); /* Change the color of the scrollbar thumb */
+}
+table thead {
+    background-color: var(--main-color);
+    color: var(--light-text);
+}
+
+table td img {
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid var(--main-color);
+}
+table td, table th {
+    border: 1px solid var(--main-color);
+    padding: 0.5rem 1rem;
+}
+table tr:first-child{
+    border-top: none;
+}
+table tr:last-child td{
+    border-bottom: none;
+}
+table tbody tr {
+    cursor: pointer;
+    opacity: 0.9;
+}
+table tbody tr:hover {
+    opacity: 1;
+}
+table tbody tr.selected {
+    background-color: rgba(var(--gray-text-rgb), 0.3);
+}
+table td:first-child, table th:first-child{
+    border-left: none;
+}
+table tr td:last-child, table tr th:last-child {
+    border-right: none;
+}
+
+select {
+    padding: 0.5rem 1rem;
+    background-color: var(--input-box-background);
+    color: var(--main-color);
+    height: 4rem;
+    max-width: 163.75px;
+    width: 100%;
+    min-width: 50px;
+}
+/* Background Color */
+.bg-green {
+    color: var(--main-color);
+    background-color: var(--bg-green);
+}
+.bg-red {
+    color: var(--main-color);
+    background-color: var(--bg-red);
+}
+.m-auto {
+    display: block;
+    margin: auto;
+}
+.text-center {
+    text-align: center;
+}
+.bg-light-main {
+    background-color: rgb(var(--light-main-color-rgb));
+}
+/* button default design */
+button {
+    max-width: 10rem;
+    background-color: var(--main-color);
+    color: var(--light-text);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+}
+form button {
+    max-width: 10rem;
+    background-color: var(--main-color);
+    color: var(--light-text);
+    padding: 0.5rem 0;
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+}
+
+form .info{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+}
+form .info label {
+    width: 180px;
+    font-weight: 700;
+}
+form .info input{
+    flex: 1;
+    max-width: 280px;
+}
+form .info .input-name-container input {
+    max-width: calc(140px - 0.25rem);
+}
+form .info .sex-radio-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 0.2rem;
+    max-width: 200px;
+}
+.m-start-auto {
+    display: block;
+    margin-left: auto;
+}
+.semibold-text {
+    font-weight: 600;
+}
+.hidden {
+    display: none;
+}
+.gray-text {
+    color: rgba(var(--gray-text-rgb), 0.7);
+}
+
+#member-information-table {
+    max-height: calc(100vh - 22rem);
+}
+#member-transactions-table {
+    max-height: calc(100vh - 27rem);
+    
+}
