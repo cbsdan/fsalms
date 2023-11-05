@@ -1,7 +1,6 @@
 let adminSection = document.querySelector('.section.admin');
 let userSection = document.querySelector('.section.user');
 
-adminSection.style.min
 function loadContent(page, button) {
     if (adminSection) {
         fetch(page) //PHP File
