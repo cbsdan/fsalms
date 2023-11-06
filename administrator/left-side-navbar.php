@@ -26,7 +26,7 @@
             <p class="text">SAVINGS</p>
             <div class="nav" id="s-deposits" onclick="loadContent('./administrator/savings-deposits.php', this)">
                 <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
-                <p class="nav-name">Deposits</p>
+                <p class="nav-name">Deposit</p>
             </div>
         </div>
         <div class="loan nav-container">
@@ -37,11 +37,7 @@
             </div>
             <div class="nav" id="l-payment" onclick="loadContent('./administrator/loan-pay.php', this)">
                 <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
-                <p class="nav-name">Pay Loan</p>
-            </div>
-            <div class="nav" id="l-loan" onclick="loadContent('./administrator/loan-make.php', this)">
-                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
-                <p class="nav-name">Make A Loan</p>
+                <p class="nav-name">Loan Payment</p>
             </div>
         </div>
         <div class="administrator nav-container">

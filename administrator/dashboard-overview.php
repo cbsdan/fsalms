@@ -144,8 +144,8 @@ function getTotalUnpaidLoan($conn) {
                 // For example, set $totalUnpaidLoan to a default value or show an error message
                 $totalUnpaidLoan = 0;
                 
-                // Debug information
-                echo "Non-numeric value encountered: " . $row["total_amount"];
+                // // Debug information
+                // echo "Non-numeric value encountered: " . $row["total_amount"];
             }
         } else {
             $totalUnpaidLoan = 0;
@@ -228,18 +228,25 @@ $weekNo = 0; // You can set an initial value here
 $membership_fee = 0; 
 // Assuming $end_date is in a valid date format
 // Calculate memberShare
-$memberShare = $membership_fee + ($weekly_payment * $weekNo) + (getTotalInterest($conn) * 0.8) / countMembers($conn);
-$memberShare = round($memberShare, 2); // Round the memberShare to 2 decimal places
-$lblMemberShare = number_format($memberShare, 2); // Format the rounded number with 2 decimal places and thousands separator if needed
+$members = countMembers($conn);
+if ($members > 0) {
+    $memberShare = $membership_fee + ($weekly_payment * $weekNo) + (getTotalInterest($conn) * 0.8) / countMembers($conn);
 
-
-// Calculate lblMemberSavings
-$memberSavings = $membership_fee + ($weekly_payment * $weekNo);
-$lblMemberSavings = number_format($memberSavings, 2);
-
-// Calculate lblMemberInterestShare
-$memberInterestShare = getTotalInterest($conn) * 0.8 / countMembers($conn);
-$lblMemberInterestShare = number_format($memberInterestShare, 2);
+    $memberShare = round($memberShare, 2); // Round the memberShare to 2 decimal places
+    $lblMemberShare = number_format($memberShare, 2); // Format the rounded number with 2 decimal places and thousands separator if needed
+    
+    // Calculate lblMemberSavings
+    $memberSavings = $membership_fee + ($weekly_payment * $weekNo);
+    $lblMemberSavings = number_format($memberSavings, 2);
+    
+    // Calculate lblMemberInterestShare
+    $memberInterestShare = getTotalInterest($conn) * 0.8 / countMembers($conn);
+    $lblMemberInterestShare = number_format($memberInterestShare, 2);
+} else {
+    $memberShare = 0;
+    $lblMemberSavings = 0;
+    $lblMemberInterestShare = 0;
+}
 
 
 ?>
