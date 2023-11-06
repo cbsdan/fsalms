@@ -10,7 +10,7 @@
     </div>
     <div class="section user">
         <?php
-            include_once('./user/request_section.php');
+            include_once('./user/info_section.php');
         ?> 
 
     </div>
@@ -29,4 +29,7 @@
 
     footerEl.classList.add('user');
     footerEl.classList.add('user');
+
+    let logStatus = document.getElementById('log-status');
+    logStatus.classList.remove('hidden');
 </script>

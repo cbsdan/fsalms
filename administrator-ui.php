@@ -27,6 +27,9 @@
     headerEl.classList.remove('user');
     footerEl.classList.remove('user');
 
+    headerEl.classList.add('admin');
     footerEl.classList.add('admin');
-    footerEl.classList.add('admin');
+
+    let logStatus = document.getElementById('log-status');
+    logStatus.classList.remove('hidden');
 </script>
