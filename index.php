@@ -1,28 +1,25 @@
 <?php
     include_once('./includes/header.php')
 ?>
-
-<div id="left-side-navbar">
+<?php
+    require_once('./database/config.php');
+?>
+<main class="default">
     <?php
-        include_once('./administrator/left-side-navbar.php');
+        try {
+            $sql = "SELECT * FROM accounts WHERE isAdmin = 1";
+            $result = $conn->query($sql);
+            if ($result -> num_rows > 0) {
+                include_once('./login/login.php');
+            } else {
+                include_once('./login/register.php');
+            }
+        } catch(Exception $e) {
+            echo "<script>console.log($e)</script>";
+        }
     ?>
-</div>
-
-<main id="main" class="admin"> <!--class should have admin or user-->
-    <!-- <div class="info-nav-container">
-        <?php
-            include_once('./user/user_info-nav.php');
-        ?>
-    </div> -->
-    <div class="section admin"> <!--class should have admin or user-->
-        <?php
-            include_once('./administrator/dashboard-overview.php');
-        ?> 
-
-    </div>
 </main>
-<div class="screen-toggle"><img src="./img/full-screen.svg" id="screen-logo"> <span>Make Full Screen</span></div>
-<a href="#main" class="scroll-top"><img src="./img/up-icon-light.svg" id="scroll-top-logo"></a>
+
 <?php
     include_once('./includes/footer.php')
 ?>
