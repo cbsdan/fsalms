@@ -1,5 +1,6 @@
 let adminSection = document.querySelector('.section.admin');
 let userSection = document.querySelector('.section.user');
+let mainElement = document.querySelector('main');
 
 function loadContent(page, button) {
     if (adminSection) {
@@ -40,51 +41,53 @@ window.addEventListener("scroll", () => {
         // Scrolling down
         headerElement.classList.add("hidden");
         mainElement.style.paddingTop = 0;
-        adminSection.style.minHeight = '100vh';
-        userSection.style.minHeight = '100vh';
+        adminSection ? adminSection.style.minHeight = '100vh' : 0;
+        userSection ? userSection.style.minHeight = '100vh' : 0;
     } else {
         // Scrolling up
         headerElement.classList.remove("hidden");
+        headerElement.style.position = "fixed";
         mainElement.style.paddingTop = '7rem';
-        adminSection.style.minHeight = 'calc(100vh - 7rem)';
-        userSection.style.minHeight = 'calc(100vh - 7rem)';
+        adminSection ? adminSection.style.minHeight = 'calc(100vh - 7rem)' : 0;
+        userSection ? userSection.style.minHeight = 'calc(100vh - 7rem)' : 0;
       }
     
       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
   }
   if (currentScroll === 0) {
-    scrollTopElement.style.display = 'none';
-    } else {
-      scrollTopElement.style.display = 'block';
-
+    scrollTopElement ? scrollTopElement.style.display = 'none' : 0;
+  } else {
+    scrollTopElement ? scrollTopElement.style.display = 'block' : 0;
   }
 });
 
 //toggling the full screen or exit full screen button
 let isFullScreen = false;
 let screenToggle = document.querySelector('.screen-toggle');
-let mainElement = document.querySelector('main');
 let footerElement = document.querySelector('footer');
 let screenToggleLabel = document.querySelector('.screen-toggle span')
-screenToggle.addEventListener('click', ()=>{
-    if (!headerElement.classList.contains('hidden')) {
-        headerElement.classList.add('hidden');
-        mainElement.style.paddingTop = 0;
-        screenToggle.style.top = '1rem';
-        isFullScreen = true;
-        screenToggleLabel.innerHTML = 'Exit Full Screen';
-        footerElement.style.display = 'none';
-        adminSection.style.minHeight = '100vh';
-    } else {
-        headerElement.classList.remove('hidden');
-        mainElement.style.paddingTop = '7rem';
-        screenToggle.style.top = '8rem';
-        isFullScreen = false;
-        screenToggleLabel.innerHTML = 'Make Full Screen';
-        footerElement.style.display = 'block';
-        adminSection.style.minHeight = 'calc(100vh - 7rem)';
-    }
-})
+if (screenToggle) {
+    screenToggle.addEventListener('click', ()=>{
+        if (!headerElement.classList.contains('hidden')) {
+            headerElement.classList.add('hidden');
+            mainElement.style.paddingTop = 0;
+            screenToggle.style.top = '1rem';
+            isFullScreen = true;
+            screenToggleLabel.innerHTML = 'Exit Full Screen';
+            footerElement.style.display = 'none';
+            adminSection.style.minHeight = '100vh';
+        } else {
+            headerElement.classList.remove('hidden');
+            mainElement.style.paddingTop = '7rem';
+            screenToggle.style.top = '8rem';
+            isFullScreen = false;
+            screenToggleLabel.innerHTML = 'Make Full Screen';
+            footerElement.style.display = 'block';
+            adminSection.style.minHeight = 'calc(100vh - 7rem)';
+        }
+    })
+
+}
 
 // if (mainElement.classList.contains("admin")) {
 //     mainElement.style.display = 'grid';
