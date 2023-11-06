@@ -95,8 +95,8 @@
         <div class="info">
             <label for="radio-sex">Sex: <span class="required">*</span></label>
             <div class="sex-radio-container">
-                <label for="radio-male"><input id="radio-male" type="radio" name="sex" value="Male" required> Male</label>
-                <label for="radio-female"><input id="radio-female" type="radio" name="sex" value="Female" required> Female</label>
+                <label for="radio-male" class="sex-label"><input id="radio-male" type="radio" name="sex" value="Male" required> Male</label>
+                <label for="radio-female" class="sex-label"><input id="radio-female" type="radio" name="sex" value="Female" required> Female</label>
             </div>
         </div>
         <div class="info">
