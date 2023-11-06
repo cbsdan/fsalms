@@ -324,7 +324,7 @@ table td.profile-img {
     min-width: 50px;
 }
 /* Settings */
-.reset-title {
+.reset-title, .password-title {
     margin-top: 3.5rem;
 }
 .reset-container .description {

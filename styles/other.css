@@ -184,6 +184,7 @@ form .info label {
     width: 180px;
     font-weight: 700;
     flex-shrink: 0;
+    font-size: 1.6rem;
 }
 form .info input{
     flex: 1;

@@ -33,7 +33,7 @@ img {
     width: 50px;
     height: 50px;
 }
-input[type='text'], input[type="date"], input[type="file"], input[type="number"] {
+input[type='text'], input[type='password'], input[type="date"], input[type="file"], input[type="number"] {
     background-color: var(--input-box-background);
     padding: 0.5rem 1rem;
     color: var(--main-color);
@@ -60,7 +60,7 @@ header.hidden {
 header, footer {
     background-color: var(--gold);
 }
-header .content, footer .content {
+header .content, footer .content{
     padding: 0.2rem 7rem;
     max-width: var(--max-width);
     margin: 0 auto;
@@ -144,7 +144,7 @@ footer .content {
 */
 main {
     min-height: auto;
-    background-color: var(--main-background);
+    /* background-color: var(--main-background); */
     position: relative;
     padding-top: 7rem;
     height: auto;
@@ -155,6 +155,10 @@ main {
 }
 main.admin {
     padding-left: 300px;
+}
+main.default {
+    max-width: var(--max-width);
+    margin: 0 auto;
 }
 /* 
     /////////////////////////
