@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="./styles/administrator.css">
     <link rel="stylesheet" href="./styles/admin-sections.css">
     <link rel="stylesheet" href="./styles/other.css">
+    <link rel="stylesheet" href="./styles/login.css">
     <link rel="stylesheet" href="./styles/variables.css">
 
     <script src="./scripts/script.js" defer></script>
 </head>
 <body>
-    <header class="admin">
+    <header class="user">
         <div class="content">
             <a class="logo-container" href="./index.php">
                 <div class="fsalms-container"><img src="./img/logo.png" id="fsalms-logo"></div>

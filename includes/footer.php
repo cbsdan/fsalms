@@ -1,4 +1,4 @@
-    <footer class="admin">
+    <footer class="user">
         <div class="content">
             <div class="developer-container">
                 <h3>Developed by:</h3>
