@@ -1,20 +1,13 @@
-/* body {
-    background-image: url('../img/background-img.png');
-    background-size: "cover";
-} */
 main.default {
     background-color: none !important;
 }
 main.default .background {
     padding: 2rem 7rem;
-    min-height: calc(100vh);
+    min-height: calc(100vh - 7rem);
     display: flex;
     align-items: center;
     justify-content: start;
     color: var(--light-text);
-    margin-top: -7rem;
-    /* background-image: url('../img/background-img.png');
-    background-size: "cover"; */
 }
 main.default .background .login-form, main.default .background .register-form {
     flex: 0 1 550px;
