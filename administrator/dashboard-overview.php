@@ -1,7 +1,14 @@
 <?php
-include('./database/config.php');
-?>
+$database_path = '../database/config.php';
+$database_path_index = './database/config.php';
 
+if (file_exists($database_path)) {
+    include($database_path);
+} else {
+    include($database_path_index);
+}
+
+?>
 <!--Week PANEL-->
 
 <!-- Panels -->

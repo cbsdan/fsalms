@@ -1,3 +1,16 @@
+<?php
+$database_path = '../database/config.php';
+$database_path_index = './database/config.php';
+
+if (file_exists($database_path)) {
+    include($database_path);
+} else {
+    include($database_path_index);
+}
+
+?>
+
+
 <h1>Member Information</h1>
 <hr>
 <div class="member-information">
@@ -95,6 +108,8 @@
             </table>
         </div>
     </div>
+
+
     <div class="right-section section member-information-section">
         <div class="member-header">
             <div class="title">Member Information</div>
@@ -102,6 +117,7 @@
                 <div class="left">
                     <img class="profile" src="./img/profile-1.png">
                 </div>
+
                 <div class="right">
                     <p class="name data">Juan Dela Cruz</p>
                     <div class="other-info">
