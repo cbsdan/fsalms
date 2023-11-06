@@ -30,11 +30,7 @@ main .section.user h1 {
     margin-bottom: 0.5rem;
     font-size: 3.0rem;
 }
-.required { 
-    color: rgba(var(--main-color-rgb), 0.7);
-    font-size: 1.6rem;
-    margin-top: -2rem;
-}
+
 /* Info Section PHP*/
 .section hr {
     border: none;
@@ -42,10 +38,13 @@ main .section.user h1 {
     background-color: var(--main-color);
 }
 
-.section .savings-container,  .section .loan-container, .section .request-container, .section .record-container, .section .edit-container, .section .password-container {
-    margin-top: 2rem;
+.section.user .content {
+    margin: 1rem 0 2rem;
+
 }
-.section .savings-container .details, .section .loan-container .details, .section .request-container form, .section .record-container{
+/* .section.user .savings-container,  .section .loan-container, .section .request-container, .section .record-container, .section .edit-container, .section .password-container {
+} */
+.section.user .savings-container .details, .section .loan-container .details, .section .request-container form, .section .record-container{
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -53,15 +52,9 @@ main .section.user h1 {
     font-size: 1.6rem;
 }
 
-/* Request Section PHP*/
-.section .loan-title, .section .record-title, .section .password-title{
-    margin-top: 3.5rem;
-}
-
 .section .request-container form div {
     display: flex;
     align-items: center;
-    margin-bottom: 1.5rem;
 }
 .section .request-container form div label {
     width: 170px;
@@ -79,7 +72,7 @@ main .section.user h1 {
 /*Transactions Section*/
 .section #transac-type {
     display: flex;
-    margin: 2rem 0 1rem;
+    margin: 0 0 0.5rem;
     margin-left: auto;
     background-color: var(--input-box-background);
     padding: 0.5rem 1rem;
@@ -95,21 +88,8 @@ main .section.user h1 {
     flex-direction: column;
     gap: 1rem;
 }
-.section .edit-container form .info, .section .password-container form .info {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-.section .edit-container form .info label, .section .password-container form .info label {
-    width: 180px;
-    flex-shrink: 0;
-}
-.section .edit-container form .info input, .section .password-container form .info input{
-    flex: 1;
-    max-width: 280px;
-}
+
+
 .section .edit-container form .info .input-name-container input {
     max-width: calc(140px - 0.25rem);
 }
@@ -118,7 +98,7 @@ main .section.user h1 {
     flex-direction: row;
     align-items: center;
     justify-content: start;
-    gap: 0.2rem;
+    gap: 1rem;
     max-width: 200px;
 }
 #edit-btn, #pw-change-btn {

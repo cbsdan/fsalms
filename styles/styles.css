@@ -216,3 +216,24 @@ main.admin {
     margin-right: 1.2rem;
 }
 
+/* Sex label for radio input */
+.sex-radio-container {
+    display: flex;
+    gap: 1rem;
+}
+.sex-label input {
+    width: 2rem !important;
+    height: 1.8rem !important;
+}
+.sex-label {
+    flex: 1 0 calc(50% - 1rem);
+    display: flex;
+    align-items: center;
+}
+.section .edit-container form .info, .section .password-container form .info {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+}

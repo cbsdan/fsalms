@@ -60,8 +60,9 @@ table {
     background-color: var(--input-box-background);
     border-color: var(--light-text);
     border-collapse: collapse;
-    flex: 1;
+    flex: 1 0 auto;
 }
+
 .result { /*Table Container*/
     max-height: 400px;
     overflow: auto;
@@ -78,9 +79,6 @@ table thead {
     color: var(--light-text);
 }
 
-table td {
-    height: 100%;
-}
 table td img {
     border-radius: 50%;
     width: 4rem;
@@ -140,10 +138,17 @@ select {
     text-align: center;
 }
 .bg-light-main {
-    background-color: rgb(var(--light-main-color-rgb));
+    background-color: rgba(var(--light-main-color-rgb), 0.5);
 }
 .p-1rem {
     padding: 1rem;
+}
+.c-red {
+    color: var(--bg-red);
+}
+.c-green {
+    color: var(--bg-green);
+
 }
 /* button default design */
 button {
@@ -178,10 +183,12 @@ form .info{
 form .info label {
     width: 180px;
     font-weight: 700;
+    flex-shrink: 0;
 }
 form .info input{
     flex: 1;
     max-width: 280px;
+    height: 4rem;
 }
 form .info .input-name-container input {
     max-width: calc(140px - 0.25rem);
@@ -214,4 +221,10 @@ form .info .sex-radio-container {
 #member-transactions-table {
     max-height: calc(100vh - 27rem);
     
+}
+
+.required { 
+    color: rgba(var(--main-color-rgb), 0.7);
+    font-size: 1.6rem;
+    margin-top: -2rem;
 }

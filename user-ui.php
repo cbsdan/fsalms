@@ -10,7 +10,7 @@
     </div>
     <div class="section user">
         <?php
-            include_once('./user/info_section.php');
+            include_once('./user/request_section.php');
         ?> 
 
     </div>

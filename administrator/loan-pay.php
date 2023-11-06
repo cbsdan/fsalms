@@ -99,7 +99,7 @@
                 </div>
     
             </div>
-            <div class="right right-section">
+            <div class="right right-section member-information-section">
                 <div class="member-header">
                     <div class="title">Member Information</div>
                     <div class="content">

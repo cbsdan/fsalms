@@ -41,12 +41,13 @@ window.addEventListener("scroll", () => {
         headerElement.classList.add("hidden");
         mainElement.style.paddingTop = 0;
         adminSection.style.minHeight = '100vh';
-
-      } else {
+        userSection.style.minHeight = '100vh';
+    } else {
         // Scrolling up
         headerElement.classList.remove("hidden");
         mainElement.style.paddingTop = '7rem';
         adminSection.style.minHeight = 'calc(100vh - 7rem)';
+        userSection.style.minHeight = 'calc(100vh - 7rem)';
       }
     
       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling

@@ -95,7 +95,7 @@
             </table>
         </div>
     </div>
-    <div class="right-section section">
+    <div class="right-section section member-information-section">
         <div class="member-header">
             <div class="title">Member Information</div>
             <div class="content">

@@ -1,7 +1,7 @@
 <div class="background">
-    <h1>Edit Account</h1>
+    <h1 class="title">Edit Account</h1>
     <hr>
-    <div class="edit-container">
+    <div class="edit-container content">
         <form action="" method="POST">
             <div class="info">
                 <label for="input-username">Username: <span class="required">*</span></label>
@@ -17,8 +17,8 @@
             <div class="info">
                 <label>Sex: <span class="required">*</span></label>
                 <div class="sex-radio-container">
-                    <label for="radio-male"><input id="radio-male" type="radio" name="sex" value="Male" required> Male</label>
-                    <label for="radio-female"><input id="radio-female" type="radio" name="sex" value="Female" required> Female</label>
+                    <label for="radio-male" class="sex-label"><input id="radio-male" type="radio" name="sex" value="Male" required>Male</label>
+                    <label for="radio-female" class="sex-label"><input id="radio-female" type="radio" name="sex" value="Female" required> Female</label>
                 </div>
             </div>
             <div class="info">
@@ -41,9 +41,9 @@
         </form>
     </div>
 
-    <h1 class="password-title">Change Password</h1>
+    <h1 class="password-title title">Change Password</h1>
     <hr>
-    <div class="password-container">
+    <div class="password-container content">
         <form action="" method="POST">
             <div class="info">
                 <label for="old_password">Old Password: <span class="required">*</span></label>

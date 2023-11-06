@@ -16,7 +16,7 @@
     </div> -->
     <div class="section admin"> <!--class should have admin or user-->
         <?php
-            include_once('./administrator/administrator-edit-transaction.php');
+            include_once('./administrator/dashboard-overview.php');
         ?> 
 
     </div>
