@@ -8,14 +8,16 @@ if (file_exists($database_path)) {
     include($database_path_index);
 }
 
+//use to identify later if there is atleast a member fetch from database 
+$isThereMember = false;
 ?>
 
 <?php 
 function calculateAge($birthday) { 
-$dob = new DateTime($birthday); 
-$currentDate = new DateTime('now'); 
-$age = $currentDate->diff($dob)->y; 
-return $age; 
+    $dob = new DateTime($birthday); 
+    $currentDate = new DateTime('now'); 
+    $age = $currentDate->diff($dob)->y; 
+    return $age; 
 }
 
 // SQL Query:
@@ -85,24 +87,24 @@ if ($result->num_rows > 0) {
         
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-
-                        echo "<tr>";
-        
-                        if (empty($row["profile"])) {
-                            echo "<td class='profile-img'><img src='./img/default-profile.png' alt='img'></td>";
-                        } else {
-                            echo "<td><img src='" . $row["profile"] . "' alt='img'></td>";
-                        }
-                        echo "<td>" . $row["mem_id"] . "</td>";
-                        echo "<td>" . $merged_name. "</td>";
-                        echo "<td>" . $row["sex"] . "</td>";
-                        echo "<td>" . $age. "</td>";
-                        echo "</tr>";
-
+                    echo "<tr>";
+    
+                    if (empty($row["profile"])) {
+                        echo "<td class='profile-img'><img src='./img/default-profile.png' alt='img'></td>";
+                    } else {
+                        echo "<td><img src='" . $row["profile"] . "' alt='img'></td>";
                     }
+                    echo "<td>" . $row["mem_id"] . "</td>";
+                    echo "<td>" . $merged_name. "</td>";
+                    echo "<td>" . $row["sex"] . "</td>";
+                    echo "<td>" . $age. "</td>";
+                    echo "</tr>";
+
+                }
+                $isThereMember = true;
+                
             } else {
-                echo "<br>";
-                echo "No results found";
+                echo "<tr><td class='no-result-label text-center' colspan='5'>No members found</td></tr>";
             }
 
             ?>
@@ -110,8 +112,6 @@ if ($result->num_rows > 0) {
             </table>
         </div>
     </div>
-</div>
-
 
     <div class="right-section section member-information-section">
         <div class="member-header">
@@ -169,5 +169,5 @@ if ($result->num_rows > 0) {
         </div>
 
     </div>
-
+</div>
 </div>

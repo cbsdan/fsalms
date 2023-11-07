@@ -229,3 +229,9 @@ form .info .sex-radio-container {
     font-size: 1.6rem;
     margin-top: -2rem;
 }
+
+.no-result-label {
+    font-size: 1.8rem;
+    padding: 1rem;
+    font-style: italic;
+}
