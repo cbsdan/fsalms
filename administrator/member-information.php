@@ -10,6 +10,48 @@ if (file_exists($database_path)) {
 
 ?>
 
+<?php 
+function calculateAge($birthday) { 
+$dob = new DateTime($birthday); 
+$currentDate = new DateTime('now'); 
+$age = $currentDate->diff($dob)->y; 
+return $age; 
+}
+
+// SQL Query:
+$sql = "SELECT mem_id, birthdate FROM members";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Output data of each row
+    while ($row = $result->fetch_assoc()) {
+        $member_id = $row["mem_id"];
+        $birthdayFromDatabase = $row["birthdate"];
+        $age = calculateAge($birthdayFromDatabase);
+}
+} else {
+    echo "No results found";
+}
+
+// Name SQL Query:
+
+function mergeName($first_name, $last_name) {
+    return $first_name . ' ' . $last_name;
+}
+
+$sql = "SELECT fname, lname FROM members";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $merged_name = mergeName($row["fname"], $row["lname"]);
+    }
+} else {
+    echo "No results found";
+}
+
+?>
+
 
 <h1>Member Information</h1>
 <hr>
@@ -34,80 +76,41 @@ if (file_exists($database_path)) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="selected">
-                        <td class="profile-img"><img src="./img/profile-1.png" alt="img"></td>
-                        <td>001</td>
-                        <td>Juan Dela Cruz</td>
-                        <td>Male</td>
-                        <td>40</td>
-                    </tr>
-                    <tr>
-                        <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                        <td>001</td>
-                        <td>Juan Dela Cruz</td>
-                        <td>Male</td>
-                        <td>40</td>
-                    </tr>
-                    <tr>
-                        <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                        <td>001</td>
-                        <td>Juan Dela Cruz</td>
-                        <td>Male</td>
-                        <td>40</td>
-                    </tr>
-                    <tr>
-                        <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                        <td>001</td>
-                        <td>Juan Dela Cruz</td>
-                        <td>Male</td>
-                        <td>40</td>
-                    </tr>
-                    <tr>
-                        <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                        <td>001</td>
-                        <td>Juan Dela Cruz</td>
-                        <td>Male</td>
-                        <td>40</td>
-                    </tr>
-                    <tr>
-                        <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                        <td>001</td>
-                        <td>Juan Dela Cruz</td>
-                        <td>Male</td>
-                        <td>40</td>
-                    </tr>
-                    <tr>
-                        <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                        <td>001</td>
-                        <td>Juan Dela Cruz</td>
-                        <td>Male</td>
-                        <td>40</td>
-                    </tr>
-                    <tr>
-                        <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                        <td>001</td>
-                        <td>Juan Dela Cruz</td>
-                        <td>Male</td>
-                        <td>40</td>
-                    </tr>
-                    <tr>
-                        <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                        <td>001</td>
-                        <td>Juan Dela Cruz</td>
-                        <td>Male</td>
-                        <td>40</td>
-                    </tr>
-                    <tr>
-                        <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                        <td>001</td>
-                        <td>Juan Dela Cruz</td>
-                        <td>Male</td>
-                        <td>40</td>
-                    </tr>
-                </tbody>
+                <?php
+                $sql = "SELECT members.mem_id, members.sex, accounts.profile 
+                FROM members
+                LEFT JOIN accounts ON members.mem_id = accounts.mem_id"; // Adjust the JOIN condition as per your database schema
+
+                $result = $conn->query($sql);
+        
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+
+                        echo "<tr>";
+        
+                        if (empty($row["profile"])) {
+                            echo "<td class='profile-img'><img src='./img/default-profile.png' alt='img'></td>";
+                        } else {
+                            echo "<td><img src='" . $row["profile"] . "' alt='img'></td>";
+                        }
+                        echo "<td>" . $row["mem_id"] . "</td>";
+                        echo "<td>" . $merged_name. "</td>";
+                        echo "<td>" . $row["sex"] . "</td>";
+                        echo "<td>" . $age. "</td>";
+                        echo "</tr>";
+
+                    }
+            } else {
+                echo "<br>";
+                echo "No results found";
+            }
+
+            ?>
+            </tbody>
             </table>
         </div>
     </div>
+</div>
 
 
     <div class="right-section section member-information-section">
