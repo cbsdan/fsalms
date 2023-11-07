@@ -1,9 +1,20 @@
+<?php
+    $database_path = '../database/config.php';
+    $database_path_index = './database/config.php';
+
+    if (file_exists($database_path)) {
+        include($database_path);
+    } else {
+        include($database_path_index);
+    }
+?>
+
 <div class="background">
     <div class="register-form">
         <h1 class="title">Register</h1>
         <hr>
         <div class="description"><p class="text">There is no admin registered. Create a new admin account to use the system.</p></div>
-        <form action="" method="POST">
+        <form action="./database/register-admin.php" method="POST">
             <div class="info">
                 <label for="username">Username:</label>
                 <input type="text" id="username" placeholder="Enter Username" name="username" required>

@@ -65,6 +65,9 @@ main.default .background .login-form, main.default .background .register-form {
     width: 100%;
     max-width: 100%;
 }
+.background .register-form form input {
+    height: 3.5rem;
+}
 .background .login-form form button, .background .register-form form button {
     margin: 3rem auto 0;
     height: 4rem;
