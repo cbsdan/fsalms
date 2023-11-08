@@ -1,11 +1,11 @@
 <?php
 
-if (!(session_status() === PHP_SESSION_ACTIVE)) {
-    session_start();
-    if (!isset($_SESSION['valid']) || !isset($_SESSION['user-type'])) {
-        $_SESSION['message'] = "Please Login first!";
-        header('Location: ../index.php');
-    } 
+$authentication_path = '../functions/user-authenticate.php';
+$authentication_path_index = './functions/user-authenticate.php';
+if (file_exists($authentication_path)) {
+    include_once("$authentication_path");
+} elseif (file_exists($authentication_path_index)) {
+    include_once("$authentication_path_index");
 }
 
 $database_path = '../database/config.php';

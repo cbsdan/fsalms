@@ -1,10 +1,12 @@
 <?php
     include_once('./includes/header.php');
-
-    if (!isset($_SESSION['valid']) || !isset($_SESSION['user-type'])) {
-        $_SESSION['message'] = "Please Login first!";
-        header('Location: ./index.php');
-    } 
+    $authentication_path = '../functions/user-authenticate.php';
+    $authentication_path_index = './functions/user-authenticate.php';
+    if (file_exists($authentication_path)) {
+        include_once("$authentication_path");
+    } elseif (file_exists($authentication_path_index)) {
+        include_once("$authentication_path_index");
+    }
     
     $user_type = $_SESSION['user-type'];
     //redirect if an admin try to access user-ui.php
