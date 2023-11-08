@@ -235,3 +235,15 @@ form .info .sex-radio-container {
     padding: 1rem;
     font-style: italic;
 }
+
+.query-message {
+    display: flex;
+    flex-direction: column;
+    border-radius: 2rem;
+    margin-bottom: 1rem;
+    background-color: var(--pale-yellow);
+    color: var(--main-color);
+    font-size: 1.6rem;
+    padding: 2rem;
+    font-style: italic;
+}

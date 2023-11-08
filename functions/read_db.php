@@ -1,7 +1,29 @@
+
 <!--Week PANEL-->
 
 <!-- Panels -->
 <?php
+function executeQuery($conn, $query) {
+    // Attempt to execute the query
+    $result = $conn->query($query);
+
+    if ($result === TRUE) {
+        // If query executed successfully
+        return true;
+    } elseif ($result->num_rows > 0) {
+        // If the query fetched data (for SELECT queries)
+        $data = array();
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        return $data;
+    } else {
+        // If there was an error or no results found
+        return array("error" => $conn->error);
+    }
+}
+
+
 function commandScalar($sql) {
     global $conn;
     $result = $conn->query($sql);
