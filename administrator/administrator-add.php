@@ -1,3 +1,12 @@
+<?php
+    if (!(session_status() === PHP_SESSION_ACTIVE)) {
+        session_start();
+        if (!isset($_SESSION['valid']) || !isset($_SESSION['user-type'])) {
+            $_SESSION['message'] = "Please Login first!";
+            header('Location: ../index.php');
+        } 
+    }
+?>
 <h1>Add Member</h1>
 <hr>
 

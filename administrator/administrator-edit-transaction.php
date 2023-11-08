@@ -1,3 +1,13 @@
+<?php
+    if (!(session_status() === PHP_SESSION_ACTIVE)) {
+        session_start();
+        if (!isset($_SESSION['valid']) || !isset($_SESSION['user-type'])) {
+            $_SESSION['message'] = "Please Login first!";
+            header('Location: ../index.php');
+        } 
+    }
+?>
+
 <h1>Edit Transaction</h1>
 <hr>
 <div class="select-transaction">

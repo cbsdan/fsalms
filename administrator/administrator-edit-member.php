@@ -1,4 +1,13 @@
 <?php
+
+    if (!(session_status() === PHP_SESSION_ACTIVE)) {
+        session_start();
+        if (!isset($_SESSION['valid']) || !isset($_SESSION['user-type'])) {
+            $_SESSION['message'] = "Please Login first!";
+            header('Location: ../index.php');
+        } 
+    }
+    
     $database_path = '../database/config.php';
     $database_path_index = './database/config.php';
 
