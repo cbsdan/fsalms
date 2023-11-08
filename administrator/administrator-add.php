@@ -1,9 +1,3 @@
-<?php
-    //This will check if a user is logged in
-    if (!isset($_SESSION['valid'])) {
-        header('Location: ../index.php');
-    }
-?>
 <h1>Add Member</h1>
 <hr>
 
