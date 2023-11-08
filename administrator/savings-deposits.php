@@ -1,3 +1,16 @@
+<?php
+    $database_path = '../database/config.php';
+    $database_path_index = './database/config.php';
+
+    if (file_exists($database_path)) {
+        include($database_path);
+    } else {
+        include($database_path_index);
+    }
+
+    //use to identify later if there is atleast a member fetch from database 
+    $isThereMember = false;
+?>
 <h1>Savings Deposit</h1>
 <hr>    
 <div class="savings-deposit">
@@ -24,82 +37,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="profile-img"><img src="./img/profile-1.png" alt="img"></td>
-                                <td>001</td>
-                                <td>Juan Dela Cruz</td>
-                                <td>Male</td>
-                                <td>40</td>
-                            </tr>
-                            <tr>
-                                <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                                <td>001</td>
-                                <td>Juan Dela Cruz</td>
-                                <td>Male</td>
-                                <td>40</td>
-                            </tr>
-                            <tr>
-                                <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                                <td>001</td>
-                                <td>Juan Dela Cruz</td>
-                                <td>Male</td>
-                                <td>40</td>
-                            </tr>
-                            <tr>
-                                <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                                <td>001</td>
-                                <td>Juan Dela Cruz</td>
-                                <td>Male</td>
-                                <td>40</td>
-                            </tr>
-                            <tr>
-                                <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                                <td>001</td>
-                                <td>Juan Dela Cruz</td>
-                                <td>Male</td>
-                                <td>40</td>
-                            </tr>
-                            <tr>
-                                <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                                <td>001</td>
-                                <td>Juan Dela Cruz</td>
-                                <td>Male</td>
-                                <td>40</td>
-                            </tr>
-                            <tr>
-                                <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                                <td>001</td>
-                                <td>Juan Dela Cruz</td>
-                                <td>Male</td>
-                                <td>40</td>
-                            </tr>
-                            <tr>
-                                <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                                <td>001</td>
-                                <td>Juan Dela Cruz</td>
-                                <td>Male</td>
-                                <td>40</td>
-                            </tr>
-                            <tr>
-                                <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                                <td>001</td>
-                                <td>Juan Dela Cruz</td>
-                                <td>Male</td>
-                                <td>40</td>
-                            </tr>
-                            <tr>
-                                <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                                <td>001</td>
-                                <td>Juan Dela Cruz</td>
-                                <td>Male</td>
-                                <td>40</td>
-                            </tr>
+                            <?php
+                                $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
+                                        FROM members
+                                        LEFT JOIN accounts ON members.mem_id = accounts.mem_id";
+
+                                $result = $conn->query($sql);
+                            
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        if (empty($row["profile"])) {
+                                            echo "<td class='profile-img'><img src='./img/default-profile.png' alt='img'></td>";
+                                        } else {
+                                            echo "<td><img src='" . $row["profile"] . "' alt='img'></td>";
+                                        }
+                                        echo "<td>" . $row["mem_id"] . "</td>";
+                                        echo "<td>" . $row['name']. "</td>";
+                                        echo "<td>" . $row["sex"] . "</td>";
+                                        echo "<td>" . $row['age']. "</td>";
+                                    }
+                                    $isThereMember = true;
+                                } else {
+                                    echo "<tr><td class='no-result-label text-center' colspan='7'>No members found</td></tr>";
+                                    $isThereMember = false;
+                                }
+                            ?>
                         </tbody>
                     </table>
                 </div>
     
             </div>
-            <div class="right right-section member-information-section">
+            <div class="right right-section member-information-section <?php if(!$isThereMember) echo "hidden"?>">
                 <div class="member-header">
                     <div class="title">Member Information</div>
                     <div class="content">
@@ -162,7 +131,7 @@
             <form action="" method="POST">
                 <div class="info">
                     <label for="savings-amount">Amount: (₱)</label>
-                    <input type="number" id="savings-amount" class="no-spinner" placeholder="Enter here" name="savings-amount">
+                    <input type="number" id="savings-amount" class="no-spinner" placeholder="<?php if(!$isThereMember) {echo "Disabled";} else {echo "Enter here";}?>" name="savings-amount" <?php if(!$isThereMember) echo "disabled"?>>
                 </div>
                 <button class="submit" type="submit" name="submit" value="submit">Save</button>
             </form>

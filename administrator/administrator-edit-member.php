@@ -1,3 +1,17 @@
+<?php
+    $database_path = '../database/config.php';
+    $database_path_index = './database/config.php';
+
+    if (file_exists($database_path)) {
+        include($database_path);
+    } else {
+        include($database_path_index);
+    }
+
+    //use to identify later if there is atleast a member fetch from database 
+    $isThereMember = false;
+?>
+
 <h1>Edit Member</h1>
 <hr>
 <div class="select-member">
@@ -22,66 +36,40 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="profile-img"><img src="./img/profile-1.png" alt="img"></td>
-                    <td>001</td>
-                    <td>Juan Dela Cruz</td>
-                    <td>Male</td>
-                    <td>40</td>
-                    <td><button class="bg-green m-auto">Edit</button></td> 
-                    <td><button class="bg-red m-auto">Delete</button></td> 
-                </tr>
-                <tr>
-                    <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                    <td>001</td>
-                    <td>Juan Dela Cruz</td>
-                    <td>Male</td>
-                    <td>40</td>
-                    <td><button class="bg-green m-auto">Edit</button></td> 
-                    <td><button class="bg-red m-auto">Delete</button></td> 
-                    
-                </tr>
-                <tr>
-                    <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                    <td>001</td>
-                    <td>Juan Dela Cruz</td>
-                    <td>Male</td>
-                    <td>40</td>
-                    <td><button class="bg-green m-auto">Edit</button></td> 
-                    <td><button class="bg-red m-auto">Delete</button></td> 
-                </tr>
-                <tr>
-                    <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                    <td>001</td>
-                    <td>Juan Dela Cruz</td>
-                    <td>Male</td>
-                    <td>40</td>
-                    <td><button class="bg-green m-auto">Edit</button></td> 
-                    <td><button class="bg-red m-auto">Delete</button></td> 
-                </tr>
-                <tr>
-                    <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                    <td>001</td>
-                    <td>Juan Dela Cruz</td>
-                    <td>Male</td>
-                    <td>40</td>
-                    <td><button class="bg-green m-auto">Edit</button></td> 
-                    <td><button class="bg-red m-auto">Delete</button></td> 
-                </tr>
-                <tr>
-                    <td class="profile-img"><img src="./img/default-profile.png" alt="img"></td>
-                    <td>001</td>
-                    <td>Juan Dela Cruz</td>
-                    <td>Male</td>
-                    <td>40</td>
-                    <td><button class="bg-green m-auto">Edit</button></td> 
-                    <td><button class="bg-red m-auto">Delete</button></td> 
-                </tr>
+                <?php
+                    $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
+                            FROM members
+                            LEFT JOIN accounts ON members.mem_id = accounts.mem_id";
+
+                    $result = $conn->query($sql);
+                
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            if (empty($row["profile"])) {
+                                echo "<td class='profile-img'><img src='./img/default-profile.png' alt='img'></td>";
+                            } else {
+                                echo "<td><img src='" . $row["profile"] . "' alt='img'></td>";
+                            }
+                            echo "<td>" . $row["mem_id"] . "</td>";
+                            echo "<td>" . $row['name']. "</td>";
+                            echo "<td>" . $row["sex"] . "</td>";
+                            echo "<td>" . $row['age']. "</td>";
+                            echo "<td><button class='bg-green m-auto'>Edit</button></td>";
+                            echo "<td><button class='bg-red m-auto'>Delete</button></td>";
+                            echo "</tr>";
+                        }
+                        $isThereMember = true;
+                    } else {
+                        echo "<tr><td class='no-result-label text-center' colspan='7'>No members found</td></tr>";
+                        $isThereMember = false;
+                    }
+                ?>
             </tbody>
         </table>
     </div>
 </div>
-<div class="edit-member p-1rem">
+<div class="edit-member p-1rem <?php if(!$isThereMember) echo "hidden"?>">
     <h3 class="title">Edit Here</h3>
     <hr>
     <form action="" method="POST">
