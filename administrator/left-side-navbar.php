@@ -1,3 +1,10 @@
+<?php
+    //This will check if a user is logged in
+    if (!isset($_SESSION['valid'])) {
+        header('Location: ../index.php');
+    }
+?>
+
 <div class="left-side-navbar active">
     <div class="navbar-container">
         <div class="admin-card" onclick="loadContent('./administrator/settings.php', this)">
@@ -59,9 +66,9 @@
             <div class="nav-logo"><img src="./img/setting-icon-light.svg" class="logo setting-logo"></div>
             <p class="nav-name">Settings</p>
         </div>
-        <div class="logout nav" id="logout-nav" onclick="loadContent('./administrator/settings.php', this)">
+        <a class="logout nav" id="logout-nav" href="./database/logout.php">
             <div class="nav-logo"><img src="./img/logout.svg" class="logo setting-logo"></div>
             <p class="nav-name">Logout</p>
-        </div>
+        </a>
     </div>
 </div>

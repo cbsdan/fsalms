@@ -123,12 +123,12 @@ select {
 }
 /* Background Color */
 .bg-green {
-    color: var(--main-color);
-    background-color: var(--bg-green);
+    color: var(--main-color) !important;
+    background-color: var(--bg-green) !important;
 }
 .bg-red {
-    color: var(--main-color);
-    background-color: var(--bg-red);
+    color: var(--main-color) !important;
+    background-color: var(--bg-red) !important;
 }
 .m-auto {
     display: block;
@@ -210,7 +210,7 @@ form .info .sex-radio-container {
     font-weight: 600;
 }
 .hidden {
-    display: none;
+    display: none !important;
 }
 .gray-text {
     color: rgba(var(--gray-text-rgb), 0.7);

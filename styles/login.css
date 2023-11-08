@@ -50,6 +50,9 @@ main.default .background .login-form, main.default .background .register-form {
     align-items: start;
     padding: 0 1rem;
 }
+.background .register-form hr {
+    margin-bottom: 1rem;
+}
 .background .register-form form {
     gap: 1.2rem;
 }

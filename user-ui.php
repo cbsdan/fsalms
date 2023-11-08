@@ -1,8 +1,28 @@
 <?php
-    include_once('./includes/header.php')
+    include_once('./includes/header.php');
+
+    if (!isset($_SESSION['valid']) || !isset($_SESSION['user-type'])) {
+        $_SESSION['message'] = "Please Login first!";
+        header('Location: ./index.php');
+    } 
+    
+    $user_type = $_SESSION['user-type'];
+    //redirect if an admin try to access user-ui.php
+    if (!($user_type == 'member')) {
+        $_SESSION['message'] = "You cannot access this file!";
+        $_SESSION['messageBg'] = 'red';
+        header('Location: ./administrator-ui.php');
+        exit();
+    }
+
+    //check for messages
+    include_once('./functions/check_msg.php')
 ?>
 
 <main id="main" class="user"> 
+    <p class="query-message <?php echo $messageClass;?>">
+        <?php echo $message; ?>
+    </p>
     <div class="info-nav-container">
         <?php
             include_once('./user/user_info-nav.php');
@@ -10,7 +30,13 @@
     </div>
     <div class="section user">
         <?php
-            include_once('./user/info_section.php');
+            if (isset($_SESSION['section'])) {
+                $section = $_SESSION['section'];
+                $_SESSION['section'] = null;
+                include_once("$section");
+            } else {
+                include_once('./user/info_section.php');
+            }
         ?> 
 
     </div>

@@ -1,4 +1,8 @@
 <?php
+    //This will check if a user is logged in
+    if (!isset($_SESSION['valid'])) {
+        header('Location: ../index.php');
+    }
     $database_path = '../database/config.php';
     $database_path_index = './database/config.php';
 

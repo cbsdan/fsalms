@@ -7,13 +7,17 @@
     } else {
         include($database_path_index);
     }
+
+    include_once('./functions/check_msg.php');
 ?>
 
 <div class="background">
     <div class="register-form">
         <h1 class="title">Register</h1>
         <hr>
-        <div class="description"><p class="text">There is no admin registered. Create a new admin account to use the system.</p></div>
+        <p class="query-message <?php echo $messageClass;?>">
+            <?php echo $message; ?>
+        </p>
         <form action="./database/register-admin.php" method="POST">
             <div class="info">
                 <label for="username">Username:</label>
@@ -51,6 +55,5 @@
     
     bodyEl.style.backgroundImage = "url('./img/background-img.png')";
     bodyEl.style.backgroundSize = "contain";
-    
     
 </script>

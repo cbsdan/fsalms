@@ -1,3 +1,9 @@
+<?php
+    //This will check if a user is logged in
+    if (!isset($_SESSION['valid'])) {
+        header('Location: ../index.php');
+    }
+?>
 <h1>Settings</h1>
 <hr>
 <div class="settings">

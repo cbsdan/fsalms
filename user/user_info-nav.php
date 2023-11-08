@@ -1,3 +1,10 @@
+<?php
+    //This will check if a user is logged in
+    if (!isset($_SESSION['valid'])) {
+        header('Location: ../index.php');
+    }
+?>
+
 <div class="user-info">
     <div class="background">
         <div class="profile-container">

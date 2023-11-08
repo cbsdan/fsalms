@@ -1,5 +1,6 @@
 <?php
     if (isset($_POST['add-btn'])) {
+        session_start();
         $database_path = '../database/config.php';
         $database_path_index = './database/config.php';
 
@@ -23,12 +24,10 @@
 
         $verify_query = $conn->query("SELECT username FROM accounts WHERE username='$username'");
         if(mysqli_num_rows($verify_query) != 0){
-            $cookie_name = "message";
-            $cookie_value = "There is an existing username with $username";
-            $expiration = time() + (3600 * 1); // 1 hour
-            $cookie_path = "/"; // accessible on the entire domain
-
-            setcookie($cookie_name, $cookie_value, $expiration, $cookie_path);
+            $_SESSION['message'] = "There is an existing username with $username";
+            $_SESSION['messageBg'] = 'red';
+            $_SESSION['section'] = './administrator/administrator-add.php';
+            $_SESSION['activeNavId'] = 'a-addMember';
             header('Location: ../administrator-ui.php');
             exit();
         }
@@ -46,22 +45,18 @@
             $stmt->bind_param('ssss', $username, $password, $profile, $mem_id);
             $stmt->execute();
             
-            $cookie_name = "message";
-            $cookie_value = "Successfully added a new member";
-            $expiration = time() + (3600 * 1); // 1 hour
-            $cookie_path = "/"; // accessible on the entire domain
-
-            setcookie($cookie_name, $cookie_value, $expiration, $cookie_path);
+            $_SESSION['message'] = "Successfully added a new member";
+            $_SESSION['messageBg'] = "green";
+            $_SESSION['section'] = './administrator/administrator-add.php';
+            $_SESSION['activeNavId'] = 'a-addMember';
             header('Location: ../administrator-ui.php');
             exit();
 
         } catch (Exception $e) {
-            $cookie_name = "message";
-            $cookie_value = "Failed to add member. Error: $e";
-            $expiration = time() + (3600 * 1); // 1 hour
-            $cookie_path = "/"; // accessible on the entire domain
-
-            setcookie($cookie_name, $cookie_value, $expiration, $cookie_path);
+            $_SESSION['message'] = "Failed to add member. Error: $e";
+            $_SESSION['messageBg'] = 'red';
+            $_SESSION['section'] = './administrator/administrator-add.php';
+            $_SESSION['activeNavId'] = 'a-addMember';
             header('Location: ../administrator-ui.php');
             exit();
         }

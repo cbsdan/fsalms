@@ -1,8 +1,7 @@
 <?php
-    if (isset($_COOKIE['message'])) {
-        $message = $_COOKIE['message'];
-        setcookie("message", "", time() - 86400, "/");
-        echo "<p class='query-message'>$message</p>";
+    //This will check if a user is logged in
+    if (!isset($_SESSION['valid'])) {
+        header('Location: ../index.php');
     }
 ?>
 <h1>Add Member</h1>

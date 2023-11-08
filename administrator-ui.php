@@ -1,5 +1,22 @@
 <?php
-    include_once('./includes/header.php')
+    include_once('./includes/header.php');
+
+    if (!isset($_SESSION['valid']) || !isset($_SESSION['user-type'])) {
+        $_SESSION['message'] = "Please Login first!";
+        header('Location: ./index.php');
+    } 
+    
+    $user_type = $_SESSION['user-type'];
+    //redirect if an user try to access administrator-ui.php
+    if (!($user_type == 'admin')) {
+        $_SESSION['message'] = "Admin Access Denied!";
+        $_SESSION['messageBg'] = 'red';
+        header('Location: ./user-ui.php');
+        exit();
+    }
+    
+     //check for messages
+    include_once('./functions/check_msg.php');
 ?>
 
 <div id="left-side-navbar">
@@ -10,8 +27,21 @@
 
 <main id="main" class="admin"> <!--class should have admin or user-->
     <div class="section admin"> <!--class should have admin or user-->
+        <p class="query-message <?php echo $messageClass;?>">
+            <?php echo $message; ?>
+        </p>
         <?php
-            include_once('./administrator/dashboard-overview.php');
+            if (isset($_SESSION['section'])) {
+                $section = $_SESSION['section'];
+                $activeNavId = $_SESSION['activeNavId'];
+                $_SESSION['section'] = null;
+                $_SESSION['activeNavId'] = null;
+                include_once("$section");
+                //will be use in javascript to change the default nav to active nav
+                echo "<span id='activeNavId' class='hidden'>$activeNavId</span>";
+            } else {
+                include_once('./administrator/dashboard-overview.php');
+            }
         ?> 
     </div>
 </main>
@@ -20,7 +50,9 @@
 <?php
     include_once('./includes/footer.php')
 ?>
-<script>
+<script type="module">
+    import {changeActiveNav} from './scripts/functions.js';
+    
     let headerEl = document.querySelector('header')
     let footerEl = document.querySelector('footer')
 
@@ -32,4 +64,11 @@
 
     let logStatus = document.getElementById('log-status');
     logStatus.classList.remove('hidden');
+    
+    let activeNavId = document.getElementById('activeNavId');
+    if (activeNavId) {
+        activeNavId = activeNavId.textContent;
+        changeActiveNav(activeNavId);
+    }
+    
 </script>

@@ -1,3 +1,10 @@
+<?php
+    //This will check if a user is logged in
+    if (!isset($_SESSION['valid'])) {
+        header('Location: ../index.php');
+    }
+?>
+
 <h1>Loan Requests</h1>
 <hr>
 <div class="loan-requests">

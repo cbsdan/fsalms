@@ -1,3 +1,13 @@
+<?php 
+    session_start();
+    $isLogin = false;
+
+    if (isset($_SESSION['valid'])) {
+        $isLogin = true;
+    } else {
+        $isLogin = false;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +23,7 @@
     <link rel="stylesheet" href="./styles/variables.css">
 
     <script src="./scripts/script.js" defer></script>
+    <script type="module" src="./scripts/functions.js" defer></script>
 </head>
 <body>
     <header class="user">
@@ -22,7 +33,17 @@
                 <div class="title-container"><h1 id="fsalms-text">FSALMS</h1></div>
             </a>
             <div class="log-container">
-                <button id="log-status">Logout</button>
+                <button id="log-status">
+                    <a href=" <?php if($isLogin){echo './database/logout.php';} else {echo './database/logout.php';}?>">
+                        <?php 
+                            if($isLogin) {
+                                echo 'Logout';
+                            } else {
+                                echo 'Login';
+                            }
+                        ?>
+                    </a>
+                </button>
             </div>
         </div>
     </header>
