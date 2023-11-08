@@ -36,42 +36,39 @@ $isThereMember = false;
                 </thead>
                 <tbody>
                 <?php
-                $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
-                FROM members
-                LEFT JOIN accounts ON members.mem_id = accounts.mem_id"; // Adjust the JOIN condition as per your database schema
+                    $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
+                            FROM members
+                            LEFT JOIN accounts ON members.mem_id = accounts.mem_id";
 
-                $result = $conn->query($sql);
-        
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-    
-                    if (empty($row["profile"])) {
-                        echo "<td class='profile-img'><img src='./img/default-profile.png' alt='img'></td>";
-                    } else {
-                        echo "<td><img src='" . $row["profile"] . "' alt='img'></td>";
-                    }
-                    echo "<td>" . $row["mem_id"] . "</td>";
-                    echo "<td>" . $row['name']. "</td>";
-                    echo "<td>" . $row["sex"] . "</td>";
-                    echo "<td>" . $row['age']. "</td>";
-                    echo "</tr>";
-
-                }
-                $isThereMember = true;
+                    $result = $conn->query($sql);
                 
-            } else {
-                echo "<tr><td class='no-result-label text-center' colspan='5'>No members found</td></tr>";
-                $isThereMember = false;
-            }
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            if (empty($row["profile"])) {
+                                echo "<td class='profile-img'><img src='./img/default-profile.png' alt='img'></td>";
+                            } else {
+                                echo "<td><img src='" . $row["profile"] . "' alt='img'></td>";
+                            }
+                            echo "<td>" . $row["mem_id"] . "</td>";
+                            echo "<td>" . $row['name']. "</td>";
+                            echo "<td>" . $row["sex"] . "</td>";
+                            echo "<td>" . $row['age']. "</td>";
+                            echo "</tr>";
+                        }
 
-            ?>
+                        $isThereMember = true;
+                    } else {
+                        echo "<tr><td class='no-result-label text-center' colspan='5'>No members found</td></tr>";
+                        $isThereMember = false;
+                    }
+                ?>
             </tbody>
             </table>
         </div>
     </div>
 
-    <div class="right-section section member-information-section">
+    <div class="right-section section member-information-section <?php if (!$isThereMember) echo "hidden"?>">
         <div class="member-header">
             <div class="title">Member Information</div>
             <div class="content">
