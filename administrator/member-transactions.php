@@ -1,9 +1,4 @@
-<?php
-    //This will check if a user is logged in
-    if (!isset($_SESSION['valid'])) {
-        header('Location: ../index.php');
-    }
-?>
+
 
 <h1>Member Transactions</h1>
 <hr>

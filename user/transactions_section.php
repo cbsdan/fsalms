@@ -1,10 +1,3 @@
-<?php
-    //This will check if a user is logged in
-    if (!isset($_SESSION['valid'])) {
-        header('Location: ../index.php');
-    }
-?>
-
 <div class="background">
     <h1 class="transactions-title title">Transactions</h1>
     <hr>

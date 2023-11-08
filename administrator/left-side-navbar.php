@@ -1,10 +1,3 @@
-<?php
-    //This will check if a user is logged in
-    if (!isset($_SESSION['valid'])) {
-        header('Location: ../index.php');
-    }
-?>
-
 <div class="left-side-navbar active">
     <div class="navbar-container">
         <div class="admin-card" onclick="loadContent('./administrator/settings.php', this)">
