@@ -12,49 +12,6 @@ if (file_exists($database_path)) {
 $isThereMember = false;
 ?>
 
-<?php 
-function calculateAge($birthday) { 
-    $dob = new DateTime($birthday); 
-    $currentDate = new DateTime('now'); 
-    $age = $currentDate->diff($dob)->y; 
-    return $age; 
-}
-
-// SQL Query:
-$sql = "SELECT mem_id, birthdate FROM members";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        $member_id = $row["mem_id"];
-        $birthdayFromDatabase = $row["birthdate"];
-        $age = calculateAge($birthdayFromDatabase);
-}
-} else {
-    echo "No results found";
-}
-
-// Name SQL Query:
-
-function mergeName($first_name, $last_name) {
-    return $first_name . ' ' . $last_name;
-}
-
-$sql = "SELECT fname, lname FROM members";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $merged_name = mergeName($row["fname"], $row["lname"]);
-    }
-} else {
-    echo "No results found";
-}
-
-?>
-
-
 <h1>Member Information</h1>
 <hr>
 <div class="member-information">
@@ -79,7 +36,7 @@ if ($result->num_rows > 0) {
                 </thead>
                 <tbody>
                 <?php
-                $sql = "SELECT members.mem_id, members.sex, accounts.profile 
+                $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
                 FROM members
                 LEFT JOIN accounts ON members.mem_id = accounts.mem_id"; // Adjust the JOIN condition as per your database schema
 
@@ -95,9 +52,9 @@ if ($result->num_rows > 0) {
                         echo "<td><img src='" . $row["profile"] . "' alt='img'></td>";
                     }
                     echo "<td>" . $row["mem_id"] . "</td>";
-                    echo "<td>" . $merged_name. "</td>";
+                    echo "<td>" . $row['name']. "</td>";
                     echo "<td>" . $row["sex"] . "</td>";
-                    echo "<td>" . $age. "</td>";
+                    echo "<td>" . $row['age']. "</td>";
                     echo "</tr>";
 
                 }
@@ -105,6 +62,7 @@ if ($result->num_rows > 0) {
                 
             } else {
                 echo "<tr><td class='no-result-label text-center' colspan='5'>No members found</td></tr>";
+                $isThereMember = false;
             }
 
             ?>
