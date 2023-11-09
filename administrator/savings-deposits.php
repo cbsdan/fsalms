@@ -56,6 +56,13 @@ if (isset($_SESSION['mem_info'])) {
     $_SESSION['mem_info'] = null;
 }
 
+//For search and loading of image functions
+if (file_exists('../functions/functions.php')) {
+    include_once('../functions/functions.php');
+}else {
+    include_once('./functions/functions.php');
+}
+
 //use to identify later if there is atleast a member fetch from database 
 $isThereMember = false;
 ?>

@@ -19,6 +19,7 @@
     
      //check for messages
     include_once('./functions/check_msg.php');
+    include_once('./functions/functions.php');
 ?>
 
 <div id="left-side-navbar">
@@ -42,7 +43,7 @@
                 //will be use in javascript to change the default nav to active nav
                 echo "<span id='activeNavId' class='hidden'>$activeNavId</span>";
             } else {
-                include_once('./administrator/member-information.php');
+                include_once('./administrator/dashboard-overview.php');
             }
         ?> 
     </div>
