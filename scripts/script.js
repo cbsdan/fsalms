@@ -8,6 +8,7 @@ function loadContent(page, button) {
             .then(response => response.text())
             .then(data => {
                 adminSection.innerHTML = data;
+                executeInjectedScripts(adminSection);
             });
            
     } else {
@@ -15,6 +16,7 @@ function loadContent(page, button) {
             .then(response => response.text())
             .then(data => {
                 userSection.innerHTML = data;
+                executeInjectedScripts(userSection);
             });
         
     }
@@ -26,6 +28,12 @@ function loadContent(page, button) {
         nav.classList.remove('active');
     }) 
     button.classList.add('active');
+}
+function executeInjectedScripts(section) {
+    const scripts = section.getElementsByTagName('script');
+    for (let i = 0; i < scripts.length; i++) {
+        eval(scripts[i].innerText);
+    }
 }
 
 let lastScrollTop = 0;
@@ -89,12 +97,3 @@ if (screenToggle) {
 
 }
 
-// if (mainElement.classList.contains("admin")) {
-//     mainElement.style.display = 'grid';
-//     mainElement.style.gridTemplateColumns = '300px 1fr';
-//     mainElement.style.gap = '1rem';
-// } else {
-//     mainElement.style.display = 'block';
-//     mainElement.style.gridTemplateColumns = '1fr';
-//     mainElement.style.gap = '0';
-// }

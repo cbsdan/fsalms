@@ -73,21 +73,21 @@
     flex-wrap: wrap;
 }
 .search-section {
-    display: flex;
-    gap: 1rem;
-    flex: 1;
-    margin-bottom: 1rem;
+    display: flex !important;
+    gap: 1rem !important;
+    flex: 1 !important;
+    margin-bottom: 1rem !important;
 }
 .search-section input {
-    height: 4rem;
-    flex: 2;
+    height: 4rem !important; 
+    flex: 2 !important;
 }
 .search-section select {
-    flex: 1;
+    flex: 1 !important;
 }
 .left-section .result {
-    display: flex;
-    flex: 1;
+    display: flex !important;
+    flex: 1 !important;
 }
 table td.profile-img {
     text-align: center;

@@ -11,7 +11,7 @@
 <hr>
 
 <div class="add-member p-1rem">
-    <form action="./database/add-member.php" method="POST">
+    <form action="./database/add-member.php" method="POST" enctype="multipart/form-data">
         <div class="info">
             <label for="input-fname">Name: <span class="required">*</span></label>
             <div class="input-name-container">

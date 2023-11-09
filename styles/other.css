@@ -96,7 +96,6 @@ table tr:last-child td{
     border-bottom: none;
 }
 table tbody tr {
-    cursor: pointer;
     opacity: 0.9;
 }
 table tbody tr:hover {

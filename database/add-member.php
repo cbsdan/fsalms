@@ -20,7 +20,9 @@
 
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $profile = $_POST['user-profile'];
+
+        $profileData = $_FILES['user-profile']['tmp_name'];
+        $profile = addslashes(file_get_contents($profileData)); // Convert image to BLOB
 
         $verify_query = $conn->query("SELECT username FROM accounts WHERE username='$username'");
         if(mysqli_num_rows($verify_query) != 0){
@@ -42,7 +44,7 @@
             
             $sql = "INSERT INTO accounts (username, password, profile, mem_id) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ssss', $username, $password, $profile, $mem_id);
+            $stmt->bind_param('ssbs', $username, $password, $profile, $mem_id);
             $stmt->execute();
             
             $_SESSION['message'] = "Successfully added a new member";

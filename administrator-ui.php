@@ -42,7 +42,7 @@
                 //will be use in javascript to change the default nav to active nav
                 echo "<span id='activeNavId' class='hidden'>$activeNavId</span>";
             } else {
-                include_once('./administrator/dashboard-overview.php');
+                include_once('./administrator/member-information.php');
             }
         ?> 
     </div>
