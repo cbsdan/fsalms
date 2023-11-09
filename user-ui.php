@@ -34,8 +34,12 @@
         <?php
             if (isset($_SESSION['section'])) {
                 $section = $_SESSION['section'];
+                $activeNavId = $_SESSION['activeNavId'];
                 $_SESSION['section'] = null;
+                $_SESSION['activeNavId'] = null;
                 include_once("$section");
+                //will be use in javascript to change the default nav to active nav
+                echo "<span id='activeNavId' class='hidden'>$activeNavId</span>";
             } else {
                 include_once('./user/info_section.php');
             }
@@ -60,4 +64,10 @@
 
     let logStatus = document.getElementById('log-status');
     logStatus.classList.remove('hidden');
+
+    let activeNavId = document.getElementById('activeNavId');
+    if (activeNavId) {
+        activeNavId = activeNavId.textContent;
+        changeActiveNav(activeNavId);
+    }
 </script>
