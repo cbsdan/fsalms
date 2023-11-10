@@ -23,6 +23,10 @@ function query($query) {
         $res = [];
         while ($row = mysqli_fetch_assoc($result)) {
             $res[] = $row;
+
+            if (count($res) == 1) {
+                $res = $res[0];
+            }
         }
 
         return $res;
