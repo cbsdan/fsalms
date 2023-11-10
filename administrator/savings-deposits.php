@@ -11,9 +11,9 @@ $database_path = '../database/config.php';
 $database_path_index = './database/config.php';
 
 if (file_exists($database_path)) {
-    include($database_path);
+    include_once($database_path);
 } else {
-    include($database_path_index);
+    include_once($database_path_index);
 }
 
 if (isset($_GET['search'])) {
@@ -54,13 +54,6 @@ if (isset($_SESSION['sql_command']) && $_SESSION['selectedSearchType']) {
 if (isset($_SESSION['mem_info'])) {
     $memInfo = $_SESSION['mem_info'];
     $_SESSION['mem_info'] = null;
-}
-
-//For search and loading of image functions
-if (file_exists('../functions/functions.php')) {
-    include_once('../functions/functions.php');
-}else {
-    include_once('./functions/functions.php');
 }
 
 //use to identify later if there is atleast a member fetch from database 

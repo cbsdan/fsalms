@@ -11,24 +11,24 @@ $database_path = '../database/config.php';
 $database_path_index = './database/config.php';
 
 if (file_exists($database_path)) {
-    include($database_path);
+    include_once($database_path);
 } else if (file_exists($database_path_index)){
-    include($database_path_index);
+    include_once($database_path_index);
 }
 
 $function_path = '../functions/read_db.php';
 $function_path_index = './functions/read_db.php';
 
 if (file_exists($function_path)) {
-    include($function_path);
+    include_once($function_path);
 } else if(file_exists($function_path_index)){
-    include($function_path_index);
+    include_once($function_path_index);
 }
 
 ?>
 
 <div id="greet-card">
-    <h1>Welcome back, Admin</h1>
+    <h1>Welcome back, <?php echo $_SESSION['valid']; ?></h1>
     <p>Your analytics are ready</p>
 </div>
 <h1 class="content-title">Overview</h1>
