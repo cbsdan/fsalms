@@ -3,9 +3,9 @@
     $database_path_index = './database/config.php';
 
     if (file_exists($database_path)) {
-        include($database_path);
+        include_once($database_path);
     } else {
-        include($database_path_index);
+        include_once($database_path_index);
     }
 
     include_once('./functions/check_msg.php');

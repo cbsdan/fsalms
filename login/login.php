@@ -1,5 +1,5 @@
 <?php
-    include("./database/config.php");
+    include_once("./database/config.php");
     if (isset($_SESSION['valid']) && isset($_SESSION['user-type'])) {
         $user_type = $_SESSION['user-type'];
         
