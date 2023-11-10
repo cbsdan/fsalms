@@ -6,11 +6,25 @@
    } elseif (file_exists($authentication_path_index)) {
        include_once("$authentication_path_index");
    }
+
+   $database_path = '../database/config.php';
+$database_path_index = './database/config.php';
+
+if (file_exists($database_path)) {
+    include_once($database_path);
+} else {
+    include_once($database_path_index);
+}
+   $profileData = query("SELECT profile FROM accounts WHERE username = '" . $_SESSION['valid']. "'");
+   $profileSrc = getImageSrc($profileData['profile']);
+   if ($profileSrc == '') {
+      $profileSrc = './img/default-profile.png'; //default profile
+   }
 ?>
 <div class="left-side-navbar active">
     <div class="navbar-container">
         <div class="admin-card" onclick="loadContent('./administrator/settings.php', this)">
-            <div class="profile"><img src="./img/profile-1.png" alt="admin" id="admin-profile"></div>
+            <div class="profile"><img src="<?php echo $profileSrc; ?>" alt="admin" id="admin-profile"></div>
             <h2>ADMINISTRATOR</h2>
         </div>
         <div class="dashboard nav-container">
