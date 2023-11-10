@@ -21,8 +21,12 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $profileData = $_FILES['user-profile']['tmp_name'];
-        $profile = file_get_contents($profileData); // Convert image to BLOB
+        if ($_FILES['user-profile']['tmp_name'] != '') {
+            $profileData = $_FILES['user-profile']['tmp_name'];
+            $profile = file_get_contents($profileData); // Convert image to BLOB
+        } else {
+            $profile = '';
+        }
 
         $verify_query = $conn->query("SELECT username FROM accounts WHERE username='$username'");
         if(mysqli_num_rows($verify_query) != 0){
@@ -41,7 +45,7 @@
             $stmt->execute();
             
             $mem_id = $stmt->insert_id;
-            
+
             $sql = "INSERT INTO accounts (username, password, profile, mem_id) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('ssss', $username, $password, $profile, $mem_id);

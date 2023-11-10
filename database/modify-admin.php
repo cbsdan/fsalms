@@ -18,14 +18,26 @@
             $start_date = $_POST['starting-date'];
             $end_date = $_POST['ending-date'];
 
-            $profileData = $_FILES['admin-profile']['tmp_name'];
-            $profile = file_get_contents($profileData); // Convert image to BLOB
-            var_dump($_FILES);
+            if ($_FILES['admin-profile']['tmp_name'] != '') {
+                $profileData = $_FILES['admin-profile']['tmp_name'];
+                $profile = file_get_contents($profileData); // Convert image to BLOB
+            } else {
+                $profile = '';
+            }
             try {
-                $sql = "UPDATE accounts SET username = (?), profile = (?) WHERE username = '$admin_username';";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param('ss', $username, $profile);
-                $stmt->execute();
+                if ($profile == '') {
+                    $sql = "UPDATE accounts SET username = (?) WHERE username = '$admin_username';";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param('s', $username);
+                    $stmt->execute();
+
+                } else {
+                    $sql = "UPDATE accounts SET username = (?), profile = (?) WHERE username = '$admin_username';";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param('ss', $username, $profile);
+                    $stmt->execute();
+
+                }
                 
                 $sql = "UPDATE system_info SET weekly_payment = (?), membership_fee = (?), start_date = (?), end_date = (?)";
                 $stmt = $conn->prepare($sql);
