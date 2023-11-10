@@ -19,7 +19,6 @@
 
     //check for messages
     include_once('./functions/check_msg.php');
-    include_once('./functions/functions.php');
 ?>
 
 <main id="main" class="user"> 
