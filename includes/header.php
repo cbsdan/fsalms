@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="./styles/other.css">
     <link rel="stylesheet" href="./styles/login.css">
     <link rel="stylesheet" href="./styles/variables.css">
+    <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
 
     <script src="./scripts/script.js" defer></script>
     <script type="module" src="./scripts/functions.js" defer></script>
