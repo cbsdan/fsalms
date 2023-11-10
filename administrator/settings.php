@@ -6,6 +6,17 @@ if (file_exists($authentication_path)) {
 } elseif (file_exists($authentication_path_index)) {
     include_once("$authentication_path_index");
 }
+
+$database_path = '../database/config.php';
+$database_path_index = './database/config.php';
+
+if (file_exists($database_path)) {
+    include_once($database_path);
+} else {
+    include_once($database_path_index);
+}
+
+$system_info = query("SELECT * FROM system_info");
 ?>
 
 <h1>Settings</h1>
@@ -14,23 +25,23 @@ if (file_exists($authentication_path)) {
     <form action="./database/modify-admin.php" method="POST" enctype="multipart/form-data">
         <div class="info">
             <label for="admin-username">Admin Username:</label>
-            <input type="text" id="admin-username" name="admin-username" placeholder="Enter username" required>
+            <input type="text" id="admin-username" name="admin-username" placeholder="Enter username" value="<?php echo $_SESSION['valid']; ?>" required>
         </div>
         <div class="info">
             <label for="weekly-payment">Weekly Payment: (₱)<span class="required"></span></label>
-            <input type="number" id="weekly-payment" class="no-spinner" name="weekly-payment" placeholder="Enter weekly payment" required>
+            <input type="number" id="weekly-payment" class="no-spinner" name="weekly-payment" placeholder="Enter weekly payment" value="<?php echo $system_info['weekly_payment']; ?>" required>
         </div>
         <div class="info">
             <label for="membership-fee">Membership Fee: (₱)<span class="required"></span></label>
-            <input type="number" id="membership-fee" class="no-spinner" name="membership-fee" placeholder="Enter weekly payment" required>
+            <input type="number" id="membership-fee" class="no-spinner" name="membership-fee" placeholder="Enter membership fee" value="<?php echo $system_info['membership_fee']; ?>" required>
         </div>
         <div class="info">
             <label for="starting-date">Starting Date:</label>
-            <input type="date" id="starting-date" name="starting-date" required>
+            <input type="date" id="starting-date" name="starting-date" value="<?php echo $system_info['start_date']; ?>" required>
         </div>
         <div class="info">
             <label for="ending-date">Ending Date:</label>
-            <input type="date" id="ending-date" name="ending-date" required>
+            <input type="date" id="ending-date" name="ending-date" value="<?php echo $system_info['end_date']; ?>" required>
         </div>
         <div class="info">
             <label for="upload-img">Profile:</label>
