@@ -65,15 +65,15 @@ $system_info = query("SELECT * FROM system_info");
     <form action="./database/modify-admin.php" method="POST">
         <div class="info">
             <label for="old_password">Old Password: <span class="required">*</span></label>
-            <input id="old_password" type="text" name="old_password" placeholder="Enter Old Password">
+            <input id="old_password" type="password" name="old_password" placeholder="Enter Old Password">
         </div>
         <div class="info">
             <label for="new_password">New Password: <span class="required">*</span></label>
-            <input id="new_password" type="text" name="new_password" placeholder="Enter New Password">
+            <input id="new_password" type="password" name="new_password" placeholder="Enter New Password">
         </div>
         <div class="info">
             <label for="confirm_password">Confirm Password: <span class="required">*</span></label>
-            <input id="confirm_password" type="text" name="confirm_password" placeholder="Confirm Password">
+            <input id="confirm_password" type="password" name="confirm_password" placeholder="Confirm Password">
         </div>
         <button id="pw-change-btn" type="submit" name="changeSettings" value="changePw">Change Password</button>
     </form>
