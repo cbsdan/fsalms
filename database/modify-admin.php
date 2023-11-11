@@ -11,6 +11,8 @@
         }
 
         $admin_username = $_SESSION['valid'];
+
+        //FOR MODIFYING ADMIN USERNAME AND SYSTEM DATA
         if ($_POST['changeSettings'] == 'editAdmin') {
             $username = $_POST['admin-username'];
             $weekly_payment = $_POST['weekly-payment'];
@@ -60,6 +62,39 @@
                 header('Location: ../administrator-ui.php');
                 exit();
             }
+        }
+
+        //FOR CHANGING ADMIN PASSWORD
+        if ($_POST['changeSettings'] == 'changePw') {
+            $old_password = query("SELECT password FROM accounts WHERE username = '" . $_SESSION['valid'] . "'");
+            $old_password = $old_password['password'];
+            $old_password_input = $_POST['old_password'];
+
+            if ($old_password == $old_password_input) {
+                $new_password = $_POST['new_password'];
+                $confirm_password = $_POST['confirm_password'];
+                if ($new_password == $confirm_password) {
+                    query("UPDATE accounts SET password = '$new_password' WHERE username = '" . $_SESSION['valid'] . "'");
+                    $_SESSION['message'] = "Successfully changed password!";
+                    $_SESSION['messageBg'] = 'green';
+                    $_SESSION['section'] = './administrator/settings.php';
+                    $_SESSION['activeNavId'] = 'settings-nav';
+
+                } else {
+                    $_SESSION['message'] = "New password and confirm password mismatched!";
+                    $_SESSION['messageBg'] = 'red';
+                    $_SESSION['section'] = './administrator/settings.php';
+                    $_SESSION['activeNavId'] = 'settings-nav';
+                }
+            } else {
+                $_SESSION['message'] = "Old password does not matched!";
+                $_SESSION['messageBg'] = 'red';
+                $_SESSION['section'] = './administrator/settings.php';
+                $_SESSION['activeNavId'] = 'settings-nav';
+            }
+
+            header('Location: ../administrator-ui.php');
+            exit();
         }
     }
 ?>
