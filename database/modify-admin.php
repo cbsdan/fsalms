@@ -61,7 +61,39 @@
             header('Location: ../administrator-ui.php');
             exit();
         }
+        if ($_POST['changeSettings'] == 'resetDb') {
+            try {
+                // Disable foreign key checks to allow truncating tables with foreign key constraints
+                $conn->query("SET foreign_key_checks = 0");
 
+                // Get a list of tables in the database
+                $tables = $conn->query("SHOW TABLES");
+                while ($row = $tables->fetch_assoc()) {
+                    $table = $row["Tables_in_$database"];
+
+                    // Truncate each table
+                    $conn->query("TRUNCATE TABLE $table");
+                }
+
+                // Enable foreign key checks
+                $conn->query("SET foreign_key_checks = 1");
+
+                $_SESSION['message'] = "Successfully reset the database! Make a new admin account";
+                $_SESSION['messageBg'] = 'green';
+                header("Location: ./logout.php");
+                exit();
+
+            } catch (Exception $e) {
+                $_SESSION['message'] = "Failed to reset. Error: $e";
+                $_SESSION['messageBg'] = 'red';    
+            }
+
+            $_SESSION['section'] = './administrator/settings.php';
+            $_SESSION['activeNavId'] = 'settings-nav';
+            header('Location: ../administrator-ui.php');
+            exit();
+            
+        }
         //FOR CHANGING ADMIN PASSWORD
         if ($_POST['changeSettings'] == 'changePw') {
             try {
