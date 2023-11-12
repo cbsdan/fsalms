@@ -55,7 +55,7 @@ $system_info = query("SELECT * FROM system_info");
 <hr>
 <div class="reset-container">
     <p class="description">This will reset the database, you will have to create a new admin first if you want to use the system again.</p>
-    <form action="./database/modify-admin.php" method="POST">
+    <form action="./database/modify-admin.php" method="POST" id="resetForm">
         <button id="reset-system" class="bg-red" type="submit" name="changeSettings" value="resetDb">Reset</button>
     </form>
 </div>
@@ -78,3 +78,17 @@ $system_info = query("SELECT * FROM system_info");
         <button id="pw-change-btn" type="submit" name="changeSettings" value="changePw">Change Password</button>
     </form>
 </div>
+
+<script>
+    const resetForm = document.getElementById('resetForm');
+
+    resetForm.addEventListener('submit', ()=>{
+        let confirmDeletion = confirm(`Do you want to RESET the system which include the DATABASE?`);
+
+        if (!confirmDeletion) {
+            event.preventDefault();
+        }
+    })
+
+
+</script>
