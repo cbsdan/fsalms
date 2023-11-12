@@ -58,7 +58,6 @@ if (isset($_SESSION['mem_info'])) {
     $_SESSION['mem_info'] = null;
 }
 
-
 //use to identify later if there is atleast a member fetch from database 
 $isThereMember = false;
 ?>
@@ -120,7 +119,7 @@ $isThereMember = false;
 
                         $isThereMember = true;
                     } else {
-                        echo "<tr><td class='no-result-label text-center' colspan='5'>No members found</td></tr>";
+                        echo "<tr><td class='no-result-label text-center' colspan='7'>No members found</td></tr>";
                         $isThereMember = false;
                     }
                 ?>

@@ -19,7 +19,7 @@
         </select> 
     </div>
     <div class="result" id="transaction-container">
-        <select class="options select-type">
+        <select class="options select-type" name="transac-type">
             <option value="all" name="all" class="option" selected>All</option>
             <option value="savings" name="savings" class="option" selected>Savings</option>
             <option value="loan" name="loan" class="option">Loan</option>

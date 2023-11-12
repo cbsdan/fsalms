@@ -22,12 +22,12 @@ if (isset($_GET['search'])) {
     $searchType = $_GET['search-type'];
     if ($searchType == 'name') {
         //searchtype is name
-        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
+        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.fname, members.lname, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, members.birthdate, accounts.profile 
                 FROM members
                 LEFT JOIN accounts ON members.mem_id = accounts.mem_id WHERE CONCAT(members.fname, ' ', members.lname) LIKE '%$searchValue%'";
     } else {
         //searchtype is mem_id
-        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
+        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.fname, members.lname, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, members.birthdate,  accounts.profile 
                 FROM members
                 LEFT JOIN accounts ON members.mem_id = accounts.mem_id WHERE members.$searchType LIKE '%$searchValue%'";
     }
@@ -43,7 +43,7 @@ if (isset($_GET['search'])) {
 $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
         FROM members
         LEFT JOIN accounts ON members.mem_id = accounts.mem_id";
-$searchType = 'name';
+$searchType = 'name';   
 
 //Search SQL Command
 if (isset($_SESSION['sql_command']) && $_SESSION['selectedSearchType']) {
@@ -106,19 +106,20 @@ $isThereMember = false;
                             echo "<td>" . $row["sex"] . "</td>";
                             echo "<td>" . $row['age']. "</td>";
                             echo "<td>
-                                    <form action='' method='POST'>
+                                    <form action='./database/fetch_member_info.php' method='POST'>
                                         <input type='hidden' name='mem_id' value='$memId'>
-                                        <input type='hidden' name='page' value='./administrator/edit-member.php'>
+                                        <input type='hidden' name='page' value='./administrator/administrator-edit-member.php'>
                                         <input type='hidden' name='activeNavId' value='a-editMember'>
-                                        <button type='submit' class='bg-green' name='edit' value='edit'>Edit</button>
+                                        <button type='submit' class='bg-green' name='select' value='edit'>Edit</button>
                                     </form>
                                   </td>";
                             echo "<td>
-                                    <form action='' method='POST'>
-                                        <input type='hidden' name='mem_id' value='$memId'>
+                                    <form action='./database/delete-member.php' method='POST' class='deleteMember'>
+                                        <input type='hidden' name='mem_id' value='$memId' class='mem_id'>
+                                        <input type='hidden' name='name' value='" .$row['name'] . "' class='mem_name'>
                                         <input type='hidden' name='page' value='./administrator/edit-member.php'>
                                         <input type='hidden' name='activeNavId' value='a-editMember'>
-                                        <button type='submit' class='bg-red' name='delete' value='delete'>Delete</button>
+                                        <button type='submit' class='bg-red' name='select' value='delete'>Delete</button>
                                     </form>
                                   </td>";
                             echo "</tr>";
@@ -126,7 +127,7 @@ $isThereMember = false;
 
                         $isThereMember = true;
                     } else {
-                        echo "<tr><td class='no-result-label text-center' colspan='5'>No members found</td></tr>";
+                        echo "<tr><td class='no-result-label text-center' colspan='7'>No members found</td></tr>";
                         $isThereMember = false;
                     }
                 ?>
@@ -143,45 +144,65 @@ $isThereMember = false;
 <div class="edit-member p-1rem <?php echo $memberInfoClass?>">
     <h3 class="title">Edit Here</h3>
     <hr>
-    <form action="" method="POST">
+    <form action="./database/edit-member.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="mem_id" value="<?php if (isset($memInfo['mem_id'])) { echo $memInfo['mem_id'] ;}?>">
+        <input type="hidden" name="old_username" value="<?php echo $memInfo['username'];?>">
         <div class="info">
             <label for="input-fname">Name: <span class="required">*</span></label>
             <div class="input-name-container">
-                <input type="text" id="input-fname" name="fname" placeholder="First" required>
-                <input type="text" id="input-lname" name="lname" placeholder="Last" required>
+                <input type="text" id="input-fname" name="fname" placeholder="First" value="<?php echo $memInfo['fname']?>" required>
+                <input type="text" id="input-lname" name="lname" placeholder="Last" value="<?php echo $memInfo['lname']?>" required>
             </div>
         </div>
         <div class="info">
             <label for="radio-sex">Sex: <span class="required">*</span></label>
             <div class="sex-radio-container">
-                <label for="radio-male" class="sex-label"><input id="radio-male" type="radio" name="sex" value="Male" required> Male</label>
-                <label for="radio-female" class="sex-label"><input id="radio-female" type="radio" name="sex" value="Female" required> Female</label>
+                <label for="radio-male" class="sex-label"><input id="radio-male" type="radio" name="sex" value="Male" required <?php if($memInfo['sex'] == 'Male') {echo "checked";}?>> Male</label>
+                <label for="radio-female" class="sex-label"><input id="radio-female" type="radio" name="sex" value="Female" required <?php if($memInfo['sex'] == 'Female') {echo "checked";}?>> Female</label>
             </div>
         </div>
         <div class="info">
             <label for="input-birthdate">Birthdate: <span class="required">*</span></label>
-            <input type="date" id="input-birthdate" required>
+            <input type="date" id="input-birthdate" name="birthdate" value="<?php echo $memInfo['birthdate'];?>" required>
         </div>
         <div class="info">
             <label for="input-address">Address:</label>
-            <input type="text" id="input-address" placeholder="Enter Address">
+            <input type="text" id="input-address" name="address" placeholder="Enter Address" value="<?php echo $memInfo['address'];?>">
         </div>
         <div class="info">
             <label for="input-contact">Contact:</label>
-            <input type="text" id="input-contact" placeholder="Enter Contact">
+            <input type="text" id="input-contact" name="contact" placeholder="Enter Contact" value="<?php echo $memInfo['contact'];?>">
         </div>
         <div class="info">
             <label for="input-username">Username: <span class="required">*</span></label>
-            <input type="text" id="input-username" name="username" placeholder="Enter username" required>
+            <input type="text" id="input-username" name="username" placeholder="Enter username" value="<?php echo $memInfo['username']?>" required>
         </div>
         <div class="info">
             <label for="input-password">Password: <span class="required">*</span></label>
-            <input type="text" id="input-password" name="password" placeholder="Enter password" required>
+            <input type="password" id="input-password" name="password" placeholder="Enter password" value="<?php echo $memInfo['password']?>" required>
         </div>
         <div class="info">
             <label for="upload-img">Profile:</label>
             <input type="file" accept=".jpg, .jpeg, .png" name="user-profile">
         </div>
-        <button id="edit-btn" type="submit" name="edit-btn" value="submit" >Apply</button>
+        <button id="edit-btn" type="submit" name="edit-btn" value="submit">Apply</button>
     </form>
 </div>
+
+<script>
+    console.log("Loaded");
+    const deleteBtns = document.querySelectorAll('.deleteMember');
+    deleteBtns.forEach((deleteBtn)=>{
+        deleteBtn.addEventListener('submit', ()=>{
+            const memId = deleteBtn.querySelector('.mem_id')
+            const memName = deleteBtn.querySelector('.mem_name')
+            let confirmDeletion = confirm(`Do you want to delete member ${memName.value} with an ID of: ${memId.value}`);
+
+            if (!confirmDeletion) {
+                event.preventDefault();
+            }
+        })
+    })
+
+
+</script>
