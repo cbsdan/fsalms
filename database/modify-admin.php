@@ -51,46 +51,53 @@
                 $_SESSION['section'] = './administrator/settings.php';
                 $_SESSION['activeNavId'] = 'settings-nav';
                 $_SESSION['valid'] = $username;
-                header('Location: ../administrator-ui.php');
-                exit();
     
             } catch (Exception $e) {
                 $_SESSION['message'] = "Failed to modify admin and system data. Error: $e";
                 $_SESSION['messageBg'] = 'red';
                 $_SESSION['section'] = './administrator/settings.php';
                 $_SESSION['activeNavId'] = 'settings-nav';
-                header('Location: ../administrator-ui.php');
-                exit();
             }
+            header('Location: ../administrator-ui.php');
+            exit();
         }
 
         //FOR CHANGING ADMIN PASSWORD
         if ($_POST['changeSettings'] == 'changePw') {
-            $old_password = query("SELECT password FROM accounts WHERE username = '" . $_SESSION['valid'] . "'");
-            $old_password = $old_password['password'];
-            $old_password_input = $_POST['old_password'];
-
-            if ($old_password == $old_password_input) {
-                $new_password = $_POST['new_password'];
-                $confirm_password = $_POST['confirm_password'];
-                if ($new_password == $confirm_password) {
-                    query("UPDATE accounts SET password = '$new_password' WHERE username = '" . $_SESSION['valid'] . "'");
-                    $_SESSION['message'] = "Successfully changed password!";
-                    $_SESSION['messageBg'] = 'green';
-                    $_SESSION['section'] = './administrator/settings.php';
-                    $_SESSION['activeNavId'] = 'settings-nav';
-
+            try {
+                $old_password = query("SELECT password FROM accounts WHERE username = '" . $_SESSION['valid'] . "'");
+                $old_password = $old_password['password'];
+                $old_password_input = $_POST['old_password'];
+    
+                if ($old_password == $old_password_input) {
+                    $new_password = $_POST['new_password'];
+                    $confirm_password = $_POST['confirm_password'];
+                    if ($new_password == $confirm_password) {
+                        query("UPDATE accounts SET password = '$new_password' WHERE username = '" . $_SESSION['valid'] . "'");
+                        $_SESSION['message'] = "Successfully changed password!";
+                        $_SESSION['messageBg'] = 'green';
+                        $_SESSION['section'] = './administrator/settings.php';
+                        $_SESSION['activeNavId'] = 'settings-nav';
+    
+                    } else {
+                        $_SESSION['message'] = "New password and confirm password mismatched!";
+                        $_SESSION['messageBg'] = 'red';
+                        $_SESSION['section'] = './administrator/settings.php';
+                        $_SESSION['activeNavId'] = 'settings-nav';
+                    }
                 } else {
-                    $_SESSION['message'] = "New password and confirm password mismatched!";
+                    $_SESSION['message'] = "Old password does not matched!";
                     $_SESSION['messageBg'] = 'red';
                     $_SESSION['section'] = './administrator/settings.php';
                     $_SESSION['activeNavId'] = 'settings-nav';
                 }
-            } else {
-                $_SESSION['message'] = "Old password does not matched!";
+                
+            } catch (Exception $e) {
+                $_SESSION['message'] = "Error: $e";
                 $_SESSION['messageBg'] = 'red';
                 $_SESSION['section'] = './administrator/settings.php';
                 $_SESSION['activeNavId'] = 'settings-nav';
+
             }
 
             header('Location: ../administrator-ui.php');
