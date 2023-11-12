@@ -203,7 +203,9 @@ $isThereMember = false;
             <form action="" method="POST">
                 <div class="info">
                     <label for="savings-amount">Amount: (₱)</label>
-                    <input type="number" id="savings-amount" class="no-spinner" placeholder="<?php if(!$isThereMember) {echo "Disabled";} else {echo "Enter here";}?>" name="savings-amount" <?php if(!$isThereMember) echo "disabled"?>>
+                    <input type="number" id="savings-amount" class="no-spinner" placeholder="<?php if(!$isThereMember || empty($memInfo['mem_id'])) {echo "Disabled";} else {echo "Enter here";}?>" name="payment-amount" <?php if(!$isThereMember || empty($memInfo['mem_id'])) echo "disabled"?>>
+                    <input type="hidden" name="mem_id" value="<?php if (isset($memInfo['mem_id'])) {echo $memInfo['mem_id']; }?>">
+
                 </div>
                 <button class="submit" type="submit" name="submit" value="submit">Save</button>
             </form>
