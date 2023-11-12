@@ -51,6 +51,14 @@
             $stmt->bind_param('ssss', $username, $password, $profile, $mem_id);
             $stmt->execute();
             
+            //get membership fee
+            $sql = "SELECT membership_fee FROM system_info LIMIT 1;";
+            $result = query($sql);
+            $membership_fee = $result['membership_fee'];
+
+            $sql = "INSERT INTO deposit (deposited, mem_id) VALUES ($membership_fee, $mem_id)";
+            query($sql);
+            
             $_SESSION['message'] = "Successfully added a new member";
             $_SESSION['messageBg'] = "green";
             $_SESSION['section'] = './administrator/administrator-add.php';
