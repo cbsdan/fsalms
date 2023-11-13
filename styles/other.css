@@ -146,7 +146,7 @@ select {
     color: var(--bg-red);
 }
 .c-green {
-    color: var(--bg-green);
+    color: var(--c-strong-color);
 
 }
 /* button default design */
