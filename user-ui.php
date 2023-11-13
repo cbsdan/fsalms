@@ -22,10 +22,10 @@
 ?>
 
 <main id="main" class="user"> 
-    <p class="query-message <?php echo $messageClass;?>">
-        <?php echo $message; ?>
-    </p>
     <div class="info-nav-container">
+        <p class="query-message <?php echo $messageClass;?>">
+            <span class='message'><?php echo $message; ?></span>
+        </p>
         <?php
             include_once('./user/user_info-nav.php');
         ?>
