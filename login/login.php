@@ -6,7 +6,7 @@
         if ($user_type == 'admin') {
             header('Location: ./administrator-ui.php');
             exit();
-        } elseif ($user_type == 'user') {
+        } elseif ($user_type == 'member') {
             header('Location: ./user-ui.php');
             exit();
         }
