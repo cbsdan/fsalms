@@ -143,10 +143,10 @@ select {
     padding: 1rem;
 }
 .c-red {
-    color: var(--bg-red);
+    color: var(--c-red-color);
 }
 .c-green {
-    color: var(--c-strong-color);
+    color: var(--c-green-color);
 
 }
 /* button default design */
@@ -154,7 +154,7 @@ button {
     max-width: 15rem !important;
     background-color: var(--main-color);
     color: var(--light-text);
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem !important;
     border-radius: 0.5rem;
     font-weight: 700;
 }
@@ -244,5 +244,12 @@ form .info .sex-radio-container {
     color: var(--main-color);
     font-size: 1.6rem;
     padding: 2rem;
-    font-style: italic;
+    font-style: italic;    
+}
+
+.query-message .message {
+    display: block;
+    max-width: var(--content-max-width);
+    width: 100%;
+    margin: 0 auto;
 }
