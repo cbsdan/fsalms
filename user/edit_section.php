@@ -79,15 +79,15 @@ $mem_info = query($sql);
             <input type="hidden" name="mem_id" value="<?php echo $mem_id?>">
             <div class="info">
                 <label for="old_password">Old Password: <span class="required">*</span></label>
-                <input id="old_password" type="password" name="old_password" placeholder="Enter Old Password">
+                <input id="old_password" type="password" name="old_password" placeholder="Enter Old Password" required>
             </div>
             <div class="info">
                 <label for="new_password">New Password: <span class="required">*</span></label>
-                <input id="new_password" type="password" name="new_password" placeholder="Enter New Password">
+                <input id="new_password" type="password" name="new_password" placeholder="Enter New Password" required>
             </div>
             <div class="info">
                 <label for="confirm_password">Confirm Password: <span class="required">*</span></label>
-                <input id="confirm_password" type="password" name="confirm_password" placeholder="Confirm Password">
+                <input id="confirm_password" type="password" name="confirm_password" placeholder="Confirm Password" required>
             </div>
             <button id="pw-change-btn" type="submit" name="submit" value="change-pw">Change Password</button>
         </form>
