@@ -52,7 +52,8 @@
 <?php
     include_once('./includes/footer.php')
 ?>
-<script>
+<script type="module">
+    import {changeActiveNav} from './scripts/functions.js'
     let headerEl = document.querySelector('header')
     let footerEl = document.querySelector('footer')
 
