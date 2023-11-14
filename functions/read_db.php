@@ -1,7 +1,6 @@
-
 <!--Week PANEL-->
-
 <!-- Panels -->
+
 <?php
 function executeQuery($conn, $query) {
     // Attempt to execute the query
@@ -341,3 +340,171 @@ function getTotalSavings($conn) {
 }
 
 ?>
+
+<!-- USER-> info_section -->
+<?php
+function getTotalDeposits($conn, $mem_id) {
+    $sql = "SELECT SUM(deposited) AS total_deposit FROM deposit WHERE mem_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $mem_id); // Assuming mem_id is a string, change "s" to "i" if it's an integer
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Fetch the result
+    $row = $result->fetch_assoc();
+    $totalDeposit = $row['total_deposit'];
+
+    // Return the total deposit
+    return $totalDeposit;
+}
+?>
+
+<?php
+
+function getWeekNumber($conn) {
+    // Fetch start_date from the system_info table
+    $sql = "SELECT start_date FROM system_info";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Assuming you only have one row in the system_info table
+        $row = $result->fetch_assoc();
+        $start_date = $row['start_date'];
+
+        // Get the current date
+        $current_date = date("Y-m-d");
+
+        // Calculate the number of seconds in a week
+        $seconds_in_a_week = 60 * 60 * 24 * 7;
+
+        // Calculate the difference in seconds between the start and current dates
+        $start_timestamp = strtotime($start_date);
+        $current_timestamp = strtotime($current_date);
+        $difference = $current_timestamp - $start_timestamp;
+
+        // Calculate the number of weeks
+        $week_number = ceil($difference / $seconds_in_a_week);
+
+        return $week_number;
+    } else {
+        return "No rows found in the system_info table.";
+    }
+}
+
+?>
+<?php
+function getWeeklyPayment($conn) {
+$sql = "SELECT weekly_payment FROM system_info";
+
+// Execute the query
+$result = $conn->query($sql);
+
+// Check if the query was successful
+if ($result) {
+    // Fetch the result as an associative array
+    $row = $result->fetch_assoc();
+
+    // Close the database connection
+
+    // Return the weekly payment value
+    return $row['weekly_payment'];
+} else {
+    // If the query fails, return an error or handle it accordingly
+    return "Error: " . $conn->error;
+}
+}
+?>
+
+<?php
+
+// Function to compute the pending amount
+function computePendingAmount($conn, $weeklyPayment, $weekNumber, $totalDeposits) {
+    // Calculate the expected total payment up to the given week
+    $expectedTotalPayment = $weeklyPayment * $weekNumber;
+
+    // Calculate the pending amount by subtracting total deposits from expected total payment
+    $pendingAmount = $expectedTotalPayment - $totalDeposits;
+
+    return $pendingAmount;
+}
+?>
+ <?php
+
+function getTotalLoanBalance($conn, $member_id) {
+    $loanQuery = "
+        SELECT ld.loan_amount
+        FROM loan_requests lr
+        JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id
+        WHERE lr.mem_id = $member_id
+          AND lr.request_status = 'approved'
+    ";
+
+    $loanResult = $conn->query($loanQuery);
+
+    if ($loanResult) {
+        // Calculate the total loan balance
+        $totalLoanBalance = 0;
+        while ($row = $loanResult->fetch_assoc()) {
+            $totalLoanBalance += $row['loan_amount'];
+        }
+
+        // Don't close the connection here; you might still need it
+        // $conn->close();
+
+        return $totalLoanBalance;
+    } else {
+        // If the loan query fails, return an error or handle it accordingly
+        return "Error: " . $conn->error;
+    }
+}
+?>
+
+
+<?php
+function computeInterestShare($conn, $loanAmount, $member_id) {
+    // Fetch loan details from loan_details table for the specified member_id
+    $loanDetailsQuery = "
+        SELECT lr.mem_id, lr.request_status, ld.loan_amount, ld.interest_rate, ld.month_duration
+        FROM loan_requests lr
+        JOIN loan_details ld ON lr.mem_id = ld.loan_detail_id
+        WHERE lr.mem_id = $member_id
+    ";
+
+    $loanDetailsResult = $conn->query($loanDetailsQuery);
+
+    if ($loanDetailsResult && $loanDetailsResult->num_rows > 0) {
+        $loanDetails = $loanDetailsResult->fetch_assoc();
+
+        // Extract loan details
+        $requestStatus = $loanDetails['request_status'];
+        $interestRate = $loanDetails['interest_rate'];
+        $loanDurationMonths = $loanDetails['month_duration'];
+
+        // Check if the loan request is approved
+        if ($requestStatus == 'approved') {
+            // Convert annual interest rate to weekly rate
+            $weeklyInterestRate = ($interestRate / 100) / 52;
+
+            // Calculate the total interest over the loan period using compound interest formula
+            $compoundInterestFactor = pow(1 + $weeklyInterestRate, 52 * $loanDurationMonths / 12);
+            $totalInterest = $loanAmount * $compoundInterestFactor - $loanAmount;
+        
+            // Calculate the interest share per week
+            $interestSharePerWeek = $totalInterest / ($loanDurationMonths * 4); // Assuming 4 weeks in a month
+        
+            return number_format($interestSharePerWeek, 2);
+        } else {
+            // Handle the case where the loan request is not approved
+            return "Error: Loan request not approved for member $member_id";
+        }
+    } else {
+        // Handle the case where the loan details are not found
+        return "Error: Loan details not found for member $member_id";
+    }
+}
+?>
+
+
+
+<!-- USER-> request_section -->
+
