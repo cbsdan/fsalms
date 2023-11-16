@@ -149,6 +149,16 @@ select {
     color: var(--c-green-color);
 
 }
+.c-light-main {
+    color: rgb(var(--light-main-color-rgb)) !important;
+}
+.c-gold {
+    color: var(--gold) !important;
+}
+
+.select-btn {
+    width: 8rem;
+}
 /* button default design */
 button {
     max-width: 15rem !important;
