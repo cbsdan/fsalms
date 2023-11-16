@@ -16,7 +16,7 @@ if (file_exists($database_path)) {
     include_once($database_path_index);
 }
 
-$request_sql = "SELECT *, CONCAT(m.fname , ' ', m.lname) AS name FROM members m INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id INNER JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id WHERE lr.request_status = 'Pending'";
+$request_sql = "SELECT *, CONCAT(m.fname , ' ', m.lname) AS name FROM members m INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id INNER JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id WHERE lr.request_status = 'Pending' ORDER BY date_requested DESC";
 $loan_requests = query($request_sql);
 
 if ($loan_requests != false && (count($loan_requests) > 0)) {
@@ -26,22 +26,27 @@ if ($loan_requests != false && (count($loan_requests) > 0)) {
 }
 
 //initialize records_sql
-$records_sql = "SELECT *, CONCAT(m.fname , ' ', m.lname) AS name FROM members m INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id INNER JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id WHERE (lr.request_status = 'Approved' OR lr.request_status = 'Declined')";
+$records_sql = "SELECT *, CONCAT(m.fname , ' ', m.lname) AS name FROM members m INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id INNER JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id WHERE (lr.request_status = 'Approved' OR lr.request_status = 'Declined') ORDER BY date_requested DESC";
 
 if (isset($_SESSION['status'])) {
     $status = $_SESSION['status'];
     if ($status == 1) {
-        $filterStatus = 'Claimed';
+        $filterStatus = 'Approved';
     } else {
-        $filterStatus = 'Unclaimed';
+        $filterStatus = 'Declined';
 
     }
     $_SESSION['status'] = null;
 }
 
-//If admin want to filter record whether it is claimed or unclaimed, this will be the query:
+//If admin want to filter record whether it is approved or declined, this will be the query:
 if (isset($status)) {
-    $records_sql = "SELECT *, CONCAT(m.fname , ' ', m.lname) AS name FROM members m INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id INNER JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id WHERE (lr.request_status = 'Approved' OR lr.request_status = 'Declined') AND (is_claim = $status)";
+    $records_sql = "SELECT *, CONCAT(m.fname , ' ', m.lname) AS name 
+                    FROM members m 
+                    INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id 
+                    INNER JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id 
+                    WHERE lr.request_status = '$filterStatus'
+                    ORDER BY date_requested DESC";
 }
 $records = query($records_sql);
 
@@ -128,8 +133,8 @@ if ($records != false && (count($records) > 0)) {
     <form action="./database/filter-loan-requests.php" method="POST" id='statusForm'>
         <select name="filter-record" id="selectFilter">
             <option value="All" selected>All</option>
-            <option value="Claimed" <?php if (isset ($filterStatus) && $filterStatus == 'Claimed') {echo "selected";}?>>Claimed</option>
-            <option value="Unclaimed" <?php if (isset ($filterStatus) && $filterStatus == 'Unclaimed') {echo "selected";}?>>Unclaimed</option>
+            <option value="Approved" <?php if (isset ($filterStatus) && $filterStatus == 'Approved') {echo "selected";}?>>Approved</option>
+            <option value="Declined" <?php if (isset ($filterStatus) && $filterStatus == 'Declined') {echo "selected";}?>>Declined</option>
         </select>
     </form>
 </div>
