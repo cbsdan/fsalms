@@ -13,9 +13,9 @@
             }
     
             $filterRecord = $_POST['filter-record'];  
-            if ($filterRecord == 'Claimed') {
+            if ($filterRecord == 'Approved') {
                 $_SESSION['status'] = 1;
-            } else if ($filterRecord == 'Unclaimed'){
+            } else if ($filterRecord == 'Declined'){
                 $_SESSION['status'] = 0;
             }
     
