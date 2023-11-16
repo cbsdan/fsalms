@@ -30,11 +30,11 @@
             }
 
             //Fetch the loan amount of loan by member
-            $sql = "SELECT loan_amount FROM loan_details WHERE loan_detail_id = $loan_detail_id";
+            $sql = "SELECT ROUND(loan_amount + (loan_amount * (interest_rate / 100)), 2) AS total_loan FROM loan_details WHERE loan_detail_id = $loan_detail_id";
             $result = query($sql);
-            $loan_amount = $result['loan_amount'];
+            $total_loan = $result['total_loan'];
 
-            if ($total_paid >= $loan_amount ) {
+            if ($total_paid >= $total_loan ) {
                 $sql = "UPDATE loan_details SET is_paid = 1 WHERE loan_detail_id = $loan_detail_id";
                 query($sql);
             }
