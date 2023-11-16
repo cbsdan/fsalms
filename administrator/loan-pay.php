@@ -21,14 +21,26 @@ if (isset($_GET['search'])) {
     $searchType = $_GET['search-type'];
     if ($searchType == 'name') {
         //searchtype is name
-        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
-                FROM members
-                LEFT JOIN accounts ON members.mem_id = accounts.mem_id WHERE CONCAT(members.fname, ' ', members.lname) LIKE '%$searchValue%'";
+        $sql = "SELECT m.mem_id, ld.loan_detail_id, a.profile, lr.request_id, CONCAT(m.fname, ' ', m.lname) AS name, m.sex, TIMESTAMPDIFF(YEAR, m.birthdate, CURDATE()) AS age, ld.loan_amount, ld.month_duration, ld.is_paid
+                FROM members m 
+                INNER JOIN loan_requests lr
+                ON lr.mem_id = m.mem_id
+                INNER JOIN accounts a
+                ON a.mem_id = m.mem_id
+                INNER JOIN loan_details ld
+                ON ld.loan_detail_id = lr.loan_detail_id
+                WHERE lr.request_status = 'Approved' AND lr.is_claim = 1 AND ld.is_paid = 0 AND CONCAT(m.fname, ' ', m.lname) LIKE '%$searchValue%'";
     } else {
         //searchtype is mem_id
-        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
-                FROM members
-                LEFT JOIN accounts ON members.mem_id = accounts.mem_id WHERE members.$searchType LIKE '%$searchValue%'";
+        $sql = "SELECT m.mem_id, ld.loan_detail_id, a.profile, lr.request_id, CONCAT(m.fname, ' ', m.lname) AS name, m.sex, TIMESTAMPDIFF(YEAR, m.birthdate, CURDATE()) AS age, ld.loan_amount, ld.month_duration, ld.is_paid
+                FROM members m 
+                INNER JOIN loan_requests lr
+                ON lr.mem_id = m.mem_id
+                INNER JOIN accounts a
+                ON a.mem_id = m.mem_id
+                INNER JOIN loan_details ld
+                ON ld.loan_detail_id = lr.loan_detail_id
+                WHERE lr.request_status = 'Approved' AND lr.is_claim = 1 AND ld.is_paid = 0 AND m.$searchType LIKE '%$searchValue%'";
     }
     $_SESSION['section'] = './administrator/loan-pay.php';
     $_SESSION['activeNavId'] = 'l-payment';
@@ -39,9 +51,16 @@ if (isset($_GET['search'])) {
 } 
 
 //Default SQL Command
-$sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
-        FROM members
-        LEFT JOIN accounts ON members.mem_id = accounts.mem_id";
+$sql = "SELECT m.mem_id, ld.loan_detail_id, a.profile, lr.request_id, CONCAT(m.fname, ' ' , m.lname) AS name, m.sex, TIMESTAMPDIFF(YEAR, m.birthdate, CURDATE()) AS age, ld.loan_amount, ld.month_duration, ld.is_paid
+        FROM members m 
+        INNER JOIN loan_requests lr
+        ON lr.mem_id = m.mem_id
+        INNER JOIN accounts a
+        ON a.mem_id = m.mem_id
+        INNER JOIN loan_details ld
+        ON ld.loan_detail_id = lr.loan_detail_id
+        WHERE lr.request_status = 'Approved' AND lr.is_claim = 1 AND ld.is_paid = 0";
+
 $searchType = 'name';
 
 //Search SQL Command
@@ -82,20 +101,41 @@ $isThereMember = false;
                         <thead>
                             <tr>
                                 <th>Profile</th>
-                                <th>ID</th>
+                                <th>Member ID</th>
                                 <th>Name</th>
                                 <th>Sex</th>
                                 <th>Age</th> 
+                                <th>Loan Amount</th> 
+                                <th>Month Duration</th> 
+                                <th>Payment Status</th> 
                                 <th>Select</th> 
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                                 $result = $conn->query($sql);
-                            
+                   
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
                                         $memId = $row['mem_id'];
+
+                                        $isSelected = false;
+
+                                        if (isset($memInfo['mem_id'])) {
+                                            if ($memId == $memInfo['mem_id']) {
+                                                $isSelected = true;
+                                            }
+                                        }
+
+                                        $loan_detail_id = $row['loan_detail_id'];
+
+                                        //get is_paid
+                                        if ($row['is_paid'] == 0) {
+                                            $payment_status = "Pending";
+                                        } else {
+                                            $payment_status = "Paid";
+                                        }
+
                                         echo "<tr>";
                                         if (empty($row["profile"])) {
                                             echo "<td class='profile-img'><img src='./img/default-profile.png' alt='img'></td>";
@@ -107,12 +147,18 @@ $isThereMember = false;
                                         echo "<td>" . $row['name']. "</td>";
                                         echo "<td>" . $row["sex"] . "</td>";
                                         echo "<td>" . $row['age']. "</td>";
+                                        echo "<td>" . $row['loan_amount']. "</td>";
+                                        echo "<td>" . $row['month_duration']. "</td>";
+                                        echo "<td>" . $payment_status. "</td>";
                                         echo "<td>
                                                 <form action='database/fetch_member_info.php' method='POST'>
                                                     <input type='hidden' name='mem_id' value='$memId'>
+                                                    <input type='hidden' name='loan_detail_id' value='$loan_detail_id '>
                                                     <input type='hidden' name='page' value='./administrator/loan-pay.php'>
                                                     <input type='hidden' name='activeNavId' value='l-payment'>
-                                                    <button type='submit' name='select' value='select'>Select</button>
+                                                    <button type='submit' name='select' value='select' class='select-btn m-auto ". ($isSelected ? "c-gold" : '') ."' " . ($isSelected ? "disabled" : '') . ">" . 
+                                                        ($isSelected ? "Selected" : 'Select') . 
+                                                    "</button>
                                                 </form>
                                             </td>";
                                         echo "</tr>";
@@ -120,7 +166,7 @@ $isThereMember = false;
 
                                     $isThereMember = true;
                                 } else {
-                                    echo "<tr><td class='no-result-label text-center' colspan='5'>No members found</td></tr>";
+                                    echo "<tr><td class='no-result-label text-center' colspan='9'>No members found</td></tr>";
                                     $isThereMember = false;
                                 }
                             ?>
@@ -200,12 +246,12 @@ $isThereMember = false;
     <div class="section second">
         <h3 class="title">2. Enter Amount</h3>
         <div class="content">
-            <form action="" method="POST">
+            <form action="./database/loan-payment.php" method="POST">
                 <div class="info">
-                    <label for="savings-amount">Amount: (₱)</label>
-                    <input type="number" id="savings-amount" class="no-spinner" placeholder="<?php if(!$isThereMember || empty($memInfo['mem_id'])) {echo "Disabled";} else {echo "Enter here";}?>" name="payment-amount" <?php if(!$isThereMember || empty($memInfo['mem_id'])) echo "disabled"?>>
+                    <label for="payment-amount">Amount: (₱)</label>
+                    <input type="number" id="payment-amount" class="no-spinner" placeholder="<?php if(!$isThereMember || empty($memInfo['mem_id'])) {echo "Disabled";} else {echo "Enter here";}?>" name="payment-amount" <?php if(!$isThereMember || empty($memInfo['mem_id'])) echo "disabled"?>>
                     <input type="hidden" name="mem_id" value="<?php if (isset($memInfo['mem_id'])) {echo $memInfo['mem_id']; }?>">
-
+                    <input type="hidden" name="loan_detail_id" value="<?php if (isset($memInfo['loan_detail_id'])) {echo $memInfo['loan_detail_id']; }?>">
                 </div>
                 <button class="submit" type="submit" name="submit" value="submit">Save</button>
             </form>
