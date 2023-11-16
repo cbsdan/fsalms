@@ -20,12 +20,22 @@
             $_SESSION['message'] = "Successfully deposit savings!";
             $_SESSION['messageBg'] = 'green';
 
+            //erase the previous transaction type filter, search value and search type in member transaction
+            $_SESSION['searchValue'] = null;
+            $_SESSION['searchType'] = null;
+            $_SESSION['activity'] = null;
+
+            $_SESSION['section'] = './administrator/member-transactions.php';
+            $_SESSION['activeNavId'] = 'm-transactions';
+
         } catch (Exception $e) {
             $_SESSION['message'] = "Failed to deposit savings. Error : $e";
             $_SESSION['messageBg'] = 'red';
+
+            $_SESSION['section'] = './administrator/savings-deposits.php';
+            $_SESSION['activeNavId'] = 's-deposits';
         }
-        $_SESSION['section'] = './administrator/savings-deposits.php';
-        $_SESSION['activeNavId'] = 's-deposits';
+       
         header('Location: ../administrator-ui.php');
         exit();
     }

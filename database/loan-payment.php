@@ -41,8 +41,14 @@
 
             $_SESSION['message'] = "Successfully recorded loan payment";
             $_SESSION['messageBg'] = "green";
-            $_SESSION['section'] = './administrator/loan-pay.php';
-            $_SESSION['activeNavId'] = 'l-payment';
+            //THIS WILL REDIRECT THE ADMIN TO MEMBER TRANSACTIONS TO SEE IF IT SUCCESSFULLY INSERTED
+            //erase the previous transaction type filter, search value and search type in member transaction
+            $_SESSION['searchValue'] = null;
+            $_SESSION['searchType'] = null;
+            $_SESSION['activity'] = null;
+
+            $_SESSION['section'] = './administrator/member-transactions.php';
+            $_SESSION['activeNavId'] = 'm-transactions';
 
         } catch(Exception $e) {
             $_SESSION['message'] = "Failed to record loan payment. Error: $e";

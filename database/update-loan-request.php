@@ -51,10 +51,10 @@
             $sql = "UPDATE loan_requests SET is_claim = 1 WHERE request_id = $request_id";
             query($sql);
 
-            $_SESSION['message'] = "Successfully updated the claim status with the request ID of $request_id!";
+            $_SESSION['message'] = "Recorded! Successfully updated the claim status with the request ID of $request_id!";
             $_SESSION['messageBg'] = 'green';
-            $_SESSION['section'] = './administrator/loan-requests.php';
-            $_SESSION['activeNavId'] = 'l-requests';
+            $_SESSION['section'] = './administrator/member-transactions.php';
+            $_SESSION['activeNavId'] = 'm-transactions';
         } catch (Exception $e) {
             $_SESSION['message'] = "Failed to claim loan request. Error: $e";
             $_SESSION['messageBg'] = 'red';
