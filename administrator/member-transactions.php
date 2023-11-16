@@ -221,7 +221,7 @@ $transactions = $conn->query($sql);
                                     </tr>";
                             }
                         } else {
-                            echo "<td colspan='6' class='text-center'>No Transaction Found!</td>";
+                            echo "<td colspan='6' class='no-result-label text-center'>No Transaction Found!</td>";
                         }
                     ?>
             </table>
