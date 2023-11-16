@@ -95,6 +95,15 @@ $isThereMember = false;
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             $memId = $row['mem_id'];
+                            
+                            $isSelected = false;
+
+                            if (isset($memInfo['mem_id'])) {
+                                if ($memId == $memInfo['mem_id']) {
+                                    $isSelected = true;
+                                }
+                            }
+
                             echo "<tr>";
                             if (empty($row["profile"])) {
                                 echo "<td class='profile-img'><img src='./img/default-profile.png' alt='img'></td>";
@@ -111,7 +120,9 @@ $isThereMember = false;
                                         <input type='hidden' name='mem_id' value='$memId'>
                                         <input type='hidden' name='page' value='./administrator/member-information.php'>
                                         <input type='hidden' name='activeNavId' value='m-information'>
-                                        <button type='submit' name='select' value='select'>Select</button>
+                                        <button type='submit' name='select' value='select' class='m-auto select-btn ". ($isSelected ? "c-gold" : '') ."' " . ($isSelected ? "disabled" : '') . ">" . 
+                                            ($isSelected ? "Selected" : 'Select') . 
+                                        "</button>
                                     </form>
                                   </td>";
                             echo "</tr>";
