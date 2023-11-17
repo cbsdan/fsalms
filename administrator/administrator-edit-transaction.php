@@ -35,21 +35,21 @@
     
     //DEFAULT SQL COMMAND, IF ADMIN DOESN'T SEARCH AND FILTER ACTIVITY
     $sql = "SELECT * FROM (
-                SELECT 'Deposits' as activity, d.deposit_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, d.deposited AS amount, d.deposit_timestamp AS date
+                SELECT 'Deposits' as activity, d.deposit_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, d.deposited AS amount, d.deposit_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN deposit d ON d.mem_id = a.mem_id
     
                 UNION 
     
-                SELECT 'Loan Payment' as activity, lp.payment_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, lp.payment_amount AS amount, lp.payment_timestamp AS date
+                SELECT 'Loan Payment' as activity, lp.payment_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, lp.payment_amount AS amount, lp.payment_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_payment lp ON lp.mem_id = m.mem_id
     
                 UNION 
     
-                SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -68,21 +68,21 @@
         if ($activity != null) {
             //If admin want to filter record whether it is approved or declined, this will be the query:
             $sql = "SELECT * FROM (
-                SELECT 'Deposits' as activity, d.deposit_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, d.deposited AS amount, d.deposit_timestamp AS date
+                SELECT 'Deposits' as activity, d.deposit_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, d.deposited AS amount, d.deposit_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN deposit d ON d.mem_id = a.mem_id
     
                 UNION 
     
-                SELECT 'Loan Payment' as activity, lp.payment_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, lp.payment_amount AS amount, lp.payment_timestamp AS date
+                SELECT 'Loan Payment' as activity, lp.payment_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, lp.payment_amount AS amount, lp.payment_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_payment lp ON lp.mem_id = m.mem_id
     
                 UNION 
     
-                SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -102,21 +102,21 @@
         if ($searchValue != '') {
             //searchtype is name
             $sql = "SELECT * FROM (
-                SELECT 'Deposits' as activity, d.deposit_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, d.deposited AS amount, d.deposit_timestamp AS date
+                SELECT 'Deposits' as activity, d.deposit_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, d.deposited AS amount, d.deposit_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN deposit d ON d.mem_id = a.mem_id
     
                 UNION 
     
-                SELECT 'Loan Payment' as activity, lp.payment_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, lp.payment_amount AS amount, lp.payment_timestamp AS date
+                SELECT 'Loan Payment' as activity, lp.payment_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, lp.payment_amount AS amount, lp.payment_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_payment lp ON lp.mem_id = m.mem_id
     
                 UNION 
     
-                SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -136,21 +136,21 @@
     
         if ($searchValue != '' && $activity != null) {
             $sql = "SELECT * FROM (
-                SELECT 'Deposits' as activity, d.deposit_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, d.deposited AS amount, d.deposit_timestamp AS date
+                SELECT 'Deposits' as activity, d.deposit_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, d.deposited AS amount, d.deposit_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN deposit d ON d.mem_id = a.mem_id
     
                 UNION 
     
-                SELECT 'Loan Payment' as activity, lp.payment_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, lp.payment_amount AS amount, lp.payment_timestamp AS date
+                SELECT 'Loan Payment' as activity, lp.payment_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, lp.payment_amount AS amount, lp.payment_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_payment lp ON lp.mem_id = m.mem_id
     
                 UNION 
     
-                SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -165,6 +165,11 @@
     // echo $sql;
     // exit();
     $transactions = $conn->query($sql);
+
+    if (isset($_SESSION['transactionInfo'])) {
+        $transactionInfo = $_SESSION['transactionInfo'];
+        $_SESSION['transactionInfo'] = null;
+    }
 ?>
 
 <h1>Edit Transaction</h1>
@@ -219,7 +224,13 @@
                                     <td>" . $transaction['name'] . "</td>
                                     <td>₱" . $transaction['amount'] . "</td>
                                     <td>" . $transaction['date'] . "</td>
-                                    <td><button class='bg-green m-auto'>Edit</button></td> 
+                                    <td>
+                                        <form action='./database/fetch-a-transaction.php' method='POST'>
+                                            <input type='hidden' name='mem_id' value = '". $transaction['mem_id']."'>
+                                            <input type='hidden' name='transac-type' value = '". $transaction['activity']."'>
+                                            <input type='hidden' name='transac-id' value = '". $transaction['transaction_id']."'>
+                                            <button type='submit' name='transactionBtn' value='edit' class='bg-green m-auto'>Edit</button></td> 
+                                        </form>
                                     <td><button class='bg-red m-auto'>Delete</button></td> 
                                 </tr>";
                         }
@@ -231,27 +242,35 @@
         </table>
     </div>
 </div>
-<div class="edit-transaction p-1rem">
+<div class="edit-transaction p-1rem <?php echo (isset($transactionInfo)) ? '' : 'hidden'?>">
     <h3 class="title">Edit Here</h3>
     <hr>
-    <form action="" method="POST">
+    <form action="./database/update-transaction.php" method="POST">
+        <input type='hidden' name='mem_id' value='<?php echo $transactionInfo['mem_id']?>'>
+        <input type='hidden' name='transaction-type' value='<?php echo $transactionInfo['transacType']?>'>
+        <input type='hidden' name='transaction-id' value='<?php echo $transactionInfo['transacId']?>'>
+
         <div class="info">
-            <label for="transaction-type">Type:</label>
-            <input type="text" id="transaction-type" placeholder="Enter Type" disabled>
+            <label for="member-info">Member Name (ID):</label>
+            <input type="text" name='member-info' value='<?php echo $transactionInfo['fname'] . " " . $transactionInfo['lname'] . " (" . $transactionInfo['mem_id'] . ")"?>' placeholder="Enter Type" disabled>
         </div>
         <div class="info">
-            <label for="transaction-id">ID:</label>
-            <input type="number" id="transaction-id" placeholder="Enter ID" disabled>
+            <label>Type:</label>
+            <input type="text" value='<?php echo $transactionInfo['transacType'] ?>' placeholder="Enter Type" disabled>
+        </div>
+        <div class="info">
+            <label>ID: </label>
+            <input type="number" id="transaction-id" placeholder="Enter ID" value='<?php echo $transactionInfo['transacId'] ?>' disabled>
         </div>
         <div class="info">
             <label for="transaction-amount">Amount: <span class="required">*</span></label>
-            <input type="number" id="transaction-amount" class="no-spinner" placeholder="Enter Amount" required>
+            <input type="number" id="transaction-amount" name='transaction-amount' class="no-spinner" value='<?php echo $transactionInfo['transacAmount'] ?>' placeholder="Enter Amount" required>
         </div>
         <div class="info">
-            <label for="transaction-timestamp">Timestamp:</label>
-            <input type="date" id="transaction-timestamp" required>
+            <label>Timestamp: </label>
+            <input type="date" id="transaction-timestamp" value='<?php echo $transactionInfo['transacDate'] ?>' disabled>
         </div>
-        <button id="edit-btn" type="submit" name="edit-btn" value="submit" >Apply</button>
+        <button id="edit-btn" type="submit" name="edit-btn" value="submit">Apply</button>
     </form>
 </div>
 
