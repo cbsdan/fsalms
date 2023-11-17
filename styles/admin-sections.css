@@ -323,6 +323,10 @@ table td.profile-img {
     width: 100%;
     min-width: 50px;
 }
+#transaction-type {
+    margin-left: auto;
+    margin-bottom: 1rem;
+}
 /* Settings */
 .reset-title, .password-title {
     margin-top: 3.5rem;
