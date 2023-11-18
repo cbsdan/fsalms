@@ -229,9 +229,16 @@
                                             <input type='hidden' name='mem_id' value = '". $transaction['mem_id']."'>
                                             <input type='hidden' name='transac-type' value = '". $transaction['activity']."'>
                                             <input type='hidden' name='transac-id' value = '". $transaction['transaction_id']."'>
-                                            <button type='submit' name='transactionBtn' value='edit' class='bg-green m-auto'>Edit</button></td> 
+                                            <button type='submit' name='transactionBtn' value='edit' class='bg-green m-auto'>Edit</button> 
                                         </form>
-                                    <td><button class='bg-red m-auto'>Delete</button></td> 
+                                    <td>
+                                        <form action='./database/update-transaction.php' method='POST' class='deleteTransactionForm'>
+                                            <input type='hidden' class='mem_id' name='mem_id' value = '". $transaction['mem_id']."'>
+                                            <input type='hidden' class='transac-type' name='transac-type' value = '". $transaction['activity']."'>
+                                            <input type='hidden' class='transac-id' name='transac-id' value = '". $transaction['transaction_id']."'>
+                                            <button type='submit' name='delete-btn' value='delete' class='bg-red m-auto'>Delete</button>
+                                        </form>
+                                    </td> 
                                 </tr>";
                         }
                     } else {
@@ -280,4 +287,21 @@
         document.getElementById('filterTransaction').submit();
 
     });
+
+    let deleteTransactionForms = document.querySelectorAll('.deleteTransactionForm')
+    deleteTransactionForms.forEach((deleteTransactionForm)=>{
+        let transactionId = deleteTransactionForm.querySelector('.transac-id');
+        let transactionType = deleteTransactionForm.querySelector('.transac-type');
+        let mem_id = deleteTransactionForm.querySelector('.mem_id');
+
+        deleteTransactionForm.addEventListener('submit', (e)=>{
+            let confirmation = confirm(`Do you want to delete ${transactionType.value} with an ID of ${transactionId.value} and Member ID of ${mem_id.value}?`);
+
+            if (!confirmation) {
+                e.preventDefault();
+            } 
+        })
+    })
+
+
 </script>
