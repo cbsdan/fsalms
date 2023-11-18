@@ -28,10 +28,10 @@ $sql = "SELECT *, m.mem_id, CONCAT(m.fname, ' ', m.lname) AS name,m.fname, m.lna
         WHERE m.mem_id = $memId";
 $memInfo = query($sql);
 
-if (isset($memInfo['profile'])) {
+if (isset($memInfo['profile']) && $memInfo['profile'] != '') {
     $profileSrc = getImageSrc($memInfo['profile']);
 } else {
-    $profileSrc = './img/profile-1.png';
+    $profileSrc = './img/default-profile.png';
 }
 ?>
 <div class="user-info">
