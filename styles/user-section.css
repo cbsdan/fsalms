@@ -78,7 +78,6 @@ main .section.user h1 {
     padding: 0.5rem 1rem;
 }
 .section .transactions-container .transactions-table {
-    min-height: 50vh;
     background-color: var(--input-box-background);
 }
 
