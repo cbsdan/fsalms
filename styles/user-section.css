@@ -4,6 +4,7 @@
     /////////////////////////
 */
 main .section.user {
+    min-height: 100vh;
     max-width: var(--content-max-width);
     margin: 0 auto;
     padding: 0 10rem;
