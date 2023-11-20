@@ -49,7 +49,7 @@ $sql = "SELECT * FROM (
 
             UNION 
 
-            SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+            SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_timestamp AS date
             FROM members m 
             INNER JOIN accounts a ON a.mem_id = m.mem_id 
             INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -82,7 +82,7 @@ if (isset($_SESSION['activity'])) {
 
             UNION 
 
-            SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+            SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_timestamp AS date
             FROM members m 
             INNER JOIN accounts a ON a.mem_id = m.mem_id 
             INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -116,7 +116,7 @@ if (isset($_SESSION['searchValue']) && isset($_SESSION['searchType'])) {
 
             UNION 
 
-            SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+            SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_timestamp AS date
             FROM members m 
             INNER JOIN accounts a ON a.mem_id = m.mem_id 
             INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -150,7 +150,7 @@ if (isset($activity) && isset($_SESSION['searchValue']) && isset($_SESSION['sear
 
             UNION 
 
-            SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+            SELECT 'Loan' as activity, ld.loan_detail_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_timestamp AS date
             FROM members m 
             INNER JOIN accounts a ON a.mem_id = m.mem_id 
             INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
