@@ -44,6 +44,10 @@ if (file_exists($database_path)) {
                 <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
                 <p class="nav-name">Member Transactions</p>
             </div>
+            <div class="nav" id="m-verification" onclick="loadContent('./administrator/member-verification.php', this)">
+                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
+                <p class="nav-name">Member Verification</p>
+            </div>
         </div>
         <div class="savings nav-container">
             <p class="text">SAVINGS</p>
