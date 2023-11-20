@@ -26,6 +26,10 @@ $sql = "SELECT *,  members.mem_id, members.fname, members.lname, CONCAT(members.
         LEFT JOIN accounts ON members.mem_id = accounts.mem_id 
         WHERE members.mem_id = $mem_id";
 $mem_info = query($sql);
+
+$sql = "SELECT true AS isUploaded FROM verification_images WHERE mem_id = $mem_id";
+$verification_imgs = query($sql);
+
 ?>
 
 <div class="background">
@@ -69,6 +73,39 @@ $mem_info = query($sql);
                 <input type="file" id="upload-img" accept=".jpg, .jpeg, .png" name="user-profile">
             </div>
             <button id="edit-btn" type="submit" name="submit" value="edit" >Apply</button>
+        </form>
+    </div>
+
+    <h1 class="title">Verification Status</h1>
+    <hr>
+    <div class="my-3 mb-5">
+        <div class="details"> 
+            <p>Status: <span class="value <?php echo ($mem_info['verification_status'] == "Unverified") ? "c-red" : "c-green"?>"><?php echo $mem_info['verification_status'] ; ?></p>
+        </div>
+    </div>
+    <div class="content <?php echo ($mem_info['verification_status'] == "Verified") ? "hidden" : ""?>">
+        <p class='t-italic mb-5'>
+            <?php 
+                echo (empty($verification_imgs['isUploaded'])) 
+                ? "Verify Now by uploading these images and wait for admin approval within 7 days and get privilege to request loans" 
+                : "Waiting for Admin Approval";
+            ?>
+        </p>
+        <form action="./database/user-edit.php" method="POST" class="<?php echo (isset($verification_imgs['isUploaded'])) ? "hidden" : ""?>" enctype="multipart/form-data">
+            <input type="hidden" name="mem_id" value="<?php echo $mem_id?>">
+            <div class="info">
+                <label for="upload-img">Valid ID: <span class="required">*</span></label>
+                <input type="file" id="upload-img" accept=".jpg, .jpeg, .png" name="user-profile">
+            </div>
+            <div class="info">
+                <label for="upload-img">Selfie: <span class="required">*</span></label>
+                <input type="file" id="upload-img" accept=".jpg, .jpeg, .png" name="user-profile">
+            </div>
+            <div class="info">
+                <label for="upload-img">Selfie with Valid ID: <span class="required">*</span></label>
+                <input type="file" id="upload-img" accept=".jpg, .jpeg, .png" name="user-profile">
+            </div>
+            <button id="edit-btn" type="submit" name="submit" value="verify" >Apply</button>
         </form>
     </div>
 
