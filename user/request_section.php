@@ -16,9 +16,27 @@ if (file_exists($database_path)) {
     include_once($database_path_index);
 }
 
+$member_username = $_SESSION['valid'];
+
+$sql = "SELECT mem_id FROM accounts WHERE username = '$member_username'";
+$result = query($sql);
+$memId = $result['mem_id'];
+
+//GET VERIFICATION STATUS
+$sql = "SELECT verification_status FROM members WHERE mem_id = $memId";
+$result = query($sql);
+$verification_status = $result['verification_status'];
+
 ?>
 
 <div class="background">
+    <?php 
+    //CHECK IF THE MEMBER IS VERIFIED OR NOT
+    if ($verification_status == "Unverified") {
+        echo "<h1 class='text-center not-verified-label' >Please Verify your account first</h1>";
+        exit();
+    }
+    ?>
     <h1 class="request-title title">Request A Loan</h1>
     <hr>
     <div class="request-container content">
