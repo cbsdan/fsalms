@@ -111,8 +111,18 @@ if ($records != false && (count($records) > 0)) {
                                 <td>" . $loan_request['claim_date'] . "</td>
                                 <td>" . $loan_request['date_requested'] . "</td>
                                 <td class='text-center'>" . $loan_request['request_status'] . "</td>
-                                <td><button class='bg-green m-auto'>Approve</button></td>
-                                <td><button class='bg-red m-auto'>Decline</button></td>
+                                <td>
+                                    <form action='./database/update-loan-request.php' method='POST'>
+                                        <input type='hidden' name='request_id' value='" . $loan_request['request_id'] . "'>
+                                        <button type='submit' name='approve' value='approve' class='bg-green m-auto'>Approve</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action='./database/update-loan-request.php' method='POST'>
+                                        <input type='hidden' name='request_id' value='" . $loan_request['request_id'] . "'>
+                                        <button type='submit' name='decline' value='decline' class='bg-red m-auto'>Decline</button>
+                                    </form>
+                                </td>
                                 </tr>";
                         }
                     }
