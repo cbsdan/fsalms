@@ -20,7 +20,6 @@
     if (isset($_GET['search'])) {
         $searchValue = $_GET['search-value'];
         $searchType = $_GET['search-type'];
-            
     } 
     
     if (isset($_GET['searchValue']) && isset($_GET['searchType'])) {
@@ -49,7 +48,7 @@
     
                 UNION 
     
-                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -82,7 +81,7 @@
     
                 UNION 
     
-                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_status AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -116,7 +115,7 @@
     
                 UNION 
     
-                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -150,7 +149,7 @@
     
                 UNION 
     
-                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -270,7 +269,7 @@
             <input type="number" id="transaction-id" placeholder="Enter ID" value='<?php echo $transactionInfo['transacId'] ?>' disabled>
         </div>
         <div class="info">
-            <label for="transaction-amount">Amount: <span class="required">*</span></label>
+            <label for="transaction-amount">Amount (Editable): <span class="required">*</span></label>
             <input type="number" id="transaction-amount" name='transaction-amount' class="no-spinner" value='<?php echo $transactionInfo['transacAmount'] ?>' placeholder="Enter Amount" required>
         </div>
         <div class="info">
