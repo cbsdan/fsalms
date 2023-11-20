@@ -22,12 +22,12 @@ if (isset($_GET['search'])) {
     $searchType = $_GET['search-type'];
     if ($searchType == 'name') {
         //searchtype is name
-        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
+        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, members.verification_status, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
                 FROM members
                 LEFT JOIN accounts ON members.mem_id = accounts.mem_id WHERE CONCAT(members.fname, ' ', members.lname) LIKE '%$searchValue%'";
     } else {
         //searchtype is mem_id
-        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
+        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, members.verification_status, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
                 FROM members
                 LEFT JOIN accounts ON members.mem_id = accounts.mem_id WHERE members.$searchType LIKE '%$searchValue%'";
     }
@@ -40,7 +40,7 @@ if (isset($_GET['search'])) {
 } 
 
 //Default SQL Command
-$sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
+$sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, members.verification_status, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
         FROM members
         LEFT JOIN accounts ON members.mem_id = accounts.mem_id";
 $searchType = 'name';
@@ -85,6 +85,7 @@ $isThereMember = false;
                         <th>Name</th>
                         <th>Sex</th>
                         <th>Age</th> 
+                        <th>Status</th> 
                         <th>Select</th> 
                     </tr>
                 </thead>
@@ -115,6 +116,7 @@ $isThereMember = false;
                             echo "<td>" . $row['name']. "</td>";
                             echo "<td>" . $row["sex"] . "</td>";
                             echo "<td>" . $row['age']. "</td>";
+                            echo "<td class='text-center " . (($row['verification_status'] == "Verified") ? "c-green" : "c-red") . "'>" . $row['verification_status'] . "</td>";
                             echo "<td>
                                     <form action='database/fetch_member_info.php' method='POST'>
                                         <input type='hidden' name='mem_id' value='$memId'>
@@ -170,7 +172,9 @@ $isThereMember = false;
                         <p class="data">Sex: <span class="value"><?php echo $memInfo['sex']?></p>
                     </div>
                     <div class="other-info">
-                        <p class="data"><?php if ($memInfo['contact']!=""){echo $memInfo['contact'];}else{echo 'null';} ?></p>
+                        <p class="data <?php echo (($memInfo['verification_status'] == "Verified") ? "c-green" : "c-red")?>"> <?php echo $memInfo['verification_status'] ?></p>
+                        <p>|</p>
+                        <p class="data"> <?php if ($memInfo['contact']!=""){echo $memInfo['contact'];}else{echo 'null';} ?></p>
                     </div>
                     
                 </div>
