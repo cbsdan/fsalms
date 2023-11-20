@@ -161,6 +161,9 @@ select {
 .c-gold {
     color: var(--gold) !important;
 }
+.c-blue {
+    color: var(--c-blue) !important;
+}
 
 .select-btn {
     width: 8rem;
@@ -230,6 +233,9 @@ form .info .sex-radio-container {
 }
 .mb-5 {
     margin-bottom: 1.5rem;
+}
+.mt-8 {
+    margin-top: 3rem;
 }
 .semibold-text {
     font-weight: 600;
