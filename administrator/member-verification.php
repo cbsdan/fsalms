@@ -91,7 +91,7 @@
 <h1 class='my-5 mt-8 <?php echo ($verifiedMembers->num_rows <= 0) ? 'hidden' : '' ?>'>Verified Members</h1>
 <hr class='<?php echo ($verifiedMembers->num_rows <= 0) ? 'hidden' : '' ?>'>
 
-<h4 class='<?php echo ($verifiedMembers->num_rows <= 0) ? 'hidden' : '' ?>'>Total: <?php echo $verifiedMembers->num_rows?></h4>
+<h4 class='my-3 <?php echo ($verifiedMembers->num_rows <= 0) ? 'hidden' : '' ?>'>Total: <?php echo $verifiedMembers->num_rows?></h4>
 <div class='result member-verification-section <?php echo ($verifiedMembers->num_rows <= 0) ? 'hidden' : '' ?>'>
     <table class='result-table'>
         <thead>
