@@ -105,6 +105,7 @@ $isThereMember = false;
                                 <th>Name</th>
                                 <th>Sex</th>
                                 <th>Age</th> 
+                                <th>Loan Detail ID</th>
                                 <th>Loan Amount</th> 
                                 <th>Month Duration</th> 
                                 <th>Payment Status</th> 
@@ -118,16 +119,15 @@ $isThereMember = false;
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
                                         $memId = $row['mem_id'];
+                                        $loan_detail_id = $row['loan_detail_id'];
 
                                         $isSelected = false;
 
-                                        if (isset($memInfo['mem_id'])) {
-                                            if ($memId == $memInfo['mem_id']) {
+                                        if (isset($memInfo['loan_detail_id'])) {
+                                            if ($loan_detail_id == $memInfo['loan_detail_id']) {
                                                 $isSelected = true;
                                             }
                                         }
-
-                                        $loan_detail_id = $row['loan_detail_id'];
 
                                         //get is_paid
                                         if ($row['is_paid'] == 0) {
@@ -147,6 +147,7 @@ $isThereMember = false;
                                         echo "<td>" . $row['name']. "</td>";
                                         echo "<td>" . $row["sex"] . "</td>";
                                         echo "<td>" . $row['age']. "</td>";
+                                        echo "<td>" . $row['loan_detail_id']. "</td>";
                                         echo "<td>" . $row['loan_amount']. "</td>";
                                         echo "<td>" . $row['month_duration']. "</td>";
                                         echo "<td>" . $payment_status. "</td>";
@@ -203,7 +204,9 @@ $isThereMember = false;
                                 <p class="data">Sex: <span class="value"><?php echo $memInfo['sex']?></p>
                             </div>
                             <div class="other-info">
-                                <p class="data"><?php if ($memInfo['contact']!=""){echo $memInfo['contact'];}else{echo 'null';} ?></p>
+                                <p class="data <?php echo (($memInfo['verification_status'] == "Verified") ? "c-green" : "c-red")?>"> <?php echo $memInfo['verification_status'] ?></p>
+                                <p>|</p>
+                                <p class="data"> <?php if ($memInfo['contact']!=""){echo $memInfo['contact'];}else{echo 'null';} ?></p>
                             </div>
                             
                         </div>
