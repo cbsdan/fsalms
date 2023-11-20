@@ -76,6 +76,8 @@ if (isset($_SESSION['mem_info'])) {
     $_SESSION['mem_info'] = null;
 }
 
+$result = $conn->query($sql);
+
 //use to identify later if there is atleast a member fetch from database 
 $isThereMember = false;
 ?>
@@ -96,6 +98,7 @@ $isThereMember = false;
                         <input type="submit" class="hidden" name="search" value="search">
                     </div>
                 </form>
+                <h4 class="mb-3">Total: <span class="value"><?php echo $result->num_rows?></span></h4>
                 <div class="result">
                     <table class="result-table">
                         <thead>
@@ -114,7 +117,7 @@ $isThereMember = false;
                         </thead>
                         <tbody>
                             <?php
-                                $result = $conn->query($sql);
+                               
                    
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
@@ -148,9 +151,9 @@ $isThereMember = false;
                                         echo "<td>" . $row["sex"] . "</td>";
                                         echo "<td>" . $row['age']. "</td>";
                                         echo "<td>" . $row['loan_detail_id']. "</td>";
-                                        echo "<td>" . $row['loan_amount']. "</td>";
+                                        echo "<td>₱" . $row['loan_amount']. "</td>";
                                         echo "<td>" . $row['month_duration']. "</td>";
-                                        echo "<td>" . $payment_status. "</td>";
+                                        echo "<td class='text-center'>" . $payment_status. "</td>";
                                         echo "<td>
                                                 <form action='database/fetch_member_info.php' method='POST'>
                                                     <input type='hidden' name='mem_id' value='$memId'>
@@ -259,5 +262,74 @@ $isThereMember = false;
                 <button class="submit" type="submit" name="submit" value="submit">Save</button>
             </form>
         </div>
+    </div>
+</div>
+
+
+<?php
+    $paidLoanQuery = "SELECT m.mem_id, ld.loan_detail_id, a.profile, lr.request_id, CONCAT(m.fname, ' ', m.lname) AS name, m.sex, TIMESTAMPDIFF(YEAR, m.birthdate, CURDATE()) AS age, ld.loan_amount, ld.month_duration, ld.is_paid
+    FROM members m 
+    INNER JOIN loan_requests lr
+    ON lr.mem_id = m.mem_id
+    INNER JOIN accounts a
+    ON a.mem_id = m.mem_id
+    INNER JOIN loan_details ld
+    ON ld.loan_detail_id = lr.loan_detail_id
+    WHERE lr.request_status = 'Approved' AND lr.is_claim = 1 AND ld.is_paid = 1";
+
+    $paidLoans = $conn->query($paidLoanQuery);
+    
+?>
+<h1 class="my-3 mt-8 <?php echo (($paidLoans->num_rows <= 0) ? "hidden" : "") ?>">Paid Loans</h1>
+<hr class="<?php echo (($paidLoans->num_rows <= 0) ? "hidden" : "") ?>">    
+<div class="paid-loan mb-5 <?php echo (($paidLoans->num_rows <= 0) ? "hidden" : "") ?>">
+<h4 class="mb-3">Total: <span class="value"><?php echo $paidLoans->num_rows?></span></h4>
+    <div class="result">
+        <table class="result-table">
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                    <th>Member ID</th>
+                    <th>Name</th>
+                    <th>Sex</th>
+                    <th>Age</th> 
+                    <th>Loan Detail ID</th>
+                    <th>Loan Amount</th> 
+                    <th>Month Duration</th> 
+                    <th>Payment Status</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    if ($paidLoans->num_rows > 0) {
+                        while ($row = $paidLoans->fetch_assoc()) {
+                            //get is_paid
+                            if ($row['is_paid'] == 0) {
+                                $payment_status = "Pending";
+                            } else {
+                                $payment_status = "Paid";
+                            }
+
+                            echo "<tr>";
+                            if (empty($row["profile"])) {
+                                echo "<td class='profile-img'><img src='./img/default-profile.png' alt='img'></td>";
+                            } else {
+                                $imgSrc = getImageSrc($row['profile']);
+                                echo "<td class='profile-img'><img src='$imgSrc' alt='img'></td>";
+                            }
+                            echo "<td>$memId</td>";
+                            echo "<td>" . $row['name']. "</td>";
+                            echo "<td>" . $row["sex"] . "</td>";
+                            echo "<td>" . $row['age']. "</td>";
+                            echo "<td>" . $row['loan_detail_id']. "</td>";
+                            echo "<td>₱" . $row['loan_amount']. "</td>";
+                            echo "<td>" . $row['month_duration']. "</td>";
+                            echo "<td class='text-center " . (($payment_status == "Paid") ? "c-green" : "") . "'>" . $payment_status. "</td>";
+                            echo "</tr>";
+                        }
+                    } 
+                ?>
+            </tbody>
+        </table>
     </div>
 </div>
