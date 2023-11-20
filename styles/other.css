@@ -149,6 +149,12 @@ select {
     color: var(--c-green-color);
 
 }
+.c-light-red {
+    color: var(--c-light-red);
+}
+.c-light-green {
+    color: var(--c-light-green);
+}
 .c-light-main {
     color: rgb(var(--light-main-color-rgb)) !important;
 }
@@ -215,8 +221,21 @@ form .info .sex-radio-container {
     display: block;
     margin-left: auto;
 }
+.my-3 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.mb-3 {
+    margin-bottom: 1rem;
+}
+.mb-5 {
+    margin-bottom: 1.5rem;
+}
 .semibold-text {
     font-weight: 600;
+}
+.t-italic {
+    font-style: italic;
 }
 .hidden {
     display: none !important;
