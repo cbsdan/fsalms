@@ -167,7 +167,9 @@ $isThereMember = false;
                                 <p class="data">Sex: <span class="value"><?php echo $memInfo['sex']?></p>
                             </div>
                             <div class="other-info">
-                                <p class="data"><?php if ($memInfo['contact']!=""){echo $memInfo['contact'];}else{echo 'null';} ?></p>
+                                <p class="data <?php echo (($memInfo['verification_status'] == "Verified") ? "c-green" : "c-red")?>"> <?php echo $memInfo['verification_status'] ?></p>
+                                <p>|</p>
+                                <p class="data"> <?php if ($memInfo['contact']!=""){echo $memInfo['contact'];}else{echo 'null';} ?></p>
                             </div>
                             
                         </div>
