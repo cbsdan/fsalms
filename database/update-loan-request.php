@@ -48,7 +48,7 @@
     if (isset($_POST['claim'])) {
         try {
             $request_id = $_POST['request_id'];
-            $sql = "UPDATE loan_requests SET is_claim = 1 WHERE request_id = $request_id";
+            $sql = "UPDATE loan_requests SET is_claim = 1, claimed_timestamp = NOW() WHERE request_id = $request_id";
             query($sql);
 
             $_SESSION['message'] = "Recorded! Successfully updated the claim status with the request ID of $request_id!";
