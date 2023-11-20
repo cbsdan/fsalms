@@ -36,6 +36,7 @@
         '/fsalms/administrator/loan-requests.php',
         '/fsalms/administrator/member-information.php',
         '/fsalms/administrator/member-transactions.php',
+        '/fsalms/administrator/member-verification.php',
         '/fsalms/administrator/savings-deposits.php',
         '/fsalms/administrator/settings.php',
     ];
