@@ -44,6 +44,8 @@ if (isset($memInfo['profile']) && $memInfo['profile'] != '') {
                 <h3 id="user-name"><?php echo $memInfo['name']; ?></h3>
             </div>
             <div class="details">
+                <p><span class="semibold-text">Status: </span><span class='<?php echo ($memInfo['verification_status'] == "Unverified") ? "c-light-red" : "c-light-green"?>'><?php echo $memInfo['verification_status']?></span></p>
+                <span class="semibold-text">|</span>
                 <p><span class="semibold-text">ID: </span><span><?php echo $memId?></span></p>
                 <span class="semibold-text">|</span>
                 <p><span class="semibold-text">Age: </span><?php echo $memInfo['age']; ?><span></span></p>
