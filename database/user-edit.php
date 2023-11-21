@@ -102,6 +102,50 @@
                 $_SESSION['activeNavId'] = 'edit-nav';
             }
         }
+
+        if ($_POST['submit'] == 'verify') {
+            try {
+                if ($_FILES['user-validId']['tmp_name'] != '') {
+                    $validIdData = $_FILES['user-validId']['tmp_name'];
+                    $validId = file_get_contents($validIdData); // Convert image to BLOB
+                } else {
+                    $validId = '';
+                }
+        
+                if ($_FILES['user-selfie']['tmp_name'] != '') {
+                    $selfieData = $_FILES['user-selfie']['tmp_name'];
+                    $selfie = file_get_contents($selfieData); // Convert image to BLOB
+                } else {
+                    $selfie = '';
+                }
+        
+                if ($_FILES['user-selfieWvalidId']['tmp_name'] != '') {
+                    $selfieWvalidIdData = $_FILES['user-selfieWvalidId']['tmp_name'];
+                    $selfieWvalidId = file_get_contents($selfieWvalidIdData); // Convert image to BLOB
+                } else {
+                    $selfieWvalidId = '';
+                }
+        
+                $mem_id = $_POST['mem_id'];
+                $current_date = date("Y-m-d");
+        
+                $sql = "INSERT INTO verification_images (valid_id, selfie, selfie_with_id, mem_id, date_submitted) VALUES (?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param('sssss', $validId, $selfie, $selfieWvalidId, $mem_id, $current_date);
+                $stmt->execute();
+
+                $_SESSION['message'] = "Successfully submitted verification requirements!";
+                $_SESSION['messageBg'] = "green";
+            } catch (Exception $e) {
+                $_SESSION['message'] = "Error during execution: " . $e->getMessage();
+                $_SESSION['messageBg'] = "red";
+            }
+            $_SESSION['section'] = './user/edit_section.php';
+            $_SESSION['activeNavId'] = 'edit-nav';
+        }
+        
+          
+
         header('Location: ../user-ui.php');
         exit();
 }
