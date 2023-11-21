@@ -30,14 +30,14 @@ if (file_exists($database_path)) {
         <div class="dashboard nav-container">
             <p class="text">DASHBOARD</p>
             <div class="nav active" id="d-overview" onclick="loadContent('./administrator/dashboard-overview.php', this)">
-                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
+                <div class="nav-logo"><img src="./img/overview-icon.png" class="logo"></div>
                 <p class="nav-name">Overview</p>
             </div>
         </div>
         <div class="members nav-container">
             <p class="text">MEMBERS</p>
             <div class="nav" id="m-information" onclick="loadContent('./administrator/member-information.php', this)">
-                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
+                <div class="nav-logo"><img src="./img/member-information-icon.png" class="logo"></div>
                 <p class="nav-name">Member Information</p>
             </div>
             <div class="nav" id="m-transactions" onclick="loadContent('./administrator/member-transactions.php', this)">

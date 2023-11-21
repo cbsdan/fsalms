@@ -16,10 +16,10 @@
         include_once($database_path_index);
     }
 
-    $fetchVerifyingMembers = "SELECT *, CONCAT(m.fname, ' ', m.lname) AS name, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age FROM members m INNER JOIN verification_images vi ON vi.mem_id = m.mem_id INNER JOIN accounts a ON a.mem_id = vi.mem_id WHERE m.verification_status = 'Unverified' ORDER BY vi.date_submitted";
+    $fetchVerifyingMembers = "SELECT *, CONCAT(m.fname, ' ', m.lname) AS name, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age FROM members m INNER JOIN verification_images vi ON vi.mem_id = m.mem_id INNER JOIN accounts a ON a.mem_id = vi.mem_id WHERE vi.verification_status = 'Unverified' ORDER BY vi.date_submitted";
     $verifyingMembers = $conn->query($fetchVerifyingMembers);
 
-    $fetchVerifiedMembers = "SELECT *, CONCAT(m.fname, ' ', m.lname) AS name, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age FROM members m INNER JOIN verification_images vi ON vi.mem_id = m.mem_id INNER JOIN accounts a ON a.mem_id = vi.mem_id WHERE m.verification_status = 'Verified' ORDER BY vi.date_submitted";
+    $fetchVerifiedMembers = "SELECT *, CONCAT(m.fname, ' ', m.lname) AS name, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age FROM members m INNER JOIN verification_images vi ON vi.mem_id = m.mem_id INNER JOIN accounts a ON a.mem_id = vi.mem_id WHERE vi.verification_status = 'Verified' ORDER BY vi.date_submitted";
     $verifiedMembers = $conn->query($fetchVerifiedMembers);
 ?>
 

@@ -22,14 +22,20 @@ if (isset($_GET['search'])) {
     $searchType = $_GET['search-type'];
     if ($searchType == 'name') {
         //searchtype is name
-        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, members.verification_status, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
+        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, vi.verification_status, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
                 FROM members
-                LEFT JOIN accounts ON members.mem_id = accounts.mem_id WHERE CONCAT(members.fname, ' ', members.lname) LIKE '%$searchValue%'";
+                LEFT JOIN accounts ON members.mem_id = accounts.mem_id
+                LEFT JOIN verification_images vi ON vi.mem_id = accounts.mem_id
+                WHERE CONCAT(members.fname, ' ', members.lname) LIKE '%$searchValue%'
+                GROUP BY name";
     } else {
         //searchtype is mem_id
-        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, members.verification_status, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
+        $sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, vi.verification_status, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
                 FROM members
-                LEFT JOIN accounts ON members.mem_id = accounts.mem_id WHERE members.$searchType LIKE '%$searchValue%'";
+                LEFT JOIN accounts ON members.mem_id = accounts.mem_id 
+                LEFT JOIN verification_images vi ON vi.mem_id = accounts.mem_id
+                WHERE members.$searchType LIKE '%$searchValue%'
+                GROUP BY name";
     }
     $_SESSION['section'] = './administrator/member-information.php';
     $_SESSION['activeNavId'] = 'm-information';
@@ -40,9 +46,11 @@ if (isset($_GET['search'])) {
 } 
 
 //Default SQL Command
-$sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, members.verification_status, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
+$sql = "SELECT members.mem_id, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, vi.verification_status, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.profile 
         FROM members
-        LEFT JOIN accounts ON members.mem_id = accounts.mem_id";
+        LEFT JOIN accounts ON members.mem_id = accounts.mem_id
+        LEFT JOIN verification_images vi ON vi.mem_id = accounts.mem_id 
+        GROUP BY name";
 $searchType = 'name';
 
 //Search SQL Command
@@ -91,11 +99,11 @@ $isThereMember = false;
                 </thead>
                 <tbody>
                 <?php
-                    $result = $conn->query($sql);
+                    $members = $conn->query($sql);
                 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $memId = $row['mem_id'];
+                    if ($members->num_rows > 0) {
+                        while ($member = $members->fetch_assoc()) {
+                            $memId = $member['mem_id'];
                             
                             $isSelected = false;
 
@@ -106,17 +114,17 @@ $isThereMember = false;
                             }
 
                             echo "<tr>";
-                            if (empty($row["profile"])) {
+                            if (empty($member["profile"])) {
                                 echo "<td class='profile-img'><img src='./img/default-profile.png' alt='img'></td>";
                             } else {
-                                $imgSrc = getImageSrc($row['profile']);
+                                $imgSrc = getImageSrc($member['profile']);
                                 echo "<td class='profile-img'><img src='$imgSrc' alt='img'></td>";
                             }
                             echo "<td>$memId</td>";
-                            echo "<td>" . $row['name']. "</td>";
-                            echo "<td>" . $row["sex"] . "</td>";
-                            echo "<td>" . $row['age']. "</td>";
-                            echo "<td class='text-center " . (($row['verification_status'] == "Verified") ? "c-green" : "c-red") . "'>" . $row['verification_status'] . "</td>";
+                            echo "<td>" . $member['name']. "</td>";
+                            echo "<td>" . $member["sex"] . "</td>";
+                            echo "<td>" . $member['age']. "</td>";
+                            echo "<td class='text-center " . (($member['verification_status'] == "Verified") ? "c-green" : "c-red") . "'>" . (empty($member['verification_status']) || $member['verification_status'] == 'Declined'? "Unverified" : $member['verification_status']) . "</td>";
                             echo "<td>
                                     <form action='database/fetch_member_info.php' method='POST'>
                                         <input type='hidden' name='mem_id' value='$memId'>
@@ -172,7 +180,7 @@ $isThereMember = false;
                         <p class="data">Sex: <span class="value"><?php echo $memInfo['sex']?></p>
                     </div>
                     <div class="other-info">
-                        <p class="data <?php echo (($memInfo['verification_status'] == "Verified") ? "c-green" : "c-red")?>"> <?php echo $memInfo['verification_status'] ?></p>
+                        <p class="data <?php echo (($memInfo['verification_status'] == "Verified") ? "c-green" : "c-red")?>"> <?php echo (empty($memInfo['verification_status']) ? "Unverified" : $memInfo['verification_status']) ?></p>
                         <p>|</p>
                         <p class="data"> <?php if ($memInfo['contact']!=""){echo $memInfo['contact'];}else{echo 'null';} ?></p>
                     </div>
