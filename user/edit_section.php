@@ -24,11 +24,11 @@ $mem_id = $result['mem_id'];
 $sql = "SELECT *,  members.mem_id, members.fname, members.lname, CONCAT(members.fname, ' ', members.lname) AS name, members.sex, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age, accounts.username, accounts.profile 
         FROM members
         LEFT JOIN accounts ON members.mem_id = accounts.mem_id 
-        WHERE members.mem_id = $mem_id";
-$mem_info = query($sql);
-
-$sql = "SELECT true AS isUploaded FROM verification_images WHERE mem_id = $mem_id";
-$verification_imgs = query($sql);
+        LEFT JOIN verification_images vi ON vi.mem_id = accounts.mem_id
+        WHERE members.mem_id = $mem_id
+        ORDER BY verification_id DESC
+        LIMIT 1";
+$memInfo = query($sql);
 
 ?>
 
@@ -40,33 +40,33 @@ $verification_imgs = query($sql);
             <input type="hidden" name="mem_id" value="<?php echo $mem_id?>">
             <div class="info">
                 <label for="input-username">Username: <span class="required">*</span></label>
-                <input type="text" id="input-username" name="username" placeholder="Enter username" value="<?php echo $mem_info['username']?>" required>
+                <input type="text" id="input-username" name="username" placeholder="Enter username" value="<?php echo $memInfo['username']?>" required>
             </div>
             <div class="info">
                 <label for="input-name">Name: <span class="required">*</span></label>
                 <div class="input-name-container" id="input-name">
-                    <input type="text" id="input-fname" name="fname" placeholder="First" value="<?php echo $mem_info['fname']?>" required>
-                    <input type="text" id="input-lname" name="lname" placeholder="Last" value="<?php echo $mem_info['lname']?>" required>
+                    <input type="text" id="input-fname" name="fname" placeholder="First" value="<?php echo $memInfo['fname']?>" required>
+                    <input type="text" id="input-lname" name="lname" placeholder="Last" value="<?php echo $memInfo['lname']?>" required>
                 </div>
             </div>
             <div class="info">
                 <label>Sex: <span class="required">*</span></label>
                 <div class="sex-radio-container">
-                    <label for="radio-male" class="sex-label"><input id="radio-male" type="radio" name="sex" value="Male" <?php if ($mem_info['sex'] === 'Male') echo 'checked'; ?> required>Male</label>
-                    <label for="radio-female" class="sex-label"><input id="radio-female" type="radio" name="sex" value="Female" <?php if ($mem_info['sex'] === 'Female') echo 'checked'; ?> required> Female</label>
+                    <label for="radio-male" class="sex-label"><input id="radio-male" type="radio" name="sex" value="Male" <?php if ($memInfo['sex'] === 'Male') echo 'checked'; ?> required>Male</label>
+                    <label for="radio-female" class="sex-label"><input id="radio-female" type="radio" name="sex" value="Female" <?php if ($memInfo['sex'] === 'Female') echo 'checked'; ?> required> Female</label>
                 </div>
             </div>
             <div class="info">
                 <label for="input-birthdate">Birthdate: <span class="required">*</span></label>
-                <input type="date" id="input-birthdate" name="birthdate" value="<?php echo $mem_info['birthdate']?>" required>
+                <input type="date" id="input-birthdate" name="birthdate" value="<?php echo $memInfo['birthdate']?>" required>
             </div>
             <div class="info">
                 <label for="input-address">Address:</label>
-                <input type="text" id="input-address" name="address"placeholder="Enter Address" value="<?php echo $mem_info['address']?>">
+                <input type="text" id="input-address" name="address"placeholder="Enter Address" value="<?php echo $memInfo['address']?>">
             </div>
             <div class="info">
                 <label for="input-contact">Contact:</label>
-                <input type="text" id="input-contact" name="cnumber"placeholder="Enter Contact" value="<?php echo $mem_info['contact']?>">
+                <input type="text" id="input-contact" name="cnumber"placeholder="Enter Contact" value="<?php echo $memInfo['contact']?>">
             </div>
             <div class="info">
                 <label for="upload-img">Profile:</label>
@@ -80,18 +80,32 @@ $verification_imgs = query($sql);
     <hr>
     <div class="my-3 mb-5">
         <div class="details"> 
-            <p>Status: <span class="value <?php echo ($mem_info['verification_status'] == "Unverified") ? "c-red" : "c-green"?>"><?php echo $mem_info['verification_status'] ; ?></p>
+            <p>Status: 
+                <span class="value <?php echo (((isset($memInfo['verification_status'])) && ($memInfo['verification_status'] == 'Verified')) ? 'c-green' : 'c-red')?>">
+                    <?php echo (!isset($memInfo['verification_status']) ? 'Unverified' : $memInfo['verification_status']) ?>
+                </span>
+            </p>
         </div>
     </div>
-    <div class="content <?php echo ($mem_info['verification_status'] == "Verified") ? "hidden" : ""?>">
+    <div class="content <?php echo (!isset($memInfo['verification_status']) || ($memInfo['verification_status'] == 'Unverified') || ($memInfo['verification_status'] == 'Declined') ? '' : 'hidden') ?>">
         <p class='t-italic mb-5'>
             <?php 
-                echo (empty($verification_imgs['isUploaded'])) 
-                ? "Verify Now by uploading these images and wait for admin approval within 7 days and get privilege to request loans" 
-                : "Waiting for Admin Approval";
+                $sql = "SELECT verification_status FROM verification_images WHERE mem_id = $mem_id AND verification_status = 'Unverified' ORDER BY verification_id DESC LIMIT 1 ";
+                $verification_imgs = $conn->query($sql);
+
+                if ($verification_imgs->num_rows > 0) {
+                    $verification_row = $verification_imgs -> fetch_assoc();
+                    if ($verification_row['verification_status'] == 'Unverified') {
+                        echo "Waiting for admin approval of your application";
+                    } else if ($verification_row['verification_status'] == 'Declined') {
+                        echo "Your application has been declined! Apply again for verification";
+                    }
+                } else {
+                    echo "Verify Now by uploading these images and wait for admin approval within 7 days and get privilege to request loans";
+                }
             ?>
         </p>
-        <form action="./database/user-edit.php" method="POST" class="<?php echo (isset($verification_imgs['isUploaded'])) ? "hidden" : ""?>" enctype="multipart/form-data">
+        <form action="./database/user-edit.php" method="POST" class="<?php echo (isset($verification_row['verification_status']) && $verification_row['verification_status'] != 'Declined'  ? "hidden" : "")?>" enctype="multipart/form-data">
             <input type="hidden" name="mem_id" value="<?php echo $mem_id?>">
             <div class="info">
                 <label for="upload-img">Valid ID: <span class="required">*</span></label>

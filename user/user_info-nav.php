@@ -23,9 +23,12 @@ $sql = "SELECT mem_id FROM accounts WHERE username = '$member_username'";
 $result = query($sql);
 $memId = $result['mem_id'];
 
-$sql = "SELECT *, m.mem_id, CONCAT(m.fname, ' ', m.lname) AS name,m.fname, m.lname, m.sex, m.address, m.contact, TIMESTAMPDIFF(YEAR, m.birthdate, CURDATE()) AS age, m.birthdate, m.date_added, a.username, a.profile, a.password FROM members m 
+$sql = "SELECT *, m.mem_id, CONCAT(m.fname, ' ', m.lname) AS name, m.fname, m.lname, m.sex, m.address, m.contact, TIMESTAMPDIFF(YEAR, m.birthdate, CURDATE()) AS age, m.birthdate, m.date_added, a.username, a.profile, a.password FROM members m 
         INNER JOIN accounts a ON m.mem_id = a.mem_id
-        WHERE m.mem_id = $memId";
+        LEFT JOIN verification_images vi ON vi.mem_id = a.mem_id
+        WHERE m.mem_id = $memId
+        ORDER BY verification_id DESC
+        LIMIT 1";
 $memInfo = query($sql);
 
 if (isset($memInfo['profile']) && $memInfo['profile'] != '') {
@@ -44,7 +47,7 @@ if (isset($memInfo['profile']) && $memInfo['profile'] != '') {
                 <h3 id="user-name"><?php echo $memInfo['name']; ?></h3>
             </div>
             <div class="details">
-                <p><span class="semibold-text">Status: </span><span class='<?php echo ($memInfo['verification_status'] == "Unverified") ? "c-light-red" : "c-light-green"?>'><?php echo $memInfo['verification_status']?></span></p>
+                <p><span class="semibold-text">Status: </span><span class='<?php echo ($memInfo['verification_status'] == "Verified") ? "c-light-green" : "c-light-red"?>'><?php echo (empty($memInfo['verification_status']) ? "Unverified" : $memInfo['verification_status']) ?></span></p>
                 <span class="semibold-text">|</span>
                 <p><span class="semibold-text">ID: </span><span><?php echo $memId?></span></p>
                 <span class="semibold-text">|</span>

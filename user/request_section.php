@@ -23,19 +23,28 @@ $result = query($sql);
 $memId = $result['mem_id'];
 
 //GET VERIFICATION STATUS
-$sql = "SELECT verification_status FROM members WHERE mem_id = $memId";
-$result = query($sql);
-$verification_status = $result['verification_status'];
+$sql = "SELECT verification_status FROM verification_images WHERE mem_id = $memId ORDER BY date_submitted DESC LIMIT 1";
+$result = $conn->query($sql);
 
 ?>
 
 <div class="background">
     <?php 
     //CHECK IF THE MEMBER IS VERIFIED OR NOT
-    if ($verification_status == "Unverified") {
+    if ($result->num_rows > 0) {
+        $verification_status = $result->fetch_assoc();
+        if ($verification_status['verification_status'] == "Unverified"){
+            echo "<h1 class='text-center not-verified-label' >Please wait for admin to verify your account</h1>";
+            exit();
+        } else if ($verification_status['verification_status'] == "Declined") {
+            echo "<h1 class='text-center not-verified-label' >Your recent application has been declined! Apply again to verify your account</h1>";
+            exit();
+        }
+    } else {
         echo "<h1 class='text-center not-verified-label' >Please Verify your account first</h1>";
         exit();
     }
+
     ?>
     <h1 class="request-title title">Request A Loan</h1>
     <hr>

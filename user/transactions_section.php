@@ -34,7 +34,7 @@ $sql = "SELECT * FROM (
 
             UNION 
 
-            SELECT 'Loan' as activity, a.username, ld.loan_detail_id AS transaction_id, m.mem_id, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+            SELECT 'Loan' as activity, a.username, ld.loan_detail_id AS transaction_id, m.mem_id, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_timestamp AS date
             FROM members m 
             INNER JOIN accounts a ON a.mem_id = m.mem_id 
             INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
@@ -67,7 +67,7 @@ if (isset($_SESSION['activity'])) {
 
             UNION 
 
-            SELECT 'Loan' as activity, a.username, ld.loan_detail_id AS transaction_id, m.mem_id, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, ld.date_requested AS date
+            SELECT 'Loan' as activity, a.username, ld.loan_detail_id AS transaction_id, m.mem_id, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_timestamp AS date
             FROM members m 
             INNER JOIN accounts a ON a.mem_id = m.mem_id 
             INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
