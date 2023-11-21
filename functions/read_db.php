@@ -361,6 +361,52 @@ function getTotalDeposits($conn, $mem_id) {
 
 <?php
 
+function computeEndDate($conn) {
+    $weeks= 52;
+    // Get the start date from the database using the getStartDate function
+    $start_date = getStartDate($conn);
+
+    // Check if the start date is retrieved successfully
+    if ($start_date === "No rows found in the system_info table.") {
+        return "Error: " . $start_date;
+    }
+
+    // Convert start date to timestamp
+    $start_timestamp = strtotime($start_date);
+
+    // Calculate the number of seconds in a week
+    $seconds_in_a_week = 60 * 60 * 24 * 7;
+
+    // Calculate the total seconds for the specified number of weeks
+    $total_seconds = $weeks * $seconds_in_a_week;
+
+    // Calculate the end timestamp by adding total seconds to start timestamp
+    $end_timestamp = $start_timestamp + $total_seconds;
+
+    // Format the end timestamp as a date
+    $end_date = date("Y-m-d", $end_timestamp);
+
+    return $end_date;
+}
+
+
+function getStartDate($conn) {
+    // Fetch start_date from the system_info table
+    $sql = "SELECT start_date FROM system_info";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Assuming you only have one row in the system_info table
+        $row = $result->fetch_assoc();
+        $start_date = $row['start_date'];
+
+        return $start_date;
+    } else {
+        return "No rows found in the system_info table.";
+    }
+}
+
+
 function getWeekNumber($conn) {
     // Fetch start_date from the system_info table
     $sql = "SELECT start_date FROM system_info";
@@ -385,7 +431,7 @@ function getWeekNumber($conn) {
         // Calculate the number of weeks
         $week_number = ceil($difference / $seconds_in_a_week);
 
-        return $week_number;
+        return abs($week_number);
     } else {
         return "No rows found in the system_info table.";
     }
@@ -507,4 +553,3 @@ function computeInterestShare($conn, $loanAmount, $member_id) {
 
 
 <!-- USER-> request_section -->
-
