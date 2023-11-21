@@ -51,15 +51,16 @@
                         $validIdSrc = getImageSrc($verifyingMember['valid_id']);
                         $selfieSrc = getImageSrc($verifyingMember['selfie']);
                         $selfieWithIdSrc = getImageSrc($verifyingMember['selfie_with_id']);
-                        
-                        if (empty($row["profile"])) {
-                            $profileSrc = './img/default-profile.png';
-                        } else {
+                        $mem_id= $verifyingMember['mem_id'];
+                        if (!empty($verifyingMember["profile"])) {
                             $profileSrc = getImageSrc($verifyingMember['profile']);
+                        } else {
+                            $profileSrc = './img/default-profile.png';
+                            
                         }
+                       
 
                         echo "
-                            <tr>
                                 <td class='profile-img'><img src='$profileSrc'></td>
                                 <td> " . $verifyingMember['mem_id'] . "</td>
                                 <td> " . $verifyingMember['name'] . "</td>
@@ -75,10 +76,20 @@
                                     "<a class='selfieWithId imageContainer c-blue'><span class='altText'>[Selfie with ID]</span><img class='hidden' src=' $selfieWithIdSrc' alt='Selfie with ID'></a>" . 
                                 "</td>
                                 <td class='text-center'> " . $verifyingMember['date_submitted'] . "</td>
-                                <td class='text-center'><button class='bg-green'>Approve</button></td>
-                                <td class='text-center'><button class='bg-red'>Decline</button></td>
-                            </tr>
-                        ";
+                                <td class='text-center'>
+                                <form action='database/admin-verify.php' method='POST'>
+                                    <input type='hidden' name='memId' value='$mem_id'>
+                                    <button type='submit' name='submit' value='verified' class='bg-green'>Approve</button>
+                                </form>
+                            </td>
+                            <td class='text-center'>
+                                    <form action='database/admin-verify.php' method='POST'>
+                                    <input type='hidden' name='memId' value='$mem_id'>
+                                    <button type='submit' name='submit' value='unverified' class='bg-red'>Decline</button>
+                                </form>
+                            </td>
+                        </tr>
+                    ";
                     }
                 } else {
                     echo "<tr><td class='no-result-label text-center my-3' colspan='11'>No Verifying Members Found!</td></tr>";
@@ -115,7 +126,7 @@
                         $selfieSrc = getImageSrc($verifiedMember['selfie']);
                         $selfieWithIdSrc = getImageSrc($verifiedMember['selfie_with_id']);
                         
-                        if (empty($row["profile"])) {
+                        if (empty($verifiedMember["profile"])) {
                             $profileSrc = './img/default-profile.png';
                         } else {
                             $profileSrc = getImageSrc($verifiedMember['profile']);
