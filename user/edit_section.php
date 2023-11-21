@@ -108,18 +108,18 @@ $memInfo = query($sql);
         <form action="./database/user-edit.php" method="POST" class="<?php echo (isset($verification_row['verification_status']) && $verification_row['verification_status'] != 'Declined'  ? "hidden" : "")?>" enctype="multipart/form-data">
             <input type="hidden" name="mem_id" value="<?php echo $mem_id?>">
             <div class="info">
-                <label for="upload-img">Valid ID: <span class="required">*</span></label>
-                <input type="file" id="upload-img" accept=".jpg, .jpeg, .png" name="user-profile">
+                <label for="upload-validId">Valid ID: <span class="required">*</span></label>
+                <input type="file" id="upload-validId" accept=".jpg, .jpeg, .png" name="user-validId" required>
             </div>
             <div class="info">
-                <label for="upload-img">Selfie: <span class="required">*</span></label>
-                <input type="file" id="upload-img" accept=".jpg, .jpeg, .png" name="user-profile">
+                <label for="upload-selfie">Selfie: <span class="required">*</span></label>
+                <input type="file" id="upload-selfie" accept=".jpg, .jpeg, .png" name="user-selfie" required>
             </div>
             <div class="info">
-                <label for="upload-img">Selfie with Valid ID: <span class="required">*</span></label>
-                <input type="file" id="upload-img" accept=".jpg, .jpeg, .png" name="user-profile">
+                <label for="upload-selfieWvalidId">Selfie with Valid ID: <span class="required">*</span></label>
+                <input type="file" id="upload-selfieWvalidId" accept=".jpg, .jpeg, .png" name="user-selfieWvalidId" required>
             </div>
-            <button id="edit-btn" type="submit" name="submit" value="verify" >Apply</button>
+            <button id="verify-btn" type="submit" name="submit" value="verify" >Apply</button>
         </form>
     </div>
 
