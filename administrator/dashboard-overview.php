@@ -118,20 +118,20 @@ if (file_exists($function_path)) {
             <div class="information">
                 <p class="label">Week No.: </p>
                 <p class="data">
-                    <span class="detail"> <?php echo  $lblWeekNo; ?> </span><span class="smaller"> over  <?php echo  $lblTotalWeeks; ?></span><br>
+                    <span class="detail"> <?php echo  getWeekNumber($conn); ?> </span><span class="smaller"> over  <?php echo  52; ?></span><br>
                     
                 </p>
             </div>
             <div class="information">
                 <p class="label">Start Date:</p>
                 <p class="data">
-                    <span class="detail"><?php echo  $startDate; ?></span>
+                    <span class="detail"><?php echo  getStartDate($conn); ?></span>
                 </p>
             </div>
             <div class="information">
                 <p class="label">End Date:</p>
                 <p class="data">
-                    <span class="detail"><?php echo  $endDate; ?></span>
+                    <span class="detail"><?php echo  computeEndDate($conn); ?></span>
                 </p>
             </div>
         </div>
