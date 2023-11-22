@@ -23,7 +23,7 @@ $result = query($sql);
 $memId = $result['mem_id'];
 
 //GET VERIFICATION STATUS
-$sql = "SELECT verification_status FROM verification_images WHERE mem_id = $memId ORDER BY date_submitted DESC LIMIT 1";
+$sql = "SELECT verification_status FROM verification_images WHERE mem_id = $memId ORDER BY verification_id DESC LIMIT 1";
 $result = $conn->query($sql);
 
 ?>
