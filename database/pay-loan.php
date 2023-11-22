@@ -14,7 +14,7 @@
             $mem_id = $_POST['mem_id']; 
             $deposit = $_POST['payment-amount'];
             
-            $sql = "INSERT INTO deposit(deposited, mem_id) VALUES($deposit, $mem_id)";
+            $sql = "INSERT INTO loan_payment(deposited, mem_id) VALUES($deposit, $mem_id)";
             query($sql);
 
             $_SESSION['message'] = "Successfully deposit savings!";
