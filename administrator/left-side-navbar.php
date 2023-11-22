@@ -41,18 +41,18 @@ if (file_exists($database_path)) {
                 <p class="nav-name">Member Information</p>
             </div>
             <div class="nav" id="m-transactions" onclick="loadContent('./administrator/member-transactions.php', this)">
-                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
+                <div class="nav-logo"><img src="./img/member-transactions.png" class="logo"></div>
                 <p class="nav-name">Member Transactions</p>
             </div>
             <div class="nav" id="m-verification" onclick="loadContent('./administrator/member-verification.php', this)">
-                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
+                <div class="nav-logo"><img src="./img/member-verification.png" class="logo"></div>
                 <p class="nav-name">Member Verification</p>
             </div>
         </div>
         <div class="savings nav-container">
             <p class="text">SAVINGS</p>
             <div class="nav" id="s-deposits" onclick="loadContent('./administrator/savings-deposits.php', this)">
-                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
+                <div class="nav-logo"><img src="./img/savings-deposits.png" class="logo"></div>
                 <p class="nav-name">Deposit</p>
             </div>
         </div>
@@ -70,11 +70,11 @@ if (file_exists($database_path)) {
         <div class="administrator nav-container">
             <p class="text">ADMINISTRATOR</p>
             <div class="nav" id="a-addMember" onclick="loadContent('./administrator/administrator-add.php', this)">
-                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
+                <div class="nav-logo"><img src="./img/administrator-add-member.png" class="logo"></div>
                 <p class="nav-name">Add Member</p>
             </div>
             <div class="nav" id="a-editMember" onclick="loadContent('./administrator/administrator-edit-member.php', this)">
-                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
+                <div class="nav-logo"><img src="./img/administrator-edit-member.png" class="logo"></div>
                 <p class="nav-name">Edit Member</p>
             </div>
             <div class="nav" id="a-editTransaction" onclick="loadContent('./administrator/administrator-edit-transaction.php', this)">
