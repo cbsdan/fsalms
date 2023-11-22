@@ -79,13 +79,13 @@
                                 <td class='text-center'>
                                 <form action='database/admin-verify.php' method='POST'>
                                     <input type='hidden' name='memId' value='$mem_id'>
-                                    <button type='submit' name='submit' value='verified' class='bg-green'>Approve</button>
+                                    <button type='submit' name='submit' value='verified' class='bg-green m-auto'>Approve</button>
                                 </form>
                             </td>
                             <td class='text-center'>
                                     <form action='database/admin-verify.php' method='POST'>
                                     <input type='hidden' name='memId' value='$mem_id'>
-                                    <button type='submit' name='submit' value='unverified' class='bg-red'>Decline</button>
+                                    <button type='submit' name='submit' value='unverified' class='bg-red m-auto'>Decline</button>
                                 </form>
                             </td>
                         </tr>
