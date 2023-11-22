@@ -57,6 +57,7 @@ $records = $conn->query($records_sql);
                 <th>Name</th>
                 <th>Amount</th>
                 <th>Duration</th>
+                <th>Interest Rate</th>
                 <th>Claim Date</th>
                 <th>Date Requested</th> 
                 <th>Status</th> 
@@ -72,7 +73,8 @@ $records = $conn->query($records_sql);
                                 <td>" . $loan_request ['request_id'] . "</td>
                                 <td>" . $loan_request ['name'] . "</td>
                                 <td>₱" . $loan_request ['loan_amount'] . "</td>
-                                <td>" . $loan_request ['month_duration'] . "</td>
+                                <td class='text-center'>" . $loan_request ['month_duration'] . "</td>
+                                <td class='text-center'>" . $loan_request ['interest_rate'] . "%</td>
                                 <td>" . $loan_request ['claim_date'] . "</td>
                                 <td>" . $loan_request ['date_requested'] . "</td>
                                 <td class='text-center'>" . $loan_request ['request_status'] . "</td>
@@ -118,6 +120,7 @@ $records = $conn->query($records_sql);
                 <th>Name</th>
                 <th>Amount</th>
                 <th>Duration</th>
+                <th>Interest Rate</th>
                 <th>Claim Date</th>
                 <th>Date Requested</th> 
                 <th>Status</th> 
@@ -151,7 +154,8 @@ $records = $conn->query($records_sql);
                               <td>" .$record['request_id'] . "</td>
                               <td>" .$record['name'] . "</td>
                               <td>₱" .$record['loan_amount'] . "</td>
-                              <td>" .$record['month_duration'] . "</td>
+                              <td class='text-center'>" .$record['month_duration'] . "</td>
+                              <td class='text-center'>" .$record['interest_rate'] . "%</td>
                               <td>" .$record['claim_date'] . "</td>
                               <td>" .$record['date_requested'] . "</td>
                               <td class='text-center $statusClass'>" .$record['request_status'] . "</td>

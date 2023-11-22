@@ -17,6 +17,7 @@ if (file_exists($database_path)) {
     include_once($database_path_index);
 }
 
+
 if (isset($_GET['search'])) {
     $searchValue = $_GET['search-value'];
     $searchType = $_GET['search-type'];
@@ -193,19 +194,19 @@ $isThereMember = false;
             <div class="info">
                 <p class="label">Total Savings: </p>
                 <p class="data">
-                    <span class="detail">P 0</span>
+                    <span class="detail">₱<?php echo getTotalDeposits($conn, $memId); ?></span>
                 </p>
             </div>
             <div class="info">
                 <p class="label">Loan Balance: </p>
                 <p class="data">
-                    <span class="detail">P 0</span>
+                    <span class="detail">₱<?php echo ((isset($memInfo['mem_id'])) ? getTotalLoanBalance($conn, $memInfo['mem_id']) . ' (+ ₱' . getTotalInterests($conn, $memInfo['mem_id']) . ' Interests)' : 0);?></span>
                 </p>
             </div>
             <div class="info">
                 <p class="label">Interest Share: </p>
                 <p class="data">
-                    <span class="detail">P 0</span>
+                    <span class="detail">₱<?php echo $memberInterestShare; ?></span>
                 </p>
             </div>
         </div>

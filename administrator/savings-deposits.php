@@ -85,6 +85,7 @@ $isThereMember = false;
                                 <th>Name</th>
                                 <th>Sex</th>
                                 <th>Age</th> 
+                                <th>Total Savings</th>
                                 <th>Select</th>
                             </tr>
                         </thead>
@@ -115,6 +116,7 @@ $isThereMember = false;
                                         echo "<td>" . $row['name']. "</td>";
                                         echo "<td>" . $row["sex"] . "</td>";
                                         echo "<td>" . $row['age']. "</td>";
+                                        echo "<td>₱" . getTotalDeposits($conn, $memId) . "</td>";
                                         echo "<td>
                                                 <form action='database/fetch_member_info.php' method='POST'>
                                                     <input type='hidden' name='mem_id' value='$memId'>
@@ -139,13 +141,8 @@ $isThereMember = false;
                 </div>
     
             </div>
-            <?php
-                $memberInfoClass = "hidden";
-                if (isset($memInfo)) {
-                    $memberInfoClass = "";
-                }
-            ?>
-            <div class="right right-section member-information-section <?php echo $memberInfoClass?>">
+
+            <div class="right right-section member-information-section <?php echo ((!isset($memInfo)) ? 'hidden' : '')?>">
                 <div class="member-header">
                     <div class="title">Member Information</div>
                     <div class="content">
@@ -180,19 +177,19 @@ $isThereMember = false;
                     <div class="info">
                         <p class="label">Total Savings: </p>
                         <p class="data">
-                            <span class="detail">P 0</span>
+                            <span class="detail">₱<?php echo ((isset($memInfo['mem_id'])) ? getTotalDeposits($conn, $memInfo['mem_id']) : 0 ); ?></span>
                         </p>
                     </div>
                     <div class="info">
                         <p class="label">Loan Balance: </p>
                         <p class="data">
-                            <span class="detail">P 0</span>
+                            <span class="detail">₱<?php echo ((isset($memInfo['mem_id'])) ? getTotalLoanBalance($conn, $memInfo['mem_id']) . ' (+ ₱' . getTotalInterests($conn, $memInfo['mem_id']) . ' Interests)' : 0);?></span>
                         </p>
                     </div>
                     <div class="info">
                         <p class="label">Interest Share: </p>
                         <p class="data">
-                            <span class="detail">P 0</span>
+                            <span class="detail">₱<?php echo $memberInterestShare; ?></span>
                         </p>
                     </div>
                 </div>
@@ -218,7 +215,7 @@ $isThereMember = false;
                     <input type="number" id="savings-amount" class="no-spinner" placeholder="<?php if(!$isThereMember || empty($memInfo['mem_id'])) {echo "Disabled";} else {echo "Enter here";}?>" name="deposits-amount" <?php if(!$isThereMember || empty($memInfo['mem_id'])) echo "disabled"?>>
                     <input type="hidden" name="mem_id" value="<?php if (isset($memInfo['mem_id'])) {echo $memInfo['mem_id']; }?>">
                 </div>
-                <button class="submit" type="submit" name="submit" value="submit">Save</button>
+                <button class="submit" type="submit" name="submit" value="submit" <?php if(!$isThereMember || empty($memInfo['mem_id'])) echo "disabled"?>>Save</button>
             </form>
         </div>
     </div>
