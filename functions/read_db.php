@@ -478,24 +478,21 @@ function computePendingAmount($conn, $weeklyPayment, $weekNumber, $totalDeposits
 
 function getTotalLoanBalance($conn, $member_id) {
     $loanQuery = "
-        SELECT ld.loan_amount
+        SELECT ROUND(COALESCE(SUM(ld.loan_amount + (ld.loan_amount * (ld.interest_rate / 100))) - COALESCE((SELECT SUM(payment_amount) FROM loan_payment WHERE mem_id = $member_id), 0), 0), 2) AS loan_balance
         FROM loan_requests lr
         JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id
         WHERE lr.mem_id = $member_id
-          AND lr.request_status = 'approved'
+        AND lr.request_status = 'Approved'
+        AND lr.is_claim = 1
+        AND ld.is_paid = 0;
     ";
 
     $loanResult = $conn->query($loanQuery);
 
-    if ($loanResult) {
+    if ($loanResult->num_rows > 0) {
         // Calculate the total loan balance
-        $totalLoanBalance = 0;
-        while ($row = $loanResult->fetch_assoc()) {
-            $totalLoanBalance += $row['loan_amount'];
-        }
-
-        // Don't close the connection here; you might still need it
-        // $conn->close();
+        $loanResultArr = $loanResult->fetch_assoc();
+        $totalLoanBalance = $loanResultArr['loan_balance'];
 
         return $totalLoanBalance;
     } else {
@@ -503,8 +500,31 @@ function getTotalLoanBalance($conn, $member_id) {
         return "Error: " . $conn->error;
     }
 }
-?>
+function getTotalInterests ($conn, $member_id) {
+    $interestQuery = "
+        SELECT ROUND(COALESCE(ld.loan_amount * (ld.interest_rate / 100), 0), 2) AS totalInterest
+        FROM loan_requests lr
+        JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id
+        WHERE lr.mem_id = $member_id
+        AND lr.request_status = 'Approved'
+        AND lr.is_claim = 1
+        AND ld.is_paid = 0;
+    ";
 
+    $queryResult = $conn->query($interestQuery);
+
+    if ($queryResult->num_rows > 0) {
+        // Calculate the total loan balance
+        $totalInterestArr = $queryResult->fetch_assoc();
+        $totalInterests = $totalInterestArr['totalInterest'];
+
+        return $totalInterests;
+    } else {
+        // If the loan query fails, return an error or handle it accordingly
+        return 0;
+    }
+}
+?>
 
 <?php
 function computeInterestShare($conn, $loanAmount, $member_id) {
