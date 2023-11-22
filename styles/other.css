@@ -258,6 +258,12 @@ form .info .sex-radio-container {
     
 }
 
+.small-text {
+    font-size: 1.3rem;
+}
+.c-gray {
+    color: rgba(var(--gray-text-rgb), 1);
+}
 .required { 
     color: rgba(var(--main-color-rgb), 0.7);
     font-size: 1.6rem;
