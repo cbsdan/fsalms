@@ -200,7 +200,7 @@ $isThereMember = false;
             <div class="info">
                 <p class="label">Loan Balance: </p>
                 <p class="data">
-                    <span class="detail">₱<?php echo ((isset($memInfo['mem_id'])) ? getTotalLoanBalance($conn, $memInfo['mem_id']) . ' (+ ₱' . getTotalInterests($conn, $memInfo['mem_id']) . ' Interests)' : 0);?></span>
+                <span class="detail">₱<?php echo ((isset($memInfo['mem_id'])) ? getTotalLoanBalance($conn, $memInfo['mem_id']) . " <span class='c-gray small-text'>(+ ₱" . getTotalInterests($conn, $memInfo['mem_id']) . ' Interests)</span>' : 0);?></span>
                 </p>
             </div>
             <div class="info">
