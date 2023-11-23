@@ -81,7 +81,7 @@
     
                 UNION 
     
-                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_status AS date
+                SELECT 'Loan' as activity, ld.loan_detail_id AS transaction_id, m.mem_id, a.profile, CONCAT(m.fname, ' ', m.lname) AS name, ld.loan_amount AS amount, lr.claimed_timestamp AS date
                 FROM members m 
                 INNER JOIN accounts a ON a.mem_id = m.mem_id 
                 INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id
