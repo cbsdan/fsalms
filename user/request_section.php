@@ -93,7 +93,6 @@ $memId = $result['mem_id'];
             <th>Duration</th>
             <th>Interest Rate</th>
             <th>Total Loan</th>
-            <th>Claim Date</th>
             <th>Date Requested</th>
             <th>Status</th>
             <th>Claim</th>
@@ -105,7 +104,8 @@ $memId = $result['mem_id'];
     $sql = "SELECT lr.request_status, ld.loan_detail_id, ld.loan_amount, ld.month_duration, ld.date_requested, ld.interest_rate, ld.claim_date, ROUND(ld.loan_amount + (ld.loan_amount * (ld.interest_rate / 100)), 2) AS total_loan, lr.is_claim
             FROM loan_requests lr
             JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id
-            WHERE lr.mem_id  = $memId";
+            WHERE lr.mem_id  = $memId
+            ORDER BY ld.loan_detail_id DESC";
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -127,7 +127,6 @@ $memId = $result['mem_id'];
             echo "<td class='text-center'>" . $row['month_duration'] . " Month</td>";
             echo "<td class='text-center'>" . $row['interest_rate'] . "%</td>";
             echo "<td>₱ " . $row['total_loan'] . "</td>";
-            echo '<td>' . $row['claim_date'] . '</td>';
             echo '<td>' . $row['date_requested'] . '</td>';
             echo '<td class="c-' . ($row['request_status'] == 'Approved' ? 'green' : 'red') . ' text-center">' . $row['request_status'] . '</td>';
             echo "<td class='text-center'>$claim_status</td>";
