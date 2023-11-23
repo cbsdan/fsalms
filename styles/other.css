@@ -281,19 +281,32 @@ form .info .sex-radio-container {
 
 .query-message {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
     border-radius: 2rem;
     margin-bottom: 1rem;
     background-color: var(--pale-yellow);
     color: var(--main-color);
     font-size: 1.6rem;
     padding: 2rem;
-    font-style: italic;    
+    font-style: italic;  
+    position: fixed;
+    top : 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;  
+    z-index: 1001;
+    opacity: 0.9;
 }
-
-.query-message .message {
-    display: block;
-    max-width: var(--content-max-width);
-    width: 100%;
-    margin: 0 auto;
+.query-message .close-logo {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+}
+.query-message .close-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: transparent;
 }

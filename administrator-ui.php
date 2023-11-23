@@ -29,8 +29,9 @@
 
 <main id="main" class="admin"> <!--class should have admin or user-->
     <div class="section admin"> <!--class should have admin or user-->
-        <p class="query-message <?php echo $messageClass;?>">
-            <?php echo $message; ?>
+        <p class="query-message <?php echo $messageClass;?>"> <!--Default hidden-->
+            <span class='message'><?php echo $message; ?></span>
+            <button class='close-message'><img class='close-logo' src='./img/close.svg' alt='x'></button>
         </p>
         <?php
             if (isset($_SESSION['section'])) {
@@ -73,4 +74,18 @@
         changeActiveNav(activeNavId);
     }
     
+    //Make the message disappear after 5 seconds
+    document.addEventListener("DOMContentLoaded", ()=>{
+        setTimeout(() => {
+            messageEl.classList.add('hidden');
+        }, 5000);
+    })
+
+    //close logo
+    let closeBtn = document.querySelector('.close-logo');
+    let messageEl = document.querySelector('.query-message');
+
+    closeBtn.addEventListener('click', ()=>{
+        messageEl.classList.add('hidden');
+    })
 </script>

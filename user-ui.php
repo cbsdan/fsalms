@@ -23,8 +23,9 @@
 
 <main id="main" class="user"> 
     <div class="info-nav-container">
-        <p class="query-message <?php echo $messageClass;?>">
+        <p class="query-message <?php echo $messageClass;?>"> <!--Default hidden-->
             <span class='message'><?php echo $message; ?></span>
+            <button class='close-message'><img class='close-logo' src='./img/close.svg' alt='x'></button>
         </p>
         <?php
             include_once('./user/user_info-nav.php');
@@ -71,4 +72,18 @@
         activeNavId = activeNavId.textContent;
         changeActiveNav(activeNavId);
     }
+
+    //Make the message disappear after 5 seconds
+    document.addEventListener("DOMContentLoaded", ()=>{
+        setTimeout(() => {
+            messageEl.classList.add('hidden');
+        }, 5000);
+    })
+    //close logo
+    let closeBtn = document.querySelector('.close-logo');
+    let messageEl = document.querySelector('.query-message');
+
+    closeBtn.addEventListener('click', ()=>{
+        messageEl.classList.add('hidden');
+    })
 </script>
