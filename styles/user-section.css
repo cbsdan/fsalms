@@ -43,6 +43,19 @@ main .section.user h1 {
     margin: 1rem 0 2rem;
 
 }
+
+.user-info .content .details .info {
+    display: flex;
+    font-size: 1.6rem;
+}
+.user-info .content .details .info span.label {
+    flex: 1;
+}
+.user-info .content .details .info span.value {
+    flex: 3;
+    font-weight: 700;
+}
+
 /* .section.user .savings-container,  .section .loan-container, .section .request-container, .section .record-container, .section .edit-container, .section .password-container {
 } */
 .section.user .savings-container .details, .section .loan-container .details, .section .request-container form, .section .record-container{
@@ -107,3 +120,9 @@ main .section.user h1 {
 .not-verified-label {
     margin-top: 3rem;
 }
+
+@media only screen and (max-width: 840px) {
+    .user-info .content .details .info span.value {
+        flex: 2;
+    }
+  }
