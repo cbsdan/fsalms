@@ -156,7 +156,7 @@ $isThereMember = false;
                                         echo "<td>₱" . $row['loan_amount']. "</td>";
                                         echo "<td class='text-center'>" . $row['month_duration']. "</td>";
                                         echo "<td class='text-center'>" . $row['interest_rate']. "%</td>";
-                                        echo "<td class='text-center'>₱" . getTotalLoanBalance($conn, $memId) . "</td>";
+                                        echo "<td class='text-center'>₱" . getLoanBalance($conn, $memId, $row['loan_detail_id']) . "</td>";
                                         echo "<td class='text-center'>" . $payment_status. "</td>";
                                         echo "<td>
                                                 <form action='database/fetch_member_info.php' method='POST'>
@@ -231,7 +231,7 @@ $isThereMember = false;
                     <div class="info">
                         <p class="label">Interest Share: </p>
                         <p class="data">
-                            <span class="detail">₱<?php echo $memberInterestShare; ?></span>
+                            <span class="detail">₱<?php echo number_format(getMemberInterestsShare($conn), 2); ?></span>
                         </p>
                     </div>
                 </div>
