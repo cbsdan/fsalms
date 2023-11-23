@@ -173,6 +173,7 @@ function getTotalPaidLoan ($conn) {
 }
 
 
+
 ?>
 
 <!-- Calculating Dates -->
@@ -462,6 +463,45 @@ function computePendingAmount($conn, $memId) {
 ?>
  <?php
 
+function getMemberTotalPaidLoan ($conn, $mem_id) {
+    // Get total paid loan amount from loan_payment table
+    $queryTotalPaidLoan = "SELECT SUM(payment_amount) AS total_paid_loan FROM loan_payment WHERE mem_id = $mem_id";
+    $resultTotalPaidLoan = $conn->query($queryTotalPaidLoan);
+
+    if ($resultTotalPaidLoan && $resultTotalPaidLoan->num_rows > 0) {
+        $rowTotalPaidLoan = $resultTotalPaidLoan->fetch_assoc();
+        $totalPaidLoan = (float) $rowTotalPaidLoan['total_paid_loan'];
+        return number_format($totalPaidLoan, 2); // Format the total paid loan amount
+    } else {
+        return "0.00";
+    }
+
+}
+function getLoanBalance($conn, $member_id, $loan_detail_id) {
+    $loanQuery = "
+        SELECT ROUND(COALESCE(SUM(ld.loan_amount + (ld.loan_amount * (ld.interest_rate / 100))) - COALESCE((SELECT SUM(payment_amount) FROM loan_payment WHERE mem_id = $member_id AND loan_detail_id = $loan_detail_id), 0), 0), 2) AS loan_balance
+        FROM loan_requests lr
+        JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id
+        WHERE lr.mem_id = $member_id
+        AND ld.loan_detail_id = $loan_detail_id
+        AND lr.request_status = 'Approved'
+        AND lr.is_claim = 1
+        AND ld.is_paid = 0;
+    ";
+
+    $loanResult = $conn->query($loanQuery);
+
+    if ($loanResult->num_rows > 0) {
+        // Calculate the total loan balance
+        $loanResultArr = $loanResult->fetch_assoc();
+        $loanBalance = $loanResultArr['loan_balance'];
+
+        return $loanBalance;
+    } else {
+        // If the loan query fails, return an error or handle it accordingly
+        return "Error: " . $conn->error;
+    }
+}
 function getTotalLoanBalance($conn, $member_id) {
     $loanQuery = "
         SELECT ROUND(COALESCE(SUM(ld.loan_amount + (ld.loan_amount * (ld.interest_rate / 100))) - COALESCE((SELECT SUM(payment_amount) FROM loan_payment WHERE mem_id = $member_id), 0), 0), 2) AS loan_balance
@@ -486,9 +526,13 @@ function getTotalLoanBalance($conn, $member_id) {
         return "Error: " . $conn->error;
     }
 }
+function getPendingLoanInterest($conn, $member_id) {
+    $
+    $totalLoan = getTotalPaidLoan($conn);
+}
 function getTotalInterests ($conn, $member_id) {
     $interestQuery = "
-        SELECT ROUND(COALESCE(ld.loan_amount * (ld.interest_rate / 100), 0), 2) AS totalInterest
+        SELECT ROUND(COALESCE(SUM(ld.loan_amount * (ld.interest_rate / 100)), 0), 2) AS totalInterest
         FROM loan_requests lr
         JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id
         WHERE lr.mem_id = $member_id
