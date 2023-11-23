@@ -7,7 +7,6 @@ if (file_exists($authentication_path)) {
     include_once("$authentication_path_index");
 }
 
-
 $database_path = '../database/config.php';
 $database_path_index = './database/config.php';
 
@@ -16,15 +15,6 @@ if (file_exists($database_path)) {
 } else if (file_exists($database_path_index)){
     include_once($database_path_index);
 }   
-
-
-$function_path= '../functions/read_db.php';
-$function_path_index= './functions/read_db.php';
-if (file_exists($function_path)) {
-    include_once($function_path);
-} elseif (file_exists($function_path_index)) {
-    include_once($function_path_index);
-}
 
 ?>
 
@@ -37,25 +27,26 @@ $memId = $result['mem_id'];
 
 $total_deposits = getTotalDeposits($conn, $memId);
 $week_number = getWeekNumber($conn);
-$weekly_payment = getWeeklyPayment($conn) ;
-$pending_amount= computePendingAmount($conn, $weekly_payment, $week_number, $total_deposits);
+$start_date = getStartDate($conn);
+$end_date = getEndDate($conn);
 
-$total_loan_balance= getTotalLoanBalance($conn, $memId);
-$interest_share= $memberInterestShare;
+$weekly_payment = getWeeklyPayment($conn) ;
+$membership_fee = number_format(getMembershipFee($conn), 2);
+$pending_amount= number_format(computePendingAmount($conn, $memId), 2);
+
+$total_loan_balance = number_format(getTotalLoanBalance($conn, $memId), 2);
+$interest_share = number_format(getMemberInterestsShare($conn), 2);
 
 ?>
 
 
-<div class="background">
+<div class="background user-info">
     <h1 class="savings-title title">Savings</h1>
     <hr>
     <div class="savings-container content">
         <div class="details"> 
-
-            <p>Total: <span class="value"><?php echo $total_deposits ; ?></p>
-            <p>Pending: <span class="value"><?php echo $pending_amount; ?></p>
-            <p>Week No.: <span class="value"><?php echo $week_number ; ?></p>
-            <p>Weekly Payment: <span class="value"><?php echo  $weekly_payment; ?></p>
+            <p class='info'><span class='label'>Total: </span><span class="value c-green">₱ <?php echo $total_deposits; ?><span class='small-text c-gray'>  (+ ₱ <?php echo $membership_fee;?> Membership Fee)</span></span></p>
+            <p class='info'><span class='label'>Pending: </span><span class="value c-red">₱ <?php echo $pending_amount ; ?><span class='small-text c-gray'> (Kindly deposit any pending amount.)</span></span></p>
         </div>
     </div>
 
@@ -63,7 +54,7 @@ $interest_share= $memberInterestShare;
     <hr>
     <div class="loan-container content">
         <div class="details">
-            <p>Total: <span class="value"><?php echo  $total_loan_balance; ?></p>
+            <p class='info'><span class='label'>Unpaid Loan: </span><span class="value">₱ <?php echo $total_loan_balance ; ?></span></p>
         </div>
     </div>
 
@@ -71,7 +62,20 @@ $interest_share= $memberInterestShare;
     <hr>
     <div class="interest-container content">
         <div class="details">
-            <p>Total: <span class="value"><?php echo  $interest_share; ?></p>
+            <p class='info'><span class='label'>Total: </span><span class="value">₱ <?php echo $interest_share ; ?></span></p>
+            <p class='info t-italic c-gray mt-3'>(This is your share to interest gains from loans)</span></p>
+        </div>
+    </div>
+
+    <h1 class="title">System Information</h1>
+    <hr>
+    <div class="savings-container content">
+        <div class="details"> 
+            <p class='info'><span class='label'>Week Number: </span><span class="value"><?php echo $week_number ; ?></span></p>
+            <p class='info'><span class='label'>Weekly Payment: </span><span class="value">₱ <?php echo $weekly_payment ; ?></span></p>
+            <p class='info'><span class='label'>Membership Fee: </span><span class="value">₱ <?php echo $membership_fee ; ?></span></p>
+            <p class='info'><span class='label'>Start Date: </span><span class="value"><?php echo $start_date ; ?></span></p>
+            <p class='info'><span class='label'>End Date: </span><span class="value"><?php echo $end_date ; ?></span></p>
         </div>
     </div>
 </div>
