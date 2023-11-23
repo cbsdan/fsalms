@@ -59,11 +59,11 @@ if (file_exists($database_path)) {
         <div class="loan nav-container">
             <p class="text">LOAN</p>
             <div class="nav" id="l-requests" onclick="loadContent('./administrator/loan-requests.php', this)">
-                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
+                <div class="nav-logo"><img src="./img/loan-request.png" class="logo"></div>
                 <p class="nav-name">Loan Requests</p>
             </div>
             <div class="nav" id="l-payment" onclick="loadContent('./administrator/loan-pay.php', this)">
-                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
+                <div class="nav-logo"><img src="./img/loan-payment.png" class="logo"></div>
                 <p class="nav-name">Loan Payment</p>
             </div>
         </div>
@@ -78,7 +78,7 @@ if (file_exists($database_path)) {
                 <p class="nav-name">Edit Member</p>
             </div>
             <div class="nav" id="a-editTransaction" onclick="loadContent('./administrator/administrator-edit-transaction.php', this)">
-                <div class="nav-logo"><img src="./img/default-profile.png" class="logo"></div>
+                <div class="nav-logo"><img src="./img/edit-transaction.png" class="logo"></div>
                 <p class="nav-name">Edit Transaction</p>
             </div>
         </div>
