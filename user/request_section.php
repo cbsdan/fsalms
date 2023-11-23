@@ -88,9 +88,11 @@ $memId = $result['mem_id'];
     <table class="result-table">
         <thead>
             <tr>
-            <th>Type</th>
             <th>ID</th>
+            <th>Loan Amount</th>
             <th>Duration</th>
+            <th>Interest Rate</th>
+            <th>Total Loan</th>
             <th>Claim Date</th>
             <th>Date Requested</th>
             <th>Status</th>
@@ -100,7 +102,7 @@ $memId = $result['mem_id'];
     <tbody>
 
 <?php
-    $sql = "SELECT lr.request_status, ld.loan_amount, ld.month_duration, ld.date_requested, ld.claim_date, lr.is_claim
+    $sql = "SELECT lr.request_status, ld.loan_detail_id, ld.loan_amount, ld.month_duration, ld.date_requested, ld.interest_rate, ld.claim_date, ROUND(ld.loan_amount + (ld.loan_amount * (ld.interest_rate / 100)), 2) AS total_loan, lr.is_claim
             FROM loan_requests lr
             JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id
             WHERE lr.mem_id  = $memId";
@@ -120,9 +122,11 @@ $memId = $result['mem_id'];
             }
 
             echo '<tr>';
-            echo '<td>Loan</td>'; // Replace with the actual loan type code from the database
-            echo '<td>P ' . number_format($row['loan_amount']) . '</td>';
-            echo '<td>' . $row['month_duration'] . ' Months</td>';
+            echo '<td>' . $row['loan_detail_id'] .'</td>'; 
+            echo '<td>₱ ' . number_format($row['loan_amount']) . '</td>';
+            echo "<td class='text-center'>" . $row['month_duration'] . " Month</td>";
+            echo "<td class='text-center'>" . $row['interest_rate'] . "%</td>";
+            echo "<td>₱ " . $row['total_loan'] . "</td>";
             echo '<td>' . $row['claim_date'] . '</td>';
             echo '<td>' . $row['date_requested'] . '</td>';
             echo '<td class="c-' . ($row['request_status'] == 'Approved' ? 'green' : 'red') . ' text-center">' . $row['request_status'] . '</td>';
