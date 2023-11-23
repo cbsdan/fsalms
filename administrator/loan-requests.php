@@ -48,6 +48,7 @@ $records = $conn->query($records_sql);
 <h1>Loan Requests</h1>
 <hr>
 <div class="loan-requests">
+<h4 class="mb-3">Available Money: ₱ <span class="value"><?php echo getTotalAvailableMoney($conn)?></span></h4>
 <h4 class="mb-3">Total: <span class="value"><?php echo $loan_requests->num_rows?></span></h4>
 <div class="result">
     <table class="result-table">
