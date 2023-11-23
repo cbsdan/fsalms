@@ -15,6 +15,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+//include read_db.php which has functions
+$function_path= '../functions/read_db.php';
+$function_path_index= './functions/read_db.php';
+if (file_exists($function_path)) {
+    include_once($function_path);
+} elseif (file_exists($function_path_index)) {
+    include_once($function_path_index);
+}
+
 function query($query) {
     global $conn; 
     $result = mysqli_query($conn, $query);
