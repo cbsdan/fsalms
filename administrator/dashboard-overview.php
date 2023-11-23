@@ -68,19 +68,19 @@ if (file_exists($function_path)) {
             <div class="information">
                 <p class="label">Savings:</p>
                 <p class="data">
-                    <span class="detail">P <?php echo  $lblMemberSavings; ?></span>
+                    <span class="detail">P <?php echo $memberSavings = number_format(getMemberSavings($conn), 2); ?></span>
                 </p>
             </div>
             <div class="information">
                 <p class="label">Interest Share:</p>
                 <p class="data">
-                    <span class="detail">P <?php echo  $lblMemberInterestShare; ?> </span>
+                    <span class="detail">P <?php echo $interestShare = number_format(getMemberInterestsShare($conn), 2); ?> </span>
                 </p>
             </div>
             <div class="information">
                 <p class="label">Total:</p>
                 <p class="data">
-                    <span class="detail">P <?php echo  $memberShare; ?></span>
+                    <span class="detail">P <?php echo number_format($memberSavings + $interestShare, 2); ?></span>
                 </p>
             </div>
         </div>
@@ -105,7 +105,7 @@ if (file_exists($function_path)) {
             <div class="information">
                 <p class="label">Currently on Loan:</p>
                 <p class="data">
-                    <span class="detail">P <?php echo getTotalUnpaidLoan($conn); ?></span>
+                    <span class="detail">P <?php echo number_format(getTotalUnpaidLoan($conn), 2); ?></span>
                 </p>
             </div>
         </div>
@@ -118,7 +118,7 @@ if (file_exists($function_path)) {
             <div class="information">
                 <p class="label">Week No.: </p>
                 <p class="data">
-                    <span class="detail"> <?php echo  getWeekNumber($conn); ?> </span><span class="smaller"> over  <?php echo  52; ?></span><br>
+                    <span class="detail"> <?php echo  getWeekNumber($conn); ?> </span><span class="smaller"> over  <?php echo getTotalWeeks($conn); ?></span><br>
                     
                 </p>
             </div>
@@ -131,7 +131,7 @@ if (file_exists($function_path)) {
             <div class="information">
                 <p class="label">End Date:</p>
                 <p class="data">
-                    <span class="detail"><?php echo  computeEndDate($conn); ?></span>
+                    <span class="detail"><?php echo  getEndDate($conn); ?></span>
                 </p>
             </div>
         </div>
@@ -144,19 +144,19 @@ if (file_exists($function_path)) {
             <div class="information">
                 <p class="label">Unpaid Loan</p>
                 <p class="data">
-                    <span class="detail">P <?php echo  getTotalUnpaidLoan($conn); ?></span>
+                    <span class="detail">P <?php echo  number_format(getTotalUnpaidLoan($conn), 2); ?></span>
                 </p>
             </div>
             <div class="information">
                 <p class="label">Total Loan: </p>
                 <p class="data">
-                    <span class="detail">P  <?php echo  $lblTotalLoan; ?> </span>
+                    <span class="detail">P  <?php echo  number_format(getTotalLoan($conn), 2); ?> </span>
                 </p>
             </div>
             <div class="information">
                 <p class="label">Paid Loan: </p>
                 <p class="data">
-                    <span class="detail">P <?php echo  $lblTotalPaidLoan; ?></span>
+                    <span class="detail">P <?php echo  getTotalPaidLoan($conn); ?></span>
                 </p>
             </div>
         </div>
@@ -169,19 +169,19 @@ if (file_exists($function_path)) {
             <div class="information">
                 <p class="label">Total Interest: </p>
                 <p class="data">
-                    <span class="detail">P <?php echo  $interest; ?></span>
+                    <span class="detail">P <?php echo  $interests = number_format(getTotalInterest($conn), 2); ?></span>
                 </p>
             </div>
             <div class="information">
                 <p class="label">Paid:</p>
                 <p class="data">
-                    <span class="detail">P <?php echo  $lblPaidInterest; ?></span>
+                    <span class="detail">P <?php echo  number_format(getTotalPaidInterests($conn), 2); ?></span>
                 </p>
             </div>
             <div class="information">
                 <p class="label">Pending:</p>
                 <p class="data">
-                    <span class="detail">P <?php echo  $lblPendingInterest; ?></span>
+                    <span class="detail">P <?php echo  number_format(getTotalPendingInterests($conn), 2); ?></span>
                 </p>
             </div>
         </div>
@@ -194,14 +194,14 @@ if (file_exists($function_path)) {
             <div class="information">
                 <p class="label">Collector / Manager:</p>
                 <p class="data">
-                    <span class="detail">P <?php echo $lblCollectorShare; ?> </span>
+                    <span class="detail">P <?php echo number_format($interests * .20, 2); ?> </span>
                     <span class="gray-text">(20%)</span>
                 </p>
             </div>
             <div class="information">
                 <p class="label">All Members:</p>
                 <p class="data">
-                    <span class="detail">P <?php echo $lblAllMemberShare; ?></span>
+                    <span class="detail">P <?php echo number_format($interests * .80, 2); ?></span>
                     <span class="gray-text">(80%)</span>
                 </p>
             </div>

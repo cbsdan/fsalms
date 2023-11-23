@@ -40,7 +40,6 @@ function commandScalar($sql) {
 <?php
 //member's panel
 function countMembers($conn) {
-    $totalMembers = 0;
 
     try {
         $query = "SELECT COUNT(*) as total_members FROM members";
@@ -52,8 +51,8 @@ function countMembers($conn) {
         }
 
     } catch (Exception $ex) {
-        // Handle exceptions if needed
         echo "Error: " . $ex->getMessage();
+        $totalMembers = 0;
     }
     return $totalMembers;
 }
@@ -91,7 +90,7 @@ function getTotalInterest($conn) {
     $total_interest = 0;
 
     try {
-        $sql = "SELECT SUM(loan_amount * (interest_rate / 100)) AS total_interest FROM loan_details";
+        $sql = "SELECT SUM(ld.loan_amount * (ld.interest_rate / 100)) AS total_interest FROM loan_details ld INNER JOIN loan_requests lr ON lr.loan_detail_id = ld.loan_detail_id WHERE lr.request_status = 'Approved' AND lr.is_claim = 1";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -106,9 +105,6 @@ function getTotalInterest($conn) {
 }
 
 
-$interest = getTotalInterest($conn);
-$lblCollectorShare = number_format($interest * 0.2, 2); // 20% of total interest
-$lblAllMemberShare = number_format($interest * 0.8, 2); // 80% of total interest
 ?>
 
 
@@ -120,10 +116,12 @@ function getTotalLoan($conn) {
 
     try {
         // Get total loan amount with interest from the loan table
-        $queryTotalLoan = "SELECT SUM(loan_amount + (loan_amount * (interest_rate / 100))) AS total_loan FROM loan_details";
+        $queryTotalLoan = "SELECT ROUND(SUM(ld.loan_amount + (ld.loan_amount * (ld.interest_rate / 100))), 2) AS total_loan FROM loan_details ld INNER JOIN loan_requests lr ON lr.loan_detail_id = ld.loan_detail_id WHERE lr.request_status = 'Approved' AND is_claim = 1;";
         $resultTotalLoan = $conn->query($queryTotalLoan);
 
-        if ($resultTotalLoan && $resultTotalLoan->num_rows > 0) {
+        $totalLoan = 0;
+        
+        if ($resultTotalLoan->num_rows > 0) {
             $rowTotalLoan = $resultTotalLoan->fetch_assoc();
             $totalLoan = (float) $rowTotalLoan['total_loan'];
         }
@@ -133,30 +131,21 @@ function getTotalLoan($conn) {
         echo "Error: " . $ex->getMessage();
     }
 
-    return number_format($totalLoan, 2);
+    return round($totalLoan, 2);
 }
 function getTotalUnpaidLoan($conn) {
     $totalUnpaidLoan = 0;
 
     try {
-        $sql = "SELECT SUM(payment_amount) as total_amount FROM loan_payment";
+        $sql = "SELECT ROUND(SUM(payment_amount), 2) as total_amount FROM loan_payment";
         $result = $conn->query($sql);
 
         if ($result !== false && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            // Check if the value is numeric before subtraction
-            if (is_numeric($row["total_amount"])) {
-                $totalLoan = is_numeric(getTotalLoan($conn));
-                $totalUnpaidLoan = (float)$row["total_amount"] - $totalLoan;
-            } else {
-                // Handle the case where the value is not numeric
-                // For example, set $totalUnpaidLoan to a default value or show an error message
-                $totalUnpaidLoan = 0;
-                
-                // // Debug information
-                // echo "Non-numeric value encountered: " . $row["total_amount"];
-            }
+            $totalLoan = getTotalLoan($conn);
+            $totalUnpaidLoan = (float) $totalLoan - $row["total_amount"] ;
+            
         } else {
             $totalUnpaidLoan = 0;
         }
@@ -168,33 +157,22 @@ function getTotalUnpaidLoan($conn) {
     return round($totalUnpaidLoan, 2);
 }
 
+function getTotalPaidLoan ($conn) {
+    // Get total paid loan amount from loan_payment table
+    $queryTotalPaidLoan = "SELECT SUM(payment_amount) AS total_paid_loan FROM loan_payment";
+    $resultTotalPaidLoan = $conn->query($queryTotalPaidLoan);
 
+    if ($resultTotalPaidLoan && $resultTotalPaidLoan->num_rows > 0) {
+        $rowTotalPaidLoan = $resultTotalPaidLoan->fetch_assoc();
+        $totalPaidLoan = (float) $rowTotalPaidLoan['total_paid_loan'];
+        return number_format($totalPaidLoan, 2); // Format the total paid loan amount
+    } else {
+        return "0.00";
+    }
 
-
-
-$queryTotalLoan = "SELECT SUM(loan_amount) AS total_loan FROM loan_details";
-$resultTotalLoan = $conn->query($queryTotalLoan);
-
-if ($resultTotalLoan && $resultTotalLoan->num_rows > 0) {
-    $rowTotalLoan = $resultTotalLoan->fetch_assoc();
-    $totalLoan = (float) $rowTotalLoan['total_loan'];
-    $lblTotalLoan = number_format($totalLoan, 2); // Format the total loan amount
-} else {
-    $lblTotalLoan = "0.00";
 }
 
 
-// Get total paid loan amount from loan_payment table
-$queryTotalPaidLoan = "SELECT SUM(payment_amount) AS total_paid_loan FROM loan_payment";
-$resultTotalPaidLoan = $conn->query($queryTotalPaidLoan);
-
-if ($resultTotalPaidLoan && $resultTotalPaidLoan->num_rows > 0) {
-    $rowTotalPaidLoan = $resultTotalPaidLoan->fetch_assoc();
-    $totalPaidLoan = (float) $rowTotalPaidLoan['total_paid_loan'];
-    $lblTotalPaidLoan = number_format($totalPaidLoan, 2); // Format the total paid loan amount
-} else {
-    $lblTotalPaidLoan = "0.00";
-}
 ?>
 
 <!-- Calculating Dates -->
@@ -233,53 +211,63 @@ $endDate = $endDateTime->format('Y-m-d');
 
 <?php
 
-$weekly_payment = 0; // You can set an initial value here
-$weekNo = 0; // You can set an initial value here
-$membership_fee = 0; 
-// Assuming $end_date is in a valid date format
-// Calculate memberShare
-$members = countMembers($conn);
-if ($members > 0) {
-    $memberShare = $membership_fee + ($weekly_payment * $weekNo) + (getTotalInterest($conn) * 0.8) / countMembers($conn);
+function getMembershipFee($conn) {
+    $sql = "SELECT membership_fee FROM system_info LIMIT 1";
+    $result = $conn -> query($sql);
 
-    $memberShare = round($memberShare, 2); // Round the memberShare to 2 decimal places
-    $lblMemberShare = number_format($memberShare, 2); // Format the rounded number with 2 decimal places and thousands separator if needed
-    
-    // Calculate lblMemberSavings
-    $memberSavings = $membership_fee + ($weekly_payment * $weekNo);
-    $lblMemberSavings = number_format($memberSavings, 2);
-    
-    // Calculate lblMemberInterestShare
-    $memberInterestShare = getTotalInterest($conn) * 0.8 / countMembers($conn);
-    $lblMemberInterestShare = number_format($memberInterestShare, 2);
-} else {
-    $memberShare = 0;
-    $lblMemberSavings = 0;
-    $lblMemberInterestShare = 0;
+    if ($result !== false && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['membership_fee'];
+    } else {
+        return 0;
+    }
 }
 
+function getMemberSavings($conn) {
+    $weekNo = getWeekNumber($conn);
+    $weekly_payment = getWeeklyPayment($conn);
+
+    $memberSavings =  $weekNo * $weekly_payment;
+
+    return $memberSavings;
+}
+
+function getMemberInterestsShare($conn) {
+    $membersCount = countMembers($conn);
+
+    if ($membersCount <= 0) {
+        $memberInterestShare = 0;
+    } else {
+        $memberInterestShare = getTotalInterest($conn) * 0.8 / $membersCount;
+    }
+    return $memberInterestShare;
+}
 
 ?>
 
 <!-- INTEREST PANEL -->
 <?php
 
-// Get paid interest
-$result = $conn->query("SELECT ROUND(SUM(loan_amount * (interest_rate / 100)), 2) AS paid_interest FROM loan_details WHERE is_paid = 1;");
-$row = $result->fetch_assoc();
-if ($row !== null) {
-    $lblPaidInterest = number_format($row['paid_interest'], 2);
-} else {
-    $lblPaidInterest = "N/A"; // or any default value you want to set
+function getTotalPaidInterests($conn) {
+    $result = $conn->query("SELECT ROUND(SUM(ld.loan_amount * (ld.interest_rate / 100)), 2) AS paid_interest FROM loan_details ld INNER JOIN loan_requests lr ON lr.loan_detail_id = ld.loan_detail_id WHERE lr.request_status = 'Approved' AND lr.is_claim = 1 AND ld.is_paid = 1;");
+    $row = $result->fetch_assoc();
+    if ($row !== null) {
+        return round($row['paid_interest'], 2);
+    } else {
+        return 0;
+    }
+
 }
 
-// Get pending interest
-$result = $conn->query("SELECT ROUND(SUM(loan_amount * (interest_rate / 100)), 2) AS pending_interest FROM loan_details WHERE is_paid = 0;");
-$row = $result->fetch_assoc();
-if ($row !== null) {
-    $lblPendingInterest = number_format($row['pending_interest'], 2);
-} else {
-    $lblPendingInterest = "N/A"; // or any default value you want to set
+function getTotalPendingInterests($conn) {
+    $result = $conn->query("SELECT ROUND(SUM(ld.loan_amount * (ld.interest_rate / 100)), 2) AS pending_interest FROM loan_details ld INNER JOIN loan_requests lr ON lr.loan_detail_id = ld.loan_detail_id WHERE lr.request_status = 'Approved' AND lr.is_claim = 1 AND ld.is_paid = 0;");
+    $row = $result->fetch_assoc();
+    if ($row !== null) {
+        return round($row['pending_interest'], 2);
+    } else {
+        return 0;
+    }
+
 }
 
 ?>
@@ -300,13 +288,13 @@ function getTotalAvailableMoney($conn) {
             $totalSavings = floatval($row[0]);
         }
 
-        $result = $conn->query("SELECT SUM(loan_amount) FROM loan_details;");
+        $result = $conn->query("SELECT SUM(ld.loan_amount) FROM loan_details ld INNER JOIN loan_requests lr ON lr.loan_detail_id = ld.loan_detail_id WHERE lr.request_status = 'Approved' AND is_claim = 1;");
         if ($result !== false && $result->num_rows > 0) {
             $row = $result->fetch_row();
             $totalLoan = floatval($row[0]);
         }
 
-        $result = $conn->query("SELECT SUM(payment_amount) FROM loan_payment;");
+        $result = $conn->query("SELECT SUM(lp.payment_amount) FROM loan_payment lp INNER JOIN loan_details ld ON ld.loan_detail_id = lp.loan_detail_id;");
         if ($result !== false && $result->num_rows > 0) {
             $row = $result->fetch_row();
             $totalPaidLoan = floatval($row[0]);
@@ -361,32 +349,12 @@ function getTotalDeposits($conn, $mem_id) {
 
 <?php
 
-function computeEndDate($conn) {
-    $weeks= 52;
-    // Get the start date from the database using the getStartDate function
+function getTotalWeeks($conn) {
     $start_date = getStartDate($conn);
+    $end_date = getEndDate($conn);
 
-    // Check if the start date is retrieved successfully
-    if ($start_date === "No rows found in the system_info table.") {
-        return "Error: " . $start_date;
-    }
+    return abs(floor((new DateTime($start_date))->diff(new DateTime($end_date))->days / 7));
 
-    // Convert start date to timestamp
-    $start_timestamp = strtotime($start_date);
-
-    // Calculate the number of seconds in a week
-    $seconds_in_a_week = 60 * 60 * 24 * 7;
-
-    // Calculate the total seconds for the specified number of weeks
-    $total_seconds = $weeks * $seconds_in_a_week;
-
-    // Calculate the end timestamp by adding total seconds to start timestamp
-    $end_timestamp = $start_timestamp + $total_seconds;
-
-    // Format the end timestamp as a date
-    $end_date = date("Y-m-d", $end_timestamp);
-
-    return $end_date;
 }
 
 
@@ -401,6 +369,21 @@ function getStartDate($conn) {
         $start_date = $row['start_date'];
 
         return $start_date;
+    } else {
+        return "No rows found in the system_info table.";
+    }
+}
+
+function getEndDate($conn) {
+    // Fetch start_date from the system_info table
+    $sql = "SELECT end_date FROM system_info";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Assuming you only have one row in the system_info table
+        $row = $result->fetch_assoc();
+        return $row['end_date'];
+
     } else {
         return "No rows found in the system_info table.";
     }
@@ -527,6 +510,14 @@ function getTotalInterests ($conn, $member_id) {
 ?>
 
 <?php
+function getTotalInterestShare() {
+    //Get Total Interest Gain from loan that is already paid
+    $sql = "SELECT ROUND(SUM(ld.loan_amount * (ld.interest_rate / 100)), 2) 
+            FROM loan_details ld 
+            INNER JOIN loan_requests lr ON lr.loan_detail_id = ld.loan_detail_id 
+            WHERE lr.is_claim = 1 AND lr.request_status = 'Approved' AND ld.is_paid = 1;";
+}
+
 function computeInterestShare($conn, $loanAmount, $member_id) {
     // Fetch loan details from loan_details table for the specified member_id
     $loanDetailsQuery = "
