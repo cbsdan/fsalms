@@ -163,7 +163,7 @@ if (file_exists($function_path)) {
     </div>
     <div class="overview-card">
         <div class="card-header">
-            <p>Interest</p>
+            <p>Interest Gain</p>
         </div>
         <div class="card-body">
             <div class="information">
