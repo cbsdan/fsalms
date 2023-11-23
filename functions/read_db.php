@@ -447,14 +447,17 @@ if ($result) {
 <?php
 
 // Function to compute the pending amount
-function computePendingAmount($conn, $weeklyPayment, $weekNumber, $totalDeposits) {
-    // Calculate the expected total payment up to the given week
-    $expectedTotalPayment = $weeklyPayment * $weekNumber;
+function computePendingAmount($conn, $memId) {
+    $totalDeposits = getTotalDeposits($conn, $memId) - 1000;
+    $regularMemberSavings = getMemberSavings($conn);
 
-    // Calculate the pending amount by subtracting total deposits from expected total payment
-    $pendingAmount = $expectedTotalPayment - $totalDeposits;
+    $pending = $regularMemberSavings - $totalDeposits;
 
-    return $pendingAmount;
+    if ($pending < 0) {
+        return 0; //this means that the member is depositing regularly
+    } else {
+        return $pending;
+    }
 }
 ?>
  <?php
@@ -510,13 +513,6 @@ function getTotalInterests ($conn, $member_id) {
 ?>
 
 <?php
-function getTotalInterestShare() {
-    //Get Total Interest Gain from loan that is already paid
-    $sql = "SELECT ROUND(SUM(ld.loan_amount * (ld.interest_rate / 100)), 2) 
-            FROM loan_details ld 
-            INNER JOIN loan_requests lr ON lr.loan_detail_id = ld.loan_detail_id 
-            WHERE lr.is_claim = 1 AND lr.request_status = 'Approved' AND ld.is_paid = 1;";
-}
 
 function computeInterestShare($conn, $loanAmount, $member_id) {
     // Fetch loan details from loan_details table for the specified member_id
