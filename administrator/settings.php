@@ -29,11 +29,11 @@ $system_info = query("SELECT * FROM system_info");
         </div>
         <div class="info">
             <label for="weekly-payment">Weekly Payment: (₱)<span class="required"></span></label>
-            <input type="number" id="weekly-payment" class="no-spinner" name="weekly-payment" placeholder="Enter weekly payment" value="<?php echo $system_info['weekly_payment']; ?>" required>
+            <input type="number" id="weekly-payment" class="no-spinner" name="weekly-payment" placeholder="Enter weekly payment" value="<?php echo $system_info['weekly_payment']; ?>" readonly>
         </div>
         <div class="info">
             <label for="membership-fee">Membership Fee: (₱)<span class="required"></span></label>
-            <input type="number" id="membership-fee" class="no-spinner" name="membership-fee" placeholder="Enter membership fee" value="<?php echo $system_info['membership_fee']; ?>" required>
+            <input type="number" id="membership-fee" class="no-spinner" name="membership-fee" placeholder="Enter membership fee" value="<?php echo $system_info['membership_fee']; ?>" readonly>
         </div>
         <div class="info">
             <label for="starting-date">Starting Date:</label>
