@@ -66,19 +66,19 @@ if (file_exists($function_path)) {
         </div>
         <div class="card-body">
             <div class="information">
-                <p class="label">Savings:</p>
+                <p class="label">Savings: <span class="gray-text small-text fw-600">(Week no. * Weekly payment)</span></p>
                 <p class="data">
                     <span class="detail">P <?php echo $memberSavings = number_format(getMemberSavings($conn), 2); ?></span>
                 </p>
             </div>
             <div class="information">
-                <p class="label">Interest Share:</p>
+                <p class="label">Interest Share: <span class="gray-text small-text fw-600">(Members share / total members)</span></p>
                 <p class="data">
                     <span class="detail">P <?php echo $interestShare = number_format(getMemberInterestsShare($conn), 2); ?> </span>
                 </p>
             </div>
             <div class="information">
-                <p class="label">Total:</p>
+                <p class="label">Total: <span class="gray-text small-text fw-600"></span></p>
                 <p class="data">
                     <span class="detail">P <?php echo number_format($memberSavings + $interestShare, 2); ?></span>
                 </p>
@@ -97,9 +97,10 @@ if (file_exists($function_path)) {
                 </p>
             </div>
             <div class="information">
-                <p class="label">Available Money:</p>
+                <p class="label">Available Money: <span class="gray-text small-text fw-600">(+ Interests gain)</span></p>
                 <p class="data">
                     <span class="detail">P <?php echo getTotalAvailableMoney($conn); ?></span>
+                    
                 </p>
             </div>
             <div class="information">
@@ -195,14 +196,14 @@ if (file_exists($function_path)) {
                 <p class="label">Collector / Manager:</p>
                 <p class="data">
                     <span class="detail">P <?php echo number_format($interests * .20, 2); ?> </span>
-                    <span class="gray-text">(20%)</span>
+                    <span class="gray-text small-text">(20%)</span>
                 </p>
             </div>
             <div class="information">
                 <p class="label">All Members:</p>
                 <p class="data">
                     <span class="detail">P <?php echo number_format($interests * .80, 2); ?></span>
-                    <span class="gray-text">(80%)</span>
+                    <span class="gray-text small-text">(80%)</span>
                 </p>
             </div>
         </div>
