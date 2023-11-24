@@ -260,7 +260,9 @@ form .info .sex-radio-container {
     max-height: calc(100vh - 27rem);
     
 }
-
+.fw-600 {
+    font-weight: 600 !important;
+}
 .small-text {
     font-size: 1.3rem;
 }
