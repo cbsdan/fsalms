@@ -47,6 +47,7 @@ if (file_exists($database_path)) {
             <div class="nav" id="m-verification" onclick="loadContent('./administrator/member-verification.php', this)">
                 <div class="nav-logo"><img src="./img/member-verification.png" class="logo"></div>
                 <p class="nav-name">Member Verification</p>
+                <div class='notification <?php echo ((countMemberVerification($conn) == 0) ? 'hidden' : '');?>'><?php echo countMemberVerification($conn);?></div>
             </div>
         </div>
         <div class="savings nav-container">
@@ -61,6 +62,7 @@ if (file_exists($database_path)) {
             <div class="nav" id="l-requests" onclick="loadContent('./administrator/loan-requests.php', this)">
                 <div class="nav-logo"><img src="./img/loan-request.png" class="logo"></div>
                 <p class="nav-name">Loan Requests</p>
+                <div class='notification <?php echo ((countLoanRequests($conn) == 0) ? 'hidden' : '');?>'><?php echo countLoanRequests($conn);?></div>
             </div>
             <div class="nav" id="l-payment" onclick="loadContent('./administrator/loan-pay.php', this)">
                 <div class="nav-logo"><img src="./img/loan-payment.png" class="logo"></div>
