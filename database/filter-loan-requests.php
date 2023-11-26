@@ -28,8 +28,11 @@
             $_SESSION['section'] = './administrator/loan-requests.php';
             $_SESSION['activeNavId'] = 'l-requests';
         }
-    } 
 
-    header('Location: ../administrator-ui.php');
-    exit();
+        header('Location: ../administrator-ui.php');
+        exit();
+    }  else {
+        echo "<h1>Error! You cannot access this file!</h1>";
+    }
+
 ?>

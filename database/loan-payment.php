@@ -59,5 +59,7 @@
         
         header("Location: ../administrator-ui.php");
         exit();
+    }  else {
+        echo "<h1>Error! You cannot access this file!</h1>";
     }
 ?>

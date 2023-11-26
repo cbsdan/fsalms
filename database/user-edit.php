@@ -148,4 +148,6 @@
 
         header('Location: ../user-ui.php');
         exit();
+} else {
+    echo "<h1>Error! You cannot access this file!</h1>";
 }

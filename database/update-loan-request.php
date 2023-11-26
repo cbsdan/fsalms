@@ -4,9 +4,9 @@
     $database_path_index = './database/config.php';
 
     if (file_exists($database_path)) {
-        include($database_path);
+        include_once($database_path);
     } else if (file_exists($database_path_index)){
-        include($database_path_index);
+        include_once($database_path_index);
     }
     if (isset($_POST['approve'])) {
 
@@ -25,6 +25,8 @@
             $_SESSION['section'] = './administrator/loan-requests.php';
             $_SESSION['activeNavId'] = 'l-requests';
         }
+        header('Location: ../administrator-ui.php');
+        exit();
     } 
     
     if (isset($_POST['decline'])) {
@@ -43,6 +45,8 @@
             $_SESSION['section'] = './administrator/loan-requests.php';
             $_SESSION['activeNavId'] = 'l-requests';
         }
+        header('Location: ../administrator-ui.php');
+        exit();
     }
 
     if (isset($_POST['claim'])) {
@@ -61,6 +65,8 @@
             $_SESSION['section'] = './administrator/loan-requests.php';
             $_SESSION['activeNavId'] = 'l-requests';
         }
+        header('Location: ../administrator-ui.php');
+        exit();
     }
 
     if (isset($_POST['delete'])) {
@@ -85,7 +91,10 @@
             $_SESSION['section'] = './administrator/loan-requests.php';
             $_SESSION['activeNavId'] = 'l-requests';
         }
-    }
-    header('Location: ../administrator-ui.php');
-    exit();
+        header('Location: ../administrator-ui.php');
+        exit();
+    } 
+        
+    echo "<h1>Error! You cannot access this file!</h1>";
+
 ?>

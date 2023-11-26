@@ -37,5 +37,7 @@
 
         header('Location: ../index.php');
 
+    }  else {
+        echo "<h1>Error! You cannot access this file!</h1>";
     }
 ?>

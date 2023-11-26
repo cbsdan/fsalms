@@ -87,6 +87,10 @@
             $_SESSION['messageBg'] = "red";
         }
 
+        $_SESSION['section'] = './administrator/administrator-edit-transaction.php';
+        $_SESSION['activeNavId'] = 'a-editTransaction';
+        header('Location: ../administrator-ui.php');
+        exit();
     }
     
     if (isset($_POST['delete-btn'])) {
@@ -140,10 +144,13 @@
             $_SESSION['message'] = "Failed to delete transaction! Error: $e";
             $_SESSION['messageBg'] = "red";
         }
+
+        $_SESSION['section'] = './administrator/administrator-edit-transaction.php';
+        $_SESSION['activeNavId'] = 'a-editTransaction';
+        header('Location: ../administrator-ui.php');
+        exit();
     }
 
-    $_SESSION['section'] = './administrator/administrator-edit-transaction.php';
-    $_SESSION['activeNavId'] = 'a-editTransaction';
-    header('Location: ../administrator-ui.php');
-    exit();
+    echo "<h1>Error! You cannot access this file!</h1>";
+
 ?>
