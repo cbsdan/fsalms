@@ -225,10 +225,10 @@ function getMembershipFee($conn) {
 }
 
 function getMemberSavings($conn) {
-    $weekNo = getWeekNumber($conn);
-    $weekly_payment = getWeeklyPayment($conn);
+    $weekNo = (float) getWeekNumber($conn);
+    $weekly_payment = (float) getWeeklyPayment($conn);
 
-    $memberSavings =  $weekNo * $weekly_payment;
+    $memberSavings =  (float) $weekNo * $weekly_payment;
 
     return $memberSavings;
 }
@@ -437,7 +437,7 @@ if ($result) {
     // Close the database connection
 
     // Return the weekly payment value
-    return $row['weekly_payment'];
+    return (isset($row['weekly_payment']) ? $row['weekly_payment'] : 0);
 } else {
     // If the query fails, return an error or handle it accordingly
     return "Error: " . $conn->error;
@@ -599,8 +599,30 @@ function computeInterestShare($conn, $loanAmount, $member_id) {
         return "Error: Loan details not found for member $member_id";
     }
 }
+
+function countMemberVerification($conn) {
+    $sql = "SELECT COUNT(verification_id) as totalMembers FROM verification_images WHERE verification_status = 'Unverified'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows <= 0) {
+        return 0;
+    }
+
+    $totalMembers = $result->fetch_assoc();
+    return $totalMembers['totalMembers'];
+}
+
+function countLoanRequests($conn) {
+    $sql = "SELECT COUNT(*) AS total_requests FROM members m INNER JOIN loan_requests lr ON lr.mem_id = m.mem_id INNER JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id WHERE lr.request_status = 'Pending'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows <= 0) {
+        return 0;
+    }
+
+    $totalRequests = $result->fetch_assoc();
+    return $totalRequests['total_requests'];
+}
 ?>
 
 
-
-<!-- USER-> request_section -->
