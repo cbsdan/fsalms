@@ -241,3 +241,30 @@ main.default {
     gap: 1rem;
     flex-wrap: wrap;
 }
+
+table td a.imageContainer.active {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(0, 0, 0, 0.7);
+    backdrop-filter: blur(3px);
+    z-index: 10000;
+}
+
+table td .imageContainer img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    max-width: 1200px;
+    max-height: 800px;
+    border-radius: 0;
+    
+    object-fit: contain;
+    z-index: 10000;
+    border: none;
+}

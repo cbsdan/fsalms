@@ -61,6 +61,7 @@ $records = $conn->query($records_sql);
                 <th>Interest Rate</th>
                 <th>Claim Date</th>
                 <th>Date Requested</th> 
+                <th>Signature</th>
                 <th>Status</th> 
                 <th>Approve</th>
                 <th>Decline</th>
@@ -70,6 +71,13 @@ $records = $conn->query($records_sql);
             <?php
                 if ($loan_requests->num_rows > 0) {
                     while ($loan_request = $loan_requests->fetch_assoc()) {
+                        
+                        if (isset($loan_request['signature'])) {
+                            $signatureSrc = getImageSrc($loan_request['signature']);
+                        } else {
+                            $signatureSrc = '';
+                        }
+
                         echo " <tr>
                                 <td>" . $loan_request ['request_id'] . "</td>
                                 <td>" . $loan_request ['name'] . "</td>
@@ -78,7 +86,7 @@ $records = $conn->query($records_sql);
                                 <td class='text-center'>" . $loan_request ['interest_rate'] . "%</td>
                                 <td>" . $loan_request ['claim_date'] . "</td>
                                 <td>" . $loan_request ['date_requested'] . "</td>
-                                <td class='text-center'>" . $loan_request ['request_status'] . "</td>
+                                <td class='text-center'><a class='signature imageContainer c-blue'><span class='altText'>[Signature]</span><img class='hidden' src=' $signatureSrc' alt='Signature'></a></td>                               <td class='text-center'>" . $loan_request ['request_status'] . "</td>
                                 <td>
                                     <form action='./database/update-loan-request.php' method='POST'>
                                         <input type='hidden' name='request_id' value='" . $loan_request ['request_id'] . "'>
@@ -93,7 +101,7 @@ $records = $conn->query($records_sql);
                                 </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='9' class='text-center'>No Requests</td></tr>";
+                    echo "<tr><td colspan='10' class='text-center'>No Requests</td></tr>";
                 }
             ?>
         </tbody>
@@ -124,6 +132,7 @@ $records = $conn->query($records_sql);
                 <th>Interest Rate</th>
                 <th>Claim Date</th>
                 <th>Date Requested</th> 
+                <th>Signature</th> 
                 <th>Status</th> 
                 <th>Claim</th> 
                 <th>Delete</th>
@@ -151,6 +160,12 @@ $records = $conn->query($records_sql);
                             $statusClass = 'c-red';
                         }
 
+                        if (isset($record['signature'])) {
+                            $signatureSrc = getImageSrc($record['signature']);
+                        } else {
+                            $signatureSrc = '';
+                        }
+
                         echo "<tr>
                               <td>" .$record['request_id'] . "</td>
                               <td>" .$record['name'] . "</td>
@@ -159,18 +174,18 @@ $records = $conn->query($records_sql);
                               <td class='text-center'>" .$record['interest_rate'] . "%</td>
                               <td>" .$record['claim_date'] . "</td>
                               <td>" .$record['date_requested'] . "</td>
-                              <td class='text-center $statusClass'>" .$record['request_status'] . "</td>
+                              <td class='text-center'><a class='signature imageContainer c-blue'><span class='altText'>[Signature]</span><img class='hidden' src=' $signatureSrc' alt='Signature'></a></td>                              <td class='text-center $statusClass'>" .$record['request_status'] . "</td>
                               <td class='text-center'>$claim_status</td>
                               <td>
-                                <form action='./database/update-loan-request.php' method='POST'>
-                                    <input type='hidden' name='request_id' value='" . $record['request_id'] . "'>
-                                    <button type='submit' name='delete' value='delete' class='bg-red m-auto'>Delete</button>
+                                <form action='./database/update-loan-request.php' method='POST' class='deleteLoanReq'>
+                                    <input type='hidden' name='request_id' class='request_id' value='" . $record['request_id'] . "'>
+                                    <button type='submit' name='delete' value='delete' class='bg-red m-auto deleteBtn'>Delete</button>
                                 </form>
                               </td>
                               </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='9' class='text-center'>No Records</td></tr>";
+                    echo "<tr><td colspan='10' class='text-center'>No Records</td></tr>";
                 }
                 
             ?>
@@ -179,7 +194,38 @@ $records = $conn->query($records_sql);
 </div>
 
 <script>
+    let deleteForms = document.querySelectorAll('.deleteLoanReq');
+    deleteForms.forEach(deleteForm=>{
+        let requestId = deleteForm.querySelector('.request_id');
+
+        deleteForm.addEventListener('submit', (e)=>{
+            let confrimDelete = confirm(`Do you want to delete loan requests with id of ${requestId.value}`);
+
+            if (!confrimDelete) {
+                e.preventDefault();
+            }
+        })
+    })
+
     document.getElementById('selectFilter').addEventListener('change', ()=>{
         document.getElementById('statusForm').submit();
     });
+
+    let imageContainers = document.querySelectorAll('td .imageContainer')
+    imageContainers.forEach((imageContainer)=>{
+        let altText = imageContainer.querySelector('.altText');
+        let image = imageContainer.querySelector('img');
+
+        imageContainer.addEventListener('click', ()=>{
+            if (altText.classList.contains('hidden')) {
+                altText.classList.remove('hidden');
+                imageContainer.classList.remove('active');
+                image.classList.add('hidden');
+            } else {
+                altText.classList.add('hidden');
+                imageContainer.classList.add('active');
+                image.classList.remove('hidden');
+            }
+        })
+    })
 </script>

@@ -20,6 +20,8 @@ if (isset($_POST['request-btn'])) {
         $amount = $_POST["amount"];
         $duration = $_POST["duration"];
         $claimDate = $_POST["claim-date"];
+        $signature = file_get_contents($_FILES['signature']['tmp_name']);
+
         $currentDate = $_POST['date_requested'];
         $loanStatus = 'Pending';
         
@@ -31,7 +33,7 @@ if (isset($_POST['request-btn'])) {
                 $interestRate = 15;
                 break;
             case 3:
-                $interestRate = 20;
+                $interestRate = 20; 
                 break;
             default: 
                 $interestRate = 25;
@@ -47,9 +49,9 @@ if (isset($_POST['request-btn'])) {
         $loanDetailId = $loanDetailId['loan_detail_id']; 
         
         // Insert into loan_requests
-        $sql = "INSERT INTO loan_requests (mem_id, request_status, loan_detail_id) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO loan_requests (mem_id, request_status, signature, loan_detail_id) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("isi", $memId, $loanStatus, $loanDetailId);
+        $stmt->bind_param("issi", $memId, $loanStatus, $signature, $loanDetailId);
         $stmt->execute();
 
         $_SESSION['message'] = "Successfully applied loan request!";

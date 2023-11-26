@@ -50,7 +50,7 @@ $result = $conn->query($sql);
     <hr>
     <div class="request-container content">
         <div class="details">
-        <form action="./database/member_loan_request.php" method="POST">
+        <form action="./database/member_loan_request.php" method="POST" enctype="multipart/form-data">
             <input type='hidden' name ='date_requested' value = "<?php echo date("Y-m-d")?>">
                 <div class="info">
                     <label for="loan-amount">Loan Amount: <span class="required">*</span></label>
@@ -63,6 +63,10 @@ $result = $conn->query($sql);
                 <div class="info">
                     <label for="claim-date">Claim Date: <span class="required">*</span></label>
                     <input type="date" id="claim-date" name="claim-date" placeholder = "Enter claim date" required>
+                </div>
+                <div class="info">
+                    <label for="signature">Signature: <span class="required">*</span></label>
+                    <input type="file" id="signature" accept=".jpg, .jpeg, .png" name="signature" required>
                 </div>
                 <button type="submit" name="request-btn" value="request-btn" >Apply</button>
             </form>
@@ -91,17 +95,18 @@ $memId = $result['mem_id'];
             <th>ID</th>
             <th>Loan Amount</th>
             <th>Duration</th>
-            <th>Interest Rate</th>
+            <th>Rate</th>
             <th>Total Loan</th>
             <th>Date Requested</th>
             <th>Status</th>
             <th>Claim</th>
+            <th>Signature</th>
             </tr>
         </thead>
     <tbody>
 
 <?php
-    $sql = "SELECT lr.request_status, ld.loan_detail_id, ld.loan_amount, ld.month_duration, ld.date_requested, ld.interest_rate, ld.claim_date, ROUND(ld.loan_amount + (ld.loan_amount * (ld.interest_rate / 100)), 2) AS total_loan, lr.is_claim
+    $sql = "SELECT lr.request_status, lr.signature, ld.loan_detail_id, ld.loan_amount, ld.month_duration, ld.date_requested, ld.interest_rate, ld.claim_date, ROUND(ld.loan_amount + (ld.loan_amount * (ld.interest_rate / 100)), 2) AS total_loan, lr.is_claim
             FROM loan_requests lr
             JOIN loan_details ld ON lr.loan_detail_id = ld.loan_detail_id
             WHERE lr.mem_id  = $memId
@@ -121,6 +126,12 @@ $memId = $result['mem_id'];
 
             }
 
+            if (isset($row['signature'])) {
+                $signatureSrc = getImageSrc($row['signature']);
+            } else {
+                $signatureSrc = '';
+            }
+
             echo '<tr>';
             echo '<td>' . $row['loan_detail_id'] .'</td>'; 
             echo '<td>₱ ' . number_format($row['loan_amount']) . '</td>';
@@ -130,6 +141,8 @@ $memId = $result['mem_id'];
             echo '<td>' . $row['date_requested'] . '</td>';
             echo '<td class="c-' . ($row['request_status'] == 'Approved' ? 'green' : 'red') . ' text-center">' . $row['request_status'] . '</td>';
             echo "<td class='text-center'>$claim_status</td>";
+            echo "<td class='text-center'><a class='signature imageContainer c-blue'><span class='altText'>[Signature]</span><img class='hidden' src=' $signatureSrc' alt='Signature'></a></td>";
+            
             echo '</tr>';
         }
     } else {
@@ -141,3 +154,24 @@ $memId = $result['mem_id'];
     </table>
     </div>
 </div>
+
+<script>
+    let imageContainers = document.querySelectorAll('td .imageContainer')
+    imageContainers.forEach((imageContainer)=>{
+        let altText = imageContainer.querySelector('.altText');
+        let image = imageContainer.querySelector('img');
+
+        imageContainer.addEventListener('click', ()=>{
+            if (altText.classList.contains('hidden')) {
+                altText.classList.remove('hidden');
+                imageContainer.classList.remove('active');
+                image.classList.add('hidden');
+            } else {
+                altText.classList.add('hidden');
+                imageContainer.classList.add('active');
+                image.classList.remove('hidden');
+            }
+        })
+    })
+
+</script>
