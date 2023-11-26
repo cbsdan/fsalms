@@ -85,7 +85,10 @@ $isThereMember = false;
                 <input type="submit" class="hidden" name="search" value="search">
             </div>
         </form>
+        <?php $members = $conn->query($sql); ?>
+        <h4 class='mb-3'>Total: <span class="value"><?php echo $members->num_rows?></span></h4>
         <div class="result" id="member-information-table">
+
             <table class="result-table">
                 <thead>
                     <tr>
@@ -100,7 +103,7 @@ $isThereMember = false;
                 </thead>
                 <tbody>
                 <?php
-                    $members = $conn->query($sql);
+                    
                 
                     if ($members->num_rows > 0) {
                         while ($member = $members->fetch_assoc()) {
