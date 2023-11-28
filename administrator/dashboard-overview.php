@@ -80,7 +80,7 @@ if (file_exists($function_path)) {
             <div class="information">
                 <p class="label">Total: <span class="gray-text small-text fw-600"></span></p>
                 <p class="data">
-                    <span class="detail">P <?php echo number_format($memberSavings + $interestShare, 2); ?></span>
+                    <span class="detail">P <?php echo number_format(getMemberSavings($conn) + getMemberInterestsShare($conn), 2); ?></span>
                 </p>
             </div>
         </div>
@@ -170,7 +170,7 @@ if (file_exists($function_path)) {
             <div class="information">
                 <p class="label">Total Interest: </p>
                 <p class="data">
-                    <span class="detail">P <?php echo  $interests = number_format(getTotalInterest($conn), 2); ?></span>
+                    <span class="detail">P <?php echo  $interests = getTotalInterest($conn); ?></span>
                 </p>
             </div>
             <div class="information">
