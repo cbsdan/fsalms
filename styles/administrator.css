@@ -137,3 +137,71 @@ main .section.admin {
     color: var(--main-color);
     font-weight: 600;
 }
+
+@media screen and (max-width: 1200px)  {
+    .left-side-navbar {
+        display: flex;
+        width: 85px;
+        height: auto;
+        /* height: 110vh; */
+        overflow-y: auto;
+        z-index: 1000;
+    }
+    .navbar-container {
+        padding: 1.3rem 0.8rem !important;
+        align-items: center;
+        gap: 2rem !important;
+    }
+    .navbar-container div, .navbar-container div .profile, .navbar-container a {
+        display: flex;
+        flex-direction: column;
+        align-items: center !important;
+        justify-content: center;
+        text-align: center;
+    }
+    .navbar-container div.admin-card {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+    .navbar-container div .profile img {
+        display: flex;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: auto
+    }
+    .navbar-container div .text {
+        font-size: 0.8rem;
+        color: var(--pale-yellow);
+        
+    }
+    .nav.settings {
+        margin-bottom: 1rem;
+    }
+    .nav .notification {
+        width: 1.8rem !important;
+        height: 1.8rem !important;
+        padding: 0.2rem;
+        font-size: 0.5rem;
+        border-radius: 50%;
+        right: 1.1rem !important;
+        top: 0.2rem !important;
+        z-index: 2005 !important;
+        top: -0.3rem;
+    }
+    .nav-name {
+        display: none;
+    }
+    header.admin, main.admin, footer.admin {
+        padding-left: 85px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    header .content, footer .content {
+        padding: 0.2rem 1.5rem !important;
+    }
+    main .background {
+        padding: 2rem 1.5rem !important;
+        justify-content: center !important;
+    }
+}

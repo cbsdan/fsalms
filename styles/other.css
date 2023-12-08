@@ -27,7 +27,7 @@
 .scroll-top {
     position: fixed;
     bottom: 2rem;
-    right: 0;
+    right: 1rem;
     padding: 0.5rem;
     opacity: 0.3;
     width: 5rem;
